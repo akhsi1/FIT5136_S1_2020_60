@@ -11,4 +11,8 @@ package employfast;
  */
 class Mission {
     
+    public Mission(){
+        
+    }
+    
 }

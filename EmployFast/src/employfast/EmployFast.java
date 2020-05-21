@@ -14,7 +14,7 @@ public class EmployFast {
     private User[] userList;
     private SelectionCriteria[] selectionCriteriaList;
     private Mission[] missionList;
-    private SpaceShuttle[] shuttleList;
+    private Shuttle[] shuttleList;
     
     /**
      * @param args the command line arguments

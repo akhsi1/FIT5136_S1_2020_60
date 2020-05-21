@@ -9,13 +9,6 @@ package employfast;
  *
  * @author akhsi
  */
-class UserInterface {
+class Shuttle {
     
-    public UserInterface(){
-    
-    }
-    
-    public void displayLogin(){
-        
-    }
 }

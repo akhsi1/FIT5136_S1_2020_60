@@ -9,13 +9,6 @@ package employfast;
  *
  * @author akhsi
  */
-class UserInterface {
+public class Coordinator {
     
-    public UserInterface(){
-    
-    }
-    
-    public void displayLogin(){
-        
-    }
 }
