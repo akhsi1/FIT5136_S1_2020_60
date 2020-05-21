@@ -5,14 +5,37 @@
  */
 package employfast;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author akhsi
  */
 class Mission {
     
+    private ArrayList<Shuttle> shuttleList;
+    private SelectionCriteria selectionCriteria ;
+    
     public Mission(){
         
     }
+
+    public ArrayList<Shuttle> getShuttleList() {
+        return shuttleList;
+    }
+
+    public void setShuttleList(ArrayList<Shuttle> shuttleList) {
+        this.shuttleList = shuttleList;
+    }
+
+    public SelectionCriteria getSelectionCriteria() {
+        return selectionCriteria;
+    }
+
+    public void setSelectionCriteria(SelectionCriteria selectionCriteria) {
+        this.selectionCriteria = selectionCriteria;
+    }
+    
+    
     
 }

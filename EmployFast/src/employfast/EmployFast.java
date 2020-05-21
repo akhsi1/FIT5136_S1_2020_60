@@ -5,16 +5,16 @@
  */
 package employfast;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author akhsi
  */
 public class EmployFast {
 
-    private User[] userList;
-    private SelectionCriteria[] selectionCriteriaList;
-    private Mission[] missionList;
-    private Shuttle[] shuttleList;
+    private ArrayList<User> userList;
+    private ArrayList<Mission> missionList;
     
     /**
      * @param args the command line arguments
