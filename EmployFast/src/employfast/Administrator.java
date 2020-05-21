@@ -9,6 +9,6 @@ package employfast;
  *
  * @author akhsi
  */
-public class Administrator {
+public class Administrator extends User{
     
 }

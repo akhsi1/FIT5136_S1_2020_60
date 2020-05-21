@@ -9,6 +9,6 @@ package employfast;
  *
  * @author akhsi
  */
-public class Candidate {
+public class Candidate extends User{
     
 }

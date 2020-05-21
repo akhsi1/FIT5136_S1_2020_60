@@ -9,6 +9,6 @@ package employfast;
  *
  * @author akhsi
  */
-public class Coordinator {
+public class Coordinator extends User{
     
 }
