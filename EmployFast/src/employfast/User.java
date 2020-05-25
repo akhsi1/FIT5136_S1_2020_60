@@ -8,6 +8,7 @@ package employfast;
 /**
  *
  * @author akhsi
+ * @author Rongkun Ji
  */
 class User {
     private String userName;
