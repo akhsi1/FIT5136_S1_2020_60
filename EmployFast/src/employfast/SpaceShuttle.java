@@ -12,11 +12,11 @@ package employfast;
 class SpaceShuttle {
     
     private String shuttleName;
-    private String shuttleManuYear;
+    private int shuttleManuYear;
     private String shuttleFuelCap;
-    private String shuttlePassCap;
+    private int shuttlePassCap;
     private String shuttleCargoCap;
-    private String shuttleTrvlSpeed;
+    private float shuttleTrvlSpeed;
     
     public SpaceShuttle()
     {
@@ -43,28 +43,28 @@ class SpaceShuttle {
         return shuttleName;
     }
 
-    public String getUserId()
+    public int getshuttleManuYear()
     {
-        return userId;
+        return shuttleManuYear;
     }
 
-        public String getPassword()
-        {
-            return password;
-        }
+    public String getshuttleFuelCap()
+    {
+        return shuttleFuelCap;
+    }
 
-        public void setUserName(String userName)
-        {
-            this.userName = userName;
-        }
+    public void setUserName(String userName)
+    {
+        this.userName = userName;
+    }
 
-        public void setUserId(String userId)
-        {
-            this.userId = userId;
-        }
+    public void setUserId(String userId)
+    {
+        this.userId = userId;
+    }
 
-        public void setPassword(String password)
-        {
-            this.password = password;
-        }
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
 }
