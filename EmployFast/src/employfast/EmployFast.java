@@ -15,7 +15,7 @@ public class EmployFast {
 
     private ArrayList<User> userList;
     private ArrayList<Mission> missionList;
-    /* */
+    
     /**
      * @param args the command line arguments
      */
