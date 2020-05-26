@@ -13,19 +13,22 @@ public class Cargo {
     private String cargoID;
     private String cargoName;
     private int cargoQuantityAvail;
+    private int cargoQuantityReq;
     
     public Cargo()
     {
         cargoID = "";
         cargoName = "";
         cargoQuantityAvail = 0;
+        cargoQuantityReq = 0;
     }
     
-    public Cargo(String cargoID,String cargoName,int cargoQuantityAvail)
+    public Cargo(String cargoID,String cargoName,int cargoQuantityAvail,int cargoQuantityReq)
     {
         this.cargoID = cargoID;
         this.cargoName = cargoName;
         this.cargoQuantityAvail = cargoQuantityAvail;
+        this.cargoQuantityReq = cargoQuantityReq;
     }
     
     public String  getCargoID()
@@ -43,6 +46,11 @@ public class Cargo {
         return cargoQuantityAvail;
     }
     
+    public int  getCargoQuantityReq()
+    {
+        return cargoQuantityReq;
+    }
+    
     public void setCargoID(String cargoID)
     {
         this.cargoID = cargoID;
@@ -56,5 +64,10 @@ public class Cargo {
     public void setCargoQuantityAvail(int cargoQuantityAvail)
     {
         this.cargoQuantityAvail = cargoQuantityAvail;
+    }
+    
+    public void setCargoQuantityReq(int cargoQuantityReq)
+    {
+        this.cargoQuantityReq = cargoQuantityReq;
     }
 }

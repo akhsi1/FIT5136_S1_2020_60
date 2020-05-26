@@ -21,6 +21,7 @@ class Mission {
     private String missionCountriesAllowed;
     private String missionCoordinatorName;
     private String missionCoordinatorContact;
+    private ArrayList<Job> missionJobs;
     private ArrayList<RequiredTitle> missionTitles;
     private ArrayList<Cargo> missionCargoForJourney;
     private ArrayList<Cargo> missionCargoForMission;
@@ -40,6 +41,7 @@ class Mission {
         missionCountriesAllowed = "";
         missionCoordinatorName = "";
         missionCoordinatorContact = "";
+        missionJobs = new ArrayList<>();
         missionTitles = new ArrayList<>();
         missionCargoForJourney = new ArrayList<>();
         missionCargoForMission = new ArrayList<>();
@@ -53,7 +55,7 @@ class Mission {
     }
     
     public Mission(String missionID,String missionName,String missionDesc,String missionCountryOrigin,String missionCountriesAllowed,String missionCoordinatorName,String missionCoordinatorContact,
-           ArrayList<RequiredTitle> missionTitles,ArrayList<Cargo> missionCargoForJourney,ArrayList<Cargo> missionCargoForMission,ArrayList<Cargo> missionCargoForOtherMissions, String missionLaunchDate,
+           ArrayList<Job> missionJobs,ArrayList<RequiredTitle> missionTitles,ArrayList<Cargo> missionCargoForJourney,ArrayList<Cargo> missionCargoForMission,ArrayList<Cargo> missionCargoForOtherMissions, String missionLaunchDate,
            String missionDestinationLocation,int missionDurationMonths,String missionStatus,ArrayList<Shuttle> shuttleList,SelectionCriteria selectionCriteria)
     {
         this.missionID = missionID;
@@ -63,6 +65,7 @@ class Mission {
         this.missionCountriesAllowed = missionCountriesAllowed;
         this.missionCoordinatorName = missionCoordinatorName;
         this.missionCoordinatorContact = missionCoordinatorContact;
+        this.missionJobs =  missionJobs;
         this.missionTitles = missionTitles;
         this.missionCargoForJourney = missionCargoForJourney;
         this.missionCargoForMission = missionCargoForMission;
@@ -143,6 +146,16 @@ class Mission {
     public void setMissionCoordinatorContact(String missionCoordinatorContact)
     {
          this.missionCoordinatorContact = missionCoordinatorContact;
+    }
+    
+    public ArrayList<Job> getMissionJobs()
+    {
+        return missionJobs;
+    }
+    
+    public void setMissionJobs(ArrayList<Job> missionJobs)
+    {
+        this.missionJobs = missionJobs;
     }
     
     public ArrayList<RequiredTitle> getMissionTitles()
