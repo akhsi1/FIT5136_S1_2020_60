@@ -20,10 +20,9 @@ public class EmployFast {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Coordinator c = new Coordinator("H1", "D1", "S3");
-        c.createMission();
-    }
-   
-    
-    
+//        Coordinator c = new Coordinator("H1", "D1", "S3");
+//        c.createMission();
+        UserInterface ui = new UserInterface();
+        ui.displayLogin();
+    }  
 }

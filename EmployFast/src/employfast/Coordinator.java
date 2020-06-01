@@ -34,7 +34,7 @@ public class Coordinator extends User {
         boolean complete = false;
         boolean back = false;
         do {
-            System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+            System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
             System.out.println("1. Mission ID \n 2. Mission name \n 3. Mission description \n 4. Country of origin \n 5. Countries allowed \n 6. Coordinator’s name \n  7. Coordinator’contact information \n"
                     + "8. Job(s) \n 9. Employment requirements \n 10.Cargo requirements \n 11.Launch date \n 12.Location of the destination \n 13.Duration of the mission \n 14.Status of the mission \n"
                     + "\n Please press number to choose which attribute you want to change or \"Enter\" to finish");
