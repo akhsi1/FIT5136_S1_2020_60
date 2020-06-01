@@ -89,4 +89,7 @@ public class EmployFastSystem {
     public Mission getSelectedMission(){
         return selectedMission;
     }
+    public void setSelectedShuttle(Shuttle s){
+        selectedShuttle = s;
+    }
 }

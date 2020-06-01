@@ -11,12 +11,31 @@ package employfast;
  * @author Rongkun
  */
 class Shuttle {
+    
+    private String shuttleId;
+
+    public String getShuttleId() {
+        return shuttleId;
+    }
+
+    public void setShuttleId(String shuttleId) {
+        this.shuttleId = shuttleId;
+    }
+
+    public String getShuttleOriginCountry() {
+        return shuttleOriginCountry;
+    }
+
+    public void setShuttleOriginCountry(String shuttleOriginCountry) {
+        this.shuttleOriginCountry = shuttleOriginCountry;
+    }
    private String shuttleName;
    private int shuttleManuYear;
    private String shuttleFuelCapacity;
    private float shuttleTravelSpeed;
    private String shuttlePassengerCapacity;
    private String shuttleCargoCapacity;
+   private String shuttleOriginCountry;
 
    public Shuttle()
    {

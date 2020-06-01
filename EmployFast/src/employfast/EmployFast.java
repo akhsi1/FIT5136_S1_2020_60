@@ -15,7 +15,7 @@ import java.util.Scanner;
  * @author akhsi
  */
 public class EmployFast {
-
+    private ArrayList<Shuttle> shuttleList;
     private ArrayList<User> userList;
     private ArrayList<Mission> missionList;
     
@@ -56,7 +56,34 @@ public class EmployFast {
             userList.add(u);
         }
     }
-
+    public ArrayList<Shuttle> getShuttleList(){
+        shuttleList = new ArrayList<Shuttle>();
+        ArrayList<String> result = new ArrayList<String>();
+        String path = "shuttle";
+        try {
+            FileReader fileName = new FileReader(path);
+            Scanner file = new Scanner(fileName);
+            while (file.hasNextLine()) {
+                result.add(file.nextLine());
+            }
+            //System.out.println(content);
+            fileName.close();
+            file.close();
+        } catch (IOException e) {
+        }
+        for (int i = 0; i < result.size(); i += 8) {
+            String shuttleId = result.get(i);
+            String shuttleName = result.get(i+1);
+            String usertype = result.get(i + 2);
+            String userpassword = result.get(i + 3);
+            
+            Shuttle temporaryShuttle = new Shuttle();
+            temporaryShuttle.setShuttleId(shuttleId);
+            temporaryShuttle.setShuttleName(shuttleName);
+            shuttleList.add(temporaryShuttle);
+        }
+        return shuttleList;
+    }
 
     public ArrayList<User> getUserList(){
         return userList;

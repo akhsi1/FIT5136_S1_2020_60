@@ -6,6 +6,7 @@
 package employfast;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import java.util.Scanner;
 
@@ -73,12 +74,13 @@ class UserInterface {
             } else {
 
                 System.out.println("Wrong username or password entered \nPress any key to try again...");
-                complete=false;
+                complete = false;
                 input.nextLine();
 
             }
         }
     }
+
     public void displayAdminHome() {
         Administrator a = new Administrator(userId, username, userType, userpw);
         Scanner scan = new Scanner(System.in);
@@ -87,6 +89,7 @@ class UserInterface {
             clrscr();
             System.out.println("You are logged in as Administrator\nPress L to log out\n");
             if (efs.hasMissionSelected()) {
+                
                 System.out.println("Selected Mission: " + efs.getSelectedMission().getMissionName() + "\nPress 1 to Select new Mission\n");
                 if (efs.hasShuttleSelected()) {
                     System.out.println("Selected Shuttle: " + efs.getSelectedShuttle().getShuttleName()
@@ -103,10 +106,11 @@ class UserInterface {
 
             String in = scan.nextLine().toUpperCase();
             if (in.equals("1") && efs.hasMissionSelected()) {
-                end=true;
+                
+                end = true;
                 return;
             } else if (in.equals("2") && efs.hasShuttleSelected()) {
-                end=true;
+                end = true;
                 return;
             } else if (in.equals("3") && efs.hasSelectionCriteria()) {
                 end = true;
@@ -119,10 +123,28 @@ class UserInterface {
             }
         }
     }
-    
-    public void displayShuttleinfo(){
+
+    public void displayShuttleInfo() {
         System.out.println("Shuttle Information");
-        
+        EmployFast ef = new EmployFast();
+        ArrayList<Shuttle> list = ef.getShuttleList();
+        System.out.println(list.get(0).getShuttleId() + "\n");
+        System.out.println(list.get(0).getShuttleName());
+        System.out.println("Press 1 to selected the first shuttle");
+        Scanner in = new Scanner(System.in);
+        boolean end = false;
+        while (!end) {
+            String userInput = in.nextLine();
+            if (userInput.equals("1")) {
+                int index = Integer.valueOf(userInput) - 1;
+                efs.setSelectedShuttle(list.get(0));
+                end = true;
+                return;
+            }
+            else {
+                System.out.println("wrong input");
+            }
+        }
     }
 
     public void displayCoordinatorHome() {
@@ -134,15 +156,15 @@ class UserInterface {
             System.out.println("You are logged in as Coordinator\nPress L to log out\n\nPress 1 to Create a Mission\nPress 2 to Modify or View a Mission");
             String in = scan.nextLine();
             if (in.equals("1")) {
-                end=true;
+                end = true;
                 c.createMission();
                 return;
             } else if (in.equals("2")) {
-                end=true;
+                end = true;
                 c.modifyMission();
                 return;
             } else if (in.equals("L") || in.equals("B")) {
-                end=true;
+                end = true;
                 displayLogin();
                 return;
             } else {
