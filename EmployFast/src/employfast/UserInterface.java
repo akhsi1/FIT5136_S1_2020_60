@@ -5,6 +5,7 @@
  */
 package employfast;
 
+import java.io.Console;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,57 +20,97 @@ import java.util.logging.Logger;
  * @author akhsi
  */
 class UserInterface {
-private String usertype;
-private String userpw;
-private String username;
+
+    private String usertype;
+    private String userpw;
+    private String username;
 
     public UserInterface() {
     }
+
     public void displayLogin() {
+        clrscr();
         Scanner input = new Scanner(System.in);
         EmployFastSystem efs = new EmployFastSystem();
         boolean complete = false;
         while (!complete) {
-            System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
+            System.out.println("Enter E to exit\n\n");
             System.out.println("Welcome to Employ Fast! \n\n Please enter username: ");
             String inuser = input.nextLine();
             System.out.println("Enter Password: ");
             String password = input.nextLine();
-            if (efs.verifyUser(inuser, password).equals("admin")){
+            // Console code only works after compiling (Doesn't work in IDE)
+//            Console con = System.console();
+//            char[] pwchars = con.readPassword("Please enter pw");
+//            String password = String.valueOf(pwchars);
+            if (efs.verifyUser(inuser, password).equals("admin")) {
                 usertype = "admin";
-                clrscr();
+                complete = true;
                 displayAdminHome();
+                return;
             }
-            if (efs.verifyUser(inuser, password).equals("coordinator")){
+            if (efs.verifyUser(inuser, password).equals("coordinator")) {
                 usertype = "coordinator";
-                clrscr();
+                complete = true;
                 displayCoordinatorHome();
-                
+                return;
             }
-            if (efs.verifyUser(inuser, password).equals("candidate")){
+            if (efs.verifyUser(inuser, password).equals("candidate")) {
                 usertype = "candidate";
-                clrscr();
+                complete = true;
                 displayCandidateHome();
-                       
+                return;
             }
-            
+
         }
     }
-    
-    public void displayAdminHome(){
-        System.out.println("You are logged in as Administrator");
-    }
-    public void displayCoordinatorHome(){
+
+    public void displayAdminHome() {
+        Administrator a = new Administrator(username, "1", userpw);
         Scanner scan = new Scanner(System.in);
-        System.out.println("You are logged in as Coordinator\nPress 1 to Create a Mission");
-        String in = scan.nextLine();
-        if (in.equals("1")){
-            Coordinator c = new Coordinator(username, "1", userpw);
-            c.createMission();
+        boolean end = false;
+        while (!end) {
+            clrscr();
+            System.out.println("You are logged in as Administrator\nPress 1 to Select a Shuttle\nPress 2 to Create Selection Criteria\nPress 3 to Find N Best Candidates");
+            String in = scan.nextLine();
+            if (in.equals("1")) {
+                return;
+            } else if (in.equals("2")) {
+                return;
+            } else if (in.equals("3")){
+                return;
+            }
+            else {
+                System.out.println("Please enter a valid option");
+            }
         }
     }
-    public void displayCandidateHome(){
-        System.out.println("You are logged in as Candidate");
+
+    public void displayCoordinatorHome() {
+        Coordinator c = new Coordinator(username, "1", userpw);
+        Scanner scan = new Scanner(System.in);
+        boolean end = false;
+        while (!end) {
+            clrscr();
+            System.out.println("You are logged in as Coordinator\nPress 1 to Create a Mission\nPress 2 to Modify or View a Mission");
+            String in = scan.nextLine();
+            if (in.equals("1")) {
+                c.createMission();
+                return;
+            } else if (in.equals("2")) {
+                c.modifyMission();
+                return;
+            } else {
+                System.out.println("Please enter a valid option");
+            }
+        }
+    }
+    public void displayCandidateHome() {
+        clrscr();
+        System.out.println("You are logged in as Candidate\n\n Candidate features not yet implemented. \n\nPress any key to log out...");
+        Scanner scan = new Scanner(System.in);
+        scan.nextLine();
+        displayLogin();
     }
 
     public static void clrscr() {

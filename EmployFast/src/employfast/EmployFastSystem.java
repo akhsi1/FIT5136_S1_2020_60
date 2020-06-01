@@ -34,7 +34,6 @@ public class EmployFastSystem {
             file.close();
         } catch (IOException e) {
         }
-        System.out.println(result);
         return result;
     }
 
