@@ -5,15 +5,11 @@
  */
 package employfast;
 
-import java.io.Console;
-import java.io.File;
-import java.io.FileReader;
+
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
+
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -24,14 +20,15 @@ class UserInterface {
     private String usertype;
     private String userpw;
     private String username;
+    private EmployFastSystem efs;
 
     public UserInterface() {
+        efs = new EmployFastSystem();
     }
 
     public void displayLogin() {
         clrscr();
         Scanner input = new Scanner(System.in);
-        EmployFastSystem efs = new EmployFastSystem();
         boolean complete = false;
         while (!complete) {
             System.out.println("Enter E to exit\n\n");
@@ -71,7 +68,13 @@ class UserInterface {
         boolean end = false;
         while (!end) {
             clrscr();
-            System.out.println("You are logged in as Administrator\nPress 1 to Select a Shuttle\nPress 2 to Create Selection Criteria\nPress 3 to Find N Best Candidates");
+            System.out.println("You are logged in as Administrator\nPress 1 to Select a Shuttle");
+            if(efs.hasMissionSelected()){
+                System.out.println("Press 2 to Create Selection Criteria");
+                if(efs.hasSelectionCriteria()){
+                    System.out.println("Press 3 to Find N Best Candidates");
+                }
+            }
             String in = scan.nextLine();
             if (in.equals("1")) {
                 return;

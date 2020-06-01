@@ -16,8 +16,38 @@ import java.util.Scanner;
  */
 public class EmployFastSystem {
 
-    public EmployFastSystem() {
+    private Mission selectedMission;
+    private Shuttle selectedShuttle;
 
+    public EmployFastSystem() {
+    }
+
+    public boolean hasMissionSelected() {
+        if (selectedMission != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean hasShuttleSelected() {
+        if (selectedShuttle != null) {
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+
+    public boolean hasSelectionCriteria() {
+        if (hasMissionSelected()){
+            if (selectedMission.getSelectionCriteria().getSelectionRangeOfAge() != null 
+                    && selectedMission.getSelectionCriteria().getSelectionHealthRecords() != null 
+                    && selectedMission.getSelectionCriteria().getSelectionQualifications() != null){
+                return true;
+            }
+        }
+        return false;
     }
 
     public ArrayList<String> readUsersFile() {
