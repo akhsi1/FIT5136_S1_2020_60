@@ -49,7 +49,11 @@ class UserInterface {
 //            char[] pwchars = con.readPassword("Please enter pw");
 //            String password = String.valueOf(pwchars);
             User u = efs.verifyUser(inuser, password);
+<<<<<<< HEAD
             if (u.getUserId() != "" && u.getUserName() != "" && u.getUserType() != "") {
+=======
+            if (u.getUserId() != null && u.getUserName() != null && u.getUserType() != null) {
+>>>>>>> master
                 if (u.getUserType().equals("admin")) {
                     userType = "admin";
                     complete = true;
@@ -69,9 +73,13 @@ class UserInterface {
                     return;
                 }
             } else {
+<<<<<<< HEAD
                 System.out.println("Wrong username or password entered \nPress any key to try again...");
                 complete=false;
                 input.nextLine();
+=======
+                System.out.println("Wrong username or password entered");
+>>>>>>> master
             }
         }
     }
