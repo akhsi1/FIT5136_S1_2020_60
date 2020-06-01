@@ -52,7 +52,7 @@ public class EmployFastSystem {
 
     public ArrayList<String> readUsersFile() {
         ArrayList<String> result = new ArrayList<String>();
-        String path = "users.txt";
+        String path = "users";
         try {
             FileReader fileName = new FileReader(path);
             Scanner file = new Scanner(fileName);
