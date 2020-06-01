@@ -14,19 +14,30 @@ class User {
     private String userName;
     private String userId;
     private String password;
+    private String userType;
     
     public User()
     {
         userName = "";
         userId = "";
         password = "";
+        userType = "";
     }
     
-    public User(String userName,String userId,String password)
+    public User(String userId, String userName,String userType, String password)
     {
         this.userName = userName;
         this.userId = userId;
         this.password = password;
+        this.userType = userType;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
     
     public String getUserName()

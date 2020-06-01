@@ -24,8 +24,8 @@ public class Coordinator extends User {
         super();
     }
 
-    public Coordinator(String userName, String userId, String password) {
-        super(userName, userId, password);
+    public Coordinator(String userId, String userName, String userType, String password) {
+        super(userId, userName, userType, password);
     }
 
     public void createMission() {
@@ -278,15 +278,20 @@ public class Coordinator extends User {
                     }
                     break;
                 case "13":
+
                     clrscr();
                     System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
-                    System.out.println("Please input Duration of the mission");
-                    in = input.nextLine();
+                    System.out.println("Please input Duration of the mission (Months)");
+                    do {
+                        in = input.nextLine();
+                    } while(!in.matches("[0-9]+"))
+                    ;
                     complete = backChoose(in.toUpperCase())[0];
                     back = backChoose(in.toUpperCase())[1];
                     if (!complete && !back) {
                         mission.setMissionDurationMonths(Integer.parseInt(in));
                     }
+
                     break;
                 case "14":
                     clrscr();
@@ -559,7 +564,7 @@ public class Coordinator extends User {
                                                 mission.getMissionJobs().add(new Job(jobName, jobDescription));
                                             }
                                         }
-                                    } else if (isInt(in)&& Integer.parseInt(in)<= mission.getMissionJobs().size()) {
+                                    } else if (isInt(in) && Integer.parseInt(in) <= mission.getMissionJobs().size()) {
                                         int jobIndex = Integer.parseInt(in) - 1;
                                         System.out.println("Please choose 1. Job name 2. Job description to change");
                                         in = input.nextLine();
@@ -629,7 +634,7 @@ public class Coordinator extends User {
                                                 mission.getMissionTitles().add(new RequiredTitle(requiredTitleName, Integer.parseInt(requiredTitleCount)));
                                             }
                                         }
-                                    } else if (isInt(in) && Integer.parseInt(in)<= mission.getMissionTitles().size()) {
+                                    } else if (isInt(in) && Integer.parseInt(in) <= mission.getMissionTitles().size()) {
                                         int titleIndex = Integer.parseInt(in) - 1;
                                         System.out.println("Please choose 1. Title name 2. Title count number to change");
                                         in = input.nextLine();
@@ -723,7 +728,7 @@ public class Coordinator extends User {
                                                             }
                                                         }
                                                     }
-                                                } else if (isInt(in)&& Integer.parseInt(in)<= mission.getMissionCargoForJourney().size()) {
+                                                } else if (isInt(in) && Integer.parseInt(in) <= mission.getMissionCargoForJourney().size()) {
                                                     int cargoJIndex = Integer.parseInt(in) - 1;
                                                     System.out.println("Please choose 1. cargo ID 2. cargo Name 3. cargo avaible quantity number 4. cargo require quantity number");
                                                     in = input.nextLine();
@@ -832,7 +837,7 @@ public class Coordinator extends User {
                                                         }
                                                     }
                                                 }
-                                            } else if (isInt(in)&& Integer.parseInt(in)<= mission.getMissionCargoForMission().size()) {
+                                            } else if (isInt(in) && Integer.parseInt(in) <= mission.getMissionCargoForMission().size()) {
                                                 int cargoMIndex = Integer.parseInt(in) - 1;
                                                 System.out.println("Please choose 1. cargo ID 2. cargo Name 3. cargo avaible quantity number 4. cargo require quantity number");
                                                 in = input.nextLine();
@@ -939,7 +944,7 @@ public class Coordinator extends User {
                                                             }
                                                         }
                                                     }
-                                                } else if (isInt(in)&& Integer.parseInt(in)<= mission.getMissionCargoForOtherMissions().size()) {
+                                                } else if (isInt(in) && Integer.parseInt(in) <= mission.getMissionCargoForOtherMissions().size()) {
                                                     int cargoOIndex = Integer.parseInt(in) - 1;
                                                     System.out.println("Please choose 1. cargo ID 2. cargo Name 3. cargo avaible quantity number 4. cargo require quantity number");
                                                     in = input.nextLine();

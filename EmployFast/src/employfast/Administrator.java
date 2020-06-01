@@ -15,9 +15,8 @@ public class Administrator extends User{
         super();
     }
    
-    public Administrator(String userName,String userId,String password)
-    {
-        super(userName,userId,password);
+    public Administrator (String userId, String userName, String userType, String password) {
+        super(userId, userName, userType, password);
     }
     
     public void selectNewShuttle()

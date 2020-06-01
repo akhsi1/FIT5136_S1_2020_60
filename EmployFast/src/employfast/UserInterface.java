@@ -15,9 +15,10 @@ import java.util.Scanner;
  */
 class UserInterface {
 
-    private String usertype;
-    private String userpw;
+    private String userId;
     private String username;
+    private String userType;
+    private String userpw;
     private EmployFastSystem efs;
 
     public UserInterface() {
@@ -45,29 +46,34 @@ class UserInterface {
 //            Console con = System.console();
 //            char[] pwchars = con.readPassword("Please enter pw");
 //            String password = String.valueOf(pwchars);
-            if (efs.verifyUser(inuser, password).equals("admin")) {
-                usertype = "admin";
-                complete = true;
-                displayAdminHome();
-                return;
-            }
-            if (efs.verifyUser(inuser, password).equals("coordinator")) {
-                usertype = "coordinator";
-                complete = true;
-                displayCoordinatorHome();
-                return;
-            }
-            if (efs.verifyUser(inuser, password).equals("candidate")) {
-                usertype = "candidate";
-                complete = true;
-                displayCandidateHome();
-                return;
+            User u = efs.verifyUser(inuser, password);
+            if (u.getUserId() != null && u.getUserName() != null && u.getUserType() != null) {
+                if (u.getUserType().equals("admin")) {
+                    userType = "admin";
+                    complete = true;
+                    displayAdminHome();
+                    return;
+                }
+                if (u.getUserType().equals("coordinator")) {
+                    userType = "coordinator";
+                    complete = true;
+                    displayCoordinatorHome();
+                    return;
+                }
+                if (u.getUserType().equals("candidate")) {
+                    userType = "candidate";
+                    complete = true;
+                    displayCandidateHome();
+                    return;
+                }
+            } else {
+                System.out.println("Wrong username or password entered");
             }
         }
     }
 
     public void displayAdminHome() {
-        Administrator a = new Administrator(username, "1", userpw);
+        Administrator a = new Administrator(userId, username, userType, userpw);
         Scanner scan = new Scanner(System.in);
         boolean end = false;
         while (!end) {
@@ -104,7 +110,7 @@ class UserInterface {
     }
 
     public void displayCoordinatorHome() {
-        Coordinator c = new Coordinator(username, "1", userpw);
+        Coordinator c = new Coordinator(userId, username, userType, userpw);
         Scanner scan = new Scanner(System.in);
         boolean end = false;
         while (!end) {

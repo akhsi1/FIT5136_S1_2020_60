@@ -11,4 +11,8 @@ package employfast;
  */
 public class Candidate extends User{
     
+    public Candidate (String userId, String userName, String userType, String password) {
+        super(userId, userName, userType, password);
+    }
+    
 }

@@ -67,18 +67,20 @@ public class EmployFastSystem {
         return result;
     }
 
-    public String verifyUser(String uname, String pw) {
+    public User verifyUser(String uname, String pw) {
         String result = "";
         ArrayList<String> usersList = readUsersFile();
-        for (int i = 0; i < usersList.size(); i += 3) {
-            String username = usersList.get(i);
-            String usertype = usersList.get(i + 1);
-            String userpassword = usersList.get(i + 2);
+        User u = new User();
+        for (int i = 0; i < usersList.size(); i += 4) {
+            String userId = usersList.get(i);
+            String username = usersList.get(i+1);
+            String usertype = usersList.get(i + 2);
+            String userpassword = usersList.get(i + 3);
             if (uname.equals(username) && pw.equals(userpassword)) {
-                result = usertype;
+                u = new User(userId, username, usertype, userpassword);
             }
         }
-        return result;
+        return u;
     }
 
     public Shuttle getSelectedShuttle() {
