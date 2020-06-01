@@ -33,12 +33,9 @@ public class EmployFast {
     public void readAllUsers(){
         userList = new ArrayList<User>();
         ArrayList<String> result = new ArrayList<String>();
-<<<<<<< HEAD
-        String path = "users.txt";
-=======
+
         String path = "users";
 
->>>>>>> master
         try {
             FileReader fileName = new FileReader(path);
             Scanner file = new Scanner(fileName);
@@ -59,23 +56,7 @@ public class EmployFast {
             userList.add(u);
         }
     }
-<<<<<<< HEAD
-    
-    public void getUserList(){
-        
-    }
-    
-    public void getMissionList(){
-        
-    }
-    
-    public void setUserList(){
-        
-    }
-    
-    public void setMissionList(){
-        
-=======
+
 
     public ArrayList<User> getUserList(){
         return userList;
@@ -92,6 +73,5 @@ public class EmployFast {
     public void setMissionList(ArrayList<Mission> m){
         missionList = m;
 
->>>>>>> master
     }
 }
