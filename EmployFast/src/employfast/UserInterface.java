@@ -5,11 +5,9 @@
  */
 package employfast;
 
-
 import java.io.IOException;
 
 import java.util.Scanner;
-
 
 /**
  *
@@ -28,13 +26,20 @@ class UserInterface {
 
     public void displayLogin() {
         clrscr();
+        efs = new EmployFastSystem();
         Scanner input = new Scanner(System.in);
         boolean complete = false;
         while (!complete) {
             System.out.println("Enter E to exit\n\n");
             System.out.println("Welcome to Employ Fast! \n\n Please enter username: ");
             String inuser = input.nextLine();
+            if (inuser.toUpperCase().equals("E")) {
+                return;
+            }
             System.out.println("Enter Password: ");
+            if (inuser.toUpperCase().equals("E")) {
+                return;
+            }
             String password = input.nextLine();
             // Console code only works after compiling (Doesn't work in IDE)
 //            Console con = System.console();
@@ -58,7 +63,6 @@ class UserInterface {
                 displayCandidateHome();
                 return;
             }
-
         }
     }
 
@@ -68,22 +72,32 @@ class UserInterface {
         boolean end = false;
         while (!end) {
             clrscr();
-            System.out.println("You are logged in as Administrator\nPress 1 to Select a Shuttle");
-            if(efs.hasMissionSelected()){
-                System.out.println("Press 2 to Create Selection Criteria");
-                if(efs.hasSelectionCriteria()){
-                    System.out.println("Press 3 to Find N Best Candidates");
+            System.out.println("You are logged in as Administrator\nPress L to log out\n");
+            if (efs.hasMissionSelected()) {
+                System.out.println("Selected Mission: " + efs.getSelectedMission().getMissionName() + "\nPress 1 to Select new Mission\n");
+                if (efs.hasShuttleSelected()) {
+                    System.out.println("Selected Shuttle: " + efs.getSelectedShuttle().getShuttleName()
+                            + "\nPress 2 to Select a New Shuttle\nPress 3 to Create a Selection Criteria\n");
+                    if (efs.hasSelectionCriteria()) {
+                        System.out.println("Press 4 to Find N Best Candidates\n");
+                    }
+                } else {
+                    System.out.println("Press 2 to Select a Shuttle\n");
                 }
+            } else {
+                System.out.println("Press 1 to Select a Mission");
             }
-            String in = scan.nextLine();
-            if (in.equals("1")) {
+
+            String in = scan.nextLine().toUpperCase();
+            if (in.equals("1") && efs.hasMissionSelected()) {
                 return;
-            } else if (in.equals("2")) {
+            } else if (in.equals("2") && efs.hasShuttleSelected()) {
                 return;
-            } else if (in.equals("3")){
+            } else if (in.equals("3") && efs.hasSelectionCriteria()) {
                 return;
-            }
-            else {
+            } else if (in.equals("L") || in.equals("B")) {
+                displayLogin();
+            } else {
                 System.out.println("Please enter a valid option");
             }
         }
@@ -108,6 +122,7 @@ class UserInterface {
             }
         }
     }
+
     public void displayCandidateHome() {
         clrscr();
         System.out.println("You are logged in as Candidate\n\n Candidate features not yet implemented. \n\nPress any key to log out...");

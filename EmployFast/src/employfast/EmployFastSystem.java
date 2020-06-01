@@ -81,4 +81,10 @@ public class EmployFastSystem {
         return result;
     }
 
+    public Shuttle getSelectedShuttle() {
+        return selectedShuttle;
+    }
+    public Mission getSelectedMission(){
+        return selectedMission;
+    }
 }
