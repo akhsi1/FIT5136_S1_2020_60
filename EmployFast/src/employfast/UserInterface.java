@@ -15,9 +15,10 @@ import java.util.Scanner;
  */
 class UserInterface {
 
-    private String usertype;
-    private String userpw;
+    private String userId;
     private String username;
+    private String userType;
+    private String userpw;
     private EmployFastSystem efs;
 
     public UserInterface() {
@@ -34,40 +35,48 @@ class UserInterface {
             System.out.println("Welcome to Employ Fast! \n\n Please enter username: ");
             String inuser = input.nextLine();
             if (inuser.toUpperCase().equals("E")) {
+                complete = true;
                 return;
             }
             System.out.println("Enter Password: ");
-            if (inuser.toUpperCase().equals("E")) {
+            String password = input.nextLine();
+            if (password.toUpperCase().equals("E")) {
+                complete = true;
                 return;
             }
-            String password = input.nextLine();
             // Console code only works after compiling (Doesn't work in IDE)
 //            Console con = System.console();
 //            char[] pwchars = con.readPassword("Please enter pw");
 //            String password = String.valueOf(pwchars);
-            if (efs.verifyUser(inuser, password).equals("admin")) {
-                usertype = "admin";
-                complete = true;
-                displayAdminHome();
-                return;
-            }
-            if (efs.verifyUser(inuser, password).equals("coordinator")) {
-                usertype = "coordinator";
-                complete = true;
-                displayCoordinatorHome();
-                return;
-            }
-            if (efs.verifyUser(inuser, password).equals("candidate")) {
-                usertype = "candidate";
-                complete = true;
-                displayCandidateHome();
-                return;
+            User u = efs.verifyUser(inuser, password);
+            if (u.getUserId() != "" && u.getUserName() != "" && u.getUserType() != "") {
+                if (u.getUserType().equals("admin")) {
+                    userType = "admin";
+                    complete = true;
+                    displayAdminHome();
+                    return;
+                }
+                if (u.getUserType().equals("coordinator")) {
+                    userType = "coordinator";
+                    complete = true;
+                    displayCoordinatorHome();
+                    return;
+                }
+                if (u.getUserType().equals("candidate")) {
+                    userType = "candidate";
+                    complete = true;
+                    displayCandidateHome();
+                    return;
+                }
+            } else {
+                System.out.println("Wrong username or password entered \nPress any key to try again...");
+                complete=false;
+                input.nextLine();
             }
         }
     }
-
     public void displayAdminHome() {
-        Administrator a = new Administrator(username, "1", userpw);
+        Administrator a = new Administrator(userId, username, userType, userpw);
         Scanner scan = new Scanner(System.in);
         boolean end = false;
         while (!end) {
@@ -90,12 +99,16 @@ class UserInterface {
 
             String in = scan.nextLine().toUpperCase();
             if (in.equals("1") && efs.hasMissionSelected()) {
+                end=true;
                 return;
             } else if (in.equals("2") && efs.hasShuttleSelected()) {
+                end=true;
                 return;
             } else if (in.equals("3") && efs.hasSelectionCriteria()) {
+                end = true;
                 return;
             } else if (in.equals("L") || in.equals("B")) {
+                end = true;
                 displayLogin();
             } else {
                 System.out.println("Please enter a valid option");
@@ -104,18 +117,24 @@ class UserInterface {
     }
 
     public void displayCoordinatorHome() {
-        Coordinator c = new Coordinator(username, "1", userpw);
+        Coordinator c = new Coordinator(userId, username, userType, userpw);
         Scanner scan = new Scanner(System.in);
         boolean end = false;
         while (!end) {
             clrscr();
-            System.out.println("You are logged in as Coordinator\nPress 1 to Create a Mission\nPress 2 to Modify or View a Mission");
+            System.out.println("You are logged in as Coordinator\nPress L to log out\n\nPress 1 to Create a Mission\nPress 2 to Modify or View a Mission");
             String in = scan.nextLine();
             if (in.equals("1")) {
+                end=true;
                 c.createMission();
                 return;
             } else if (in.equals("2")) {
+                end=true;
                 c.modifyMission();
+                return;
+            } else if (in.equals("L") || in.equals("B")) {
+                end=true;
+                displayLogin();
                 return;
             } else {
                 System.out.println("Please enter a valid option");
