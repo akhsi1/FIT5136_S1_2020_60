@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package employfast;
-
+import java.util.ArrayList;
 /**
  *
  * @author akhsi
@@ -13,16 +13,16 @@ package employfast;
 class SelectionCriteria {
     private String selectionRangeOfAge;
     private String selectionHealthRecords;
-    private String selectionQualifications;
+    private ArrayList<String> selectionQualifications;
     
     public SelectionCriteria()
     {
         selectionRangeOfAge = "";
         selectionHealthRecords = "";
-        selectionQualifications = "";
+        selectionQualifications = new ArrayList<String>();
     }
     
-    public SelectionCriteria(String selectionRangeOfAge,String selectionHealthRecords, String selectionQualifications)
+    public SelectionCriteria(String selectionRangeOfAge,String selectionHealthRecords, ArrayList<String> selectionQualifications)
     {
         this.selectionRangeOfAge = selectionRangeOfAge;
         this.selectionHealthRecords = selectionHealthRecords;
@@ -49,12 +49,12 @@ class SelectionCriteria {
         this.selectionHealthRecords = selectionHealthRecords;
     }
     
-    public String getSelectionQualifications()
+    public ArrayList<String> getSelectionQualifications()
     {
         return selectionQualifications;
     }
     
-    public void setSelectionQualifications(String selectionQualifications)
+    public void setSelectionQualifications(ArrayList<String> selectionQualifications)
     {
         this.selectionQualifications = selectionQualifications;
     }
