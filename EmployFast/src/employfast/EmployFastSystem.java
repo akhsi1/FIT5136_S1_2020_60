@@ -92,4 +92,14 @@ public class EmployFastSystem {
     public void setSelectedShuttle(Shuttle s){
         selectedShuttle = s;
     }
+    public void rangeOfAgeSetting (String rangeOfAge){
+        selectedMission.getSelectionCriteria().setSelectionRangeOfAge(rangeOfAge);
+    }
+    
+    public void healthSetting (String healthRank){
+        selectedMission.getSelectionCriteria().setSelectionHealthRecords(healthRank);
+    }
+    public void qualificationSetting (ArrayList<String> qualification){
+        selectedMission.getSelectionCriteria().setSelectionQualifications(qualification);
+    }
 }

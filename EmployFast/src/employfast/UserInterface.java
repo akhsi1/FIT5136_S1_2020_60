@@ -192,4 +192,101 @@ class UserInterface {
         } catch (IOException | InterruptedException ex) {
         }
     }
+    public void getCriteriaInformation(){
+        System.out.println("1. select range of Age\n"+"2. select Health Records\n"+"3. select Qualifications\n"+"Enter \"OK\" to finish criteria selection");
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine().trim();
+        Boolean finish = false;
+        Boolean hasAge = false;
+        Boolean hasHealth = false;
+        Boolean hasQualification = false;
+        ArrayList<String> qualifications = new ArrayList<>();
+        while(finish = false){
+            boolean check = true;
+            switch (input){
+                case "1":
+                    System.out.println("Sample input \"20-40\"");
+                    String rangeOfAge = scanner.nextLine().trim();
+                    if (rangeOfAge.split("-").length==2){
+                        String bothAge = rangeOfAge.split("-")[0]+rangeOfAge.split("-")[1];
+                        
+                        for (int i = 0; i <bothAge.length(); i++){
+                            if(bothAge.charAt(i)<48 || bothAge.charAt(i)>57){
+                                check = false;
+                                
+                            }
+                        }
+                        
+                        
+                    }
+                    else
+                        check = false;
+                    if (check){
+                            efs.rangeOfAgeSetting(rangeOfAge);
+                            hasAge = true;
+                        }
+                        else
+                            System.out.println("Please enter a valid context.");
+                    break;
+                    
+                case "2":
+                    System.out.println("health rank 1-5");
+                    String healthRank = scanner.nextLine().trim();
+                    if (healthRank.length() == 1){
+                        if (healthRank.charAt(0)<49||healthRank.charAt(0)>53){
+                            check = false;
+                        }
+                    }
+                    else
+                        check = false;
+                    if (check){
+                        efs.healthSetting(healthRank);
+                        hasHealth = true;
+                    }
+                    else
+                        System.out.println("Please enter a valid context.");
+                    break;
+                case "3":
+                    
+                    System.out.println("Qualification List:\n"+"1.MIT 2.BE 3.ME 4.MBS 5.MBBS 6.BDS 7.MS\n"+"Please choose qualification in the list and input id.");
+                     String qualification = scanner.nextLine().trim();
+                    if (qualification.length() == 1){
+                        if (qualification.charAt(0)<49||qualification.charAt(0)>55){
+                            check = false;
+                        }
+                    }
+                    else
+                        check = false;
+                    if (check){
+                        for(int j = 49; j<56;j++){
+                            for(int i = 0; i<qualification.length();i++){
+                                if (qualification.charAt(i)==j){
+                                    qualifications.add(String.valueOf(qualification.charAt(i)));
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        
+                        efs.qualificationSetting(qualifications);
+                        hasQualification = true;
+                    }
+                    else
+                        System.out.println("Please enter a valid context.");
+                    break;
+                case "OK":
+                    if (!hasAge){
+                        efs.rangeOfAgeSetting("none");
+                    }
+                    if (!hasHealth){
+                        efs.healthSetting("0");
+                    }
+                    if (!hasQualification){
+                        qualifications.add("none");
+                        efs.qualificationSetting(qualifications);
+                    }
+                    finish = true;
+            }
+        }
+    }
 }
