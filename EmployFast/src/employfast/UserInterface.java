@@ -140,6 +140,7 @@ class UserInterface {
             } else if (in.equals("4") && efs.hasSelectionCriteria()){
                 // If user selects 4. Find N Best Candidates
                 end=true;
+                displayNBestCandidates();
                 return;
             } else if (in.equals("L") || in.equals("B")) {
                 boolean lo = false;
@@ -161,6 +162,9 @@ class UserInterface {
             }
         }
     }
+    public void displayNBestCandidates(){
+        
+    }
 
     public void displayCoordinatorHome(EmployFastSystem efs) {
         this.efs = efs;
@@ -171,9 +175,8 @@ class UserInterface {
         System.out.println("Shuttle Information");
         EmployFast ef = new EmployFast();
         ArrayList<Shuttle> list = ef.getShuttleList();
-        System.out.println(list.get(0).getShuttleId() + "\n");
-        System.out.println(list.get(0).getShuttleName());
-        System.out.println("Press 1 to selected the first shuttle");
+        System.out.println(list.get(0).getShuttleId() + ": " + list.get(0).getShuttleName());
+        System.out.println("Enter shuttle ID to select the shuttle");
         Scanner in = new Scanner(System.in);
         boolean end = false;
         while (!end) {

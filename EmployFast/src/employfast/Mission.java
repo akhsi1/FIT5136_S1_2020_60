@@ -32,6 +32,7 @@ class Mission {
     private String missionStatus;
     private ArrayList<Shuttle> shuttleList;
     private SelectionCriteria selectionCriteria;
+    private ArrayList<Candidate> candidateList;
        
     public Mission(){
         missionID = "";
@@ -50,8 +51,9 @@ class Mission {
         missionDestinationLocation = "";
         missionDurationMonths = 0;
         missionStatus = "";
-        shuttleList = new ArrayList<>();
+        shuttleList = new ArrayList<Shuttle>();
         selectionCriteria = new SelectionCriteria();
+        candidateList = new ArrayList<Candidate>();
     }
     
     public Mission(String missionID,String missionName,String missionDesc,String missionCountryOrigin,String missionCountriesAllowed,String missionCoordinatorName,String missionCoordinatorContact,
@@ -76,6 +78,14 @@ class Mission {
         this.missionStatus = missionStatus;
         this.shuttleList = shuttleList;
         this.selectionCriteria = selectionCriteria;
+    }
+    
+    public ArrayList<Candidate> getCandidateList(){
+        return candidateList;
+    }
+    
+    public void setCandidateList(ArrayList<Candidate> canlist){
+        candidateList = canlist;
     }
     
     public String getMissionID()
