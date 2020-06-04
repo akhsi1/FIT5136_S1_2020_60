@@ -79,11 +79,22 @@ public class EmployFast {
         for (int i = 0; i < result.size(); i += 8) {
             String shuttleId = result.get(i);
             String shuttleName = result.get(i+1);
-            String shuttleDate = result.get(i + 2);
+            int shuttleDate = result.get(i + 2);
+            String shuttleFuelCapa = result.get(i + 3);
+            float shuttleTravelSpeed = result.get(i+4);
+            String shuttlePassCapa = result.get(i+5);
+            String shuttleCargoCapa = result.get(i+6);
+            String shuttleCountry = result.get(i+7);
             
             Shuttle temporaryShuttle = new Shuttle();
             temporaryShuttle.setShuttleId(shuttleId);
             temporaryShuttle.setShuttleName(shuttleName);
+            temporaryShuttle.setShuttleManuYear(shuttleDate);
+            temporaryShuttle.setShuttleFuelCapacity(shuttleFuelCapa);
+            temporaryShuttle.setShuttleTravelSpeed(shuttleTravelSpeed);
+            temporaryShuttle.setShuttlePassengerCapacity(shuttlePassCapa);
+            temporaryShuttle.setShuttleCargoCapacity(shuttleCargoCapa);
+            temporaryShuttle.setShuttleOriginCountry(shuttleCountry);
             shuttleList.add(temporaryShuttle);
         }
         return shuttleList;

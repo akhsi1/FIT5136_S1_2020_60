@@ -180,7 +180,8 @@ class UserInterface {
         System.out.println("Enter shuttle ID to select the shuttle");
         for (int i = 0; i < list.size(); i++) {
             System.out.println("ID: " + list.get(i).getShuttleId() + " Name: " + list.get(i).getShuttleName()
-                    + " Country: " + list.get(i).getShuttleOriginCountry());
+                    + "Manu. Year: " + list.get(i).getShuttleManuYear() + "Fuel Capacity: " + list.get(0).getShuttleFuelCapacity() + "Travel Speed: " + list.get(0).getShuttleTravelSpeed() + "Passenger Capacity: " + list.get(0).getShuttlePassengerCapacity()
+                    + "Cargo Capacity" + list.get(0).getShuttleCargoCapacity() +" Country: " + list.get(i).getShuttleOriginCountry());
         }
 //        System.out.println(list.get(0).getShuttleManuYear());
 //        System.out.println(list.get(0).getShuttleFuelCapacity());
