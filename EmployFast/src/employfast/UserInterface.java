@@ -123,15 +123,23 @@ class UserInterface {
             }
 
             String in = scan.nextLine().toUpperCase();
-            if (in.equals("1") && efs.hasMissionSelected()) {
-
+            if (in.equals("1")) {
                 end = true;
+                
                 return;
-            } else if (in.equals("2") && efs.hasShuttleSelected()) {
+            } else if (in.equals("2") && efs.hasMissionSelected()) {
+                // if user selects 2. Select a New Shuttle
                 end = true;
+                
                 return;
-            } else if (in.equals("3") && efs.hasSelectionCriteria()) {
+            } else if (in.equals("3") && efs.hasShuttleSelected()) {
+                // If user selects 3. Create a Selection Criteria
                 end = true;
+                displayCriteriaInformation();
+                return;
+            } else if (in.equals("4") && efs.hasSelectionCriteria()){
+                // If user selects 4. Find N Best Candidates
+                end=true;
                 return;
             } else if (in.equals("L") || in.equals("B")) {
                 boolean lo = false;
@@ -239,19 +247,20 @@ class UserInterface {
         }
     }
 
-    public void getCriteriaInformation() {
+    public void displayCriteriaInformation() {
+        clrscr();
         System.out.println("1. select range of Age\n" + "2. select Health Records\n" + "3. select Qualifications\n" + "Enter \"OK\" to finish criteria selection");
         Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine().trim();
+        String input = scanner.nextLine().trim().toUpperCase();
         Boolean finish = false;
         Boolean hasAge = false;
         Boolean hasHealth = false;
         Boolean hasQualification = false;
         ArrayList<String> qualifications = new ArrayList<>();
-        while (finish = false) {
+        while (!finish) {
             boolean check = true;
             switch (input) {
-                case "1":
+                case ("1"):
                     System.out.println("Sample input \"20-40\"");
                     String rangeOfAge = scanner.nextLine().trim();
                     if (rangeOfAge.split("-").length == 2) {
@@ -274,7 +283,7 @@ class UserInterface {
                     }
                     break;
 
-                case "2":
+                case ("2"):
                     System.out.println("health rank 1-5");
                     String healthRank = scanner.nextLine().trim();
                     if (healthRank.length() == 1) {
@@ -291,8 +300,7 @@ class UserInterface {
                         System.out.println("Please enter a valid context.");
                     }
                     break;
-                case "3":
-
+                case ("3"):
                     System.out.println("Qualification List:\n" + "1.MIT 2.BE 3.ME 4.MBS 5.MBBS 6.BDS 7.MS\n" + "Please choose qualification in the list and input id.");
                     String qualification = scanner.nextLine().trim();
                     if (qualification.length() == 1) {
@@ -318,7 +326,7 @@ class UserInterface {
                         System.out.println("Please enter a valid context.");
                     }
                     break;
-                case "OK":
+                case ("OK"):
                     if (!hasAge) {
                         efs.rangeOfAgeSetting("none");
                     }
@@ -330,6 +338,12 @@ class UserInterface {
                         efs.qualificationSetting(qualifications);
                     }
                     finish = true;
+                    break;
+                default:
+                    System.out.println("Select a valid input");
+                    finish = false;
+                    input = scanner.nextLine();
+                    break;
             }
         }
     }
