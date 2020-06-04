@@ -125,21 +125,21 @@ class UserInterface {
             String in = scan.nextLine().toUpperCase();
             if (in.equals("1")) {
                 end = true;
-                
+
                 return;
             } else if (in.equals("2") && efs.hasMissionSelected()) {
                 // if user selects 2. Select a New Shuttle
                 end = true;
-                
+
                 return;
             } else if (in.equals("3") && efs.hasShuttleSelected()) {
                 // If user selects 3. Create a Selection Criteria
                 end = true;
                 displayCriteriaInformation();
                 return;
-            } else if (in.equals("4") && efs.hasSelectionCriteria()){
+            } else if (in.equals("4") && efs.hasSelectionCriteria()) {
                 // If user selects 4. Find N Best Candidates
-                end=true;
+                end = true;
                 displayNBestCandidates();
                 return;
             } else if (in.equals("L") || in.equals("B")) {
@@ -162,8 +162,9 @@ class UserInterface {
             }
         }
     }
-    public void displayNBestCandidates(){
-        
+
+    public void displayNBestCandidates() {
+
     }
 
     public void displayCoordinatorHome(EmployFastSystem efs) {
@@ -175,17 +176,31 @@ class UserInterface {
         System.out.println("Shuttle Information");
         EmployFast ef = new EmployFast();
         ArrayList<Shuttle> list = ef.getShuttleList();
-        System.out.println(list.get(0).getShuttleId() + ": " + list.get(0).getShuttleName());
+//        System.out.println(list.get(0).getShuttleId() + ": " + list.get(0).getShuttleName());
         System.out.println("Enter shuttle ID to select the shuttle");
-        System.out.println(list.get(0).getShuttleId() + "\n");
-        System.out.println(list.get(0).getShuttleManuYear());
-        System.out.println(list.get(0).getShuttleFuelCapacity());
-        System.out.println(list.get(0).getShuttleTravelSpeed());
-        System.out.println(list.get(0).getShuttlePassengerCapacity());
-        System.out.println(list.get(0).getShuttleCargoCapacity());
-        System.out.println(list.get(0).getShuttleOriginCountry());
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println("ID: " + list.get(i).getShuttleId() + " Name: " + list.get(i).getShuttleName()
+                    + " Country: " + list.get(i).getShuttleOriginCountry());
+        }
+//        System.out.println(list.get(0).getShuttleManuYear());
+//        System.out.println(list.get(0).getShuttleFuelCapacity());
+//        System.out.println(list.get(0).getShuttleTravelSpeed());
+//        System.out.println(list.get(0).getShuttlePassengerCapacity());
+//        System.out.println(list.get(0).getShuttleCargoCapacity());
+//        System.out.println(list.get(0).getShuttleOriginCountry());
         Scanner in = new Scanner(System.in);
         boolean end = false;
+        while (!end) {
+            String userinput = in.nextLine();
+            for (Shuttle s : list) {
+                if (userinput.equals(s.getShuttleId())) {
+                    System.out.println("name" + s.getShuttleName());
+
+                    efs.getSelectedMission().setShuttle(s);
+                    end = true;
+                }
+            }
+        }
         while (!end) {
             String userInput = in.nextLine();
             if (userInput.equals("1")) {
@@ -279,7 +294,6 @@ class UserInterface {
                         for (int i = 0; i < bothAge.length(); i++) {
                             if (bothAge.charAt(i) < 48 || bothAge.charAt(i) > 57) {
                                 check = false;
-
                             }
                         }
                     } else {

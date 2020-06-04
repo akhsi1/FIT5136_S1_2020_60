@@ -30,7 +30,7 @@ class Mission {
     private String missionDestinationLocation;
     private int missionDurationMonths;
     private String missionStatus;
-    private ArrayList<Shuttle> shuttleList;
+    private Shuttle shuttle;
     private SelectionCriteria selectionCriteria;
     private ArrayList<Candidate> candidateList;
        
@@ -51,14 +51,14 @@ class Mission {
         missionDestinationLocation = "";
         missionDurationMonths = 0;
         missionStatus = "";
-        shuttleList = new ArrayList<Shuttle>();
+        shuttle = new Shuttle();
         selectionCriteria = new SelectionCriteria();
         candidateList = new ArrayList<Candidate>();
     }
     
     public Mission(String missionID,String missionName,String missionDesc,String missionCountryOrigin,String missionCountriesAllowed,String missionCoordinatorName,String missionCoordinatorContact,
            ArrayList<Job> missionJobs,ArrayList<RequiredTitle> missionTitles,ArrayList<Cargo> missionCargoForJourney,ArrayList<Cargo> missionCargoForMission,ArrayList<Cargo> missionCargoForOtherMissions, String missionLaunchDate,
-           String missionDestinationLocation,int missionDurationMonths,String missionStatus,ArrayList<Shuttle> shuttleList,SelectionCriteria selectionCriteria)
+           String missionDestinationLocation,int missionDurationMonths,String missionStatus,Shuttle shuttle,SelectionCriteria selectionCriteria)
     {
         this.missionID = missionID;
         this.missionName = missionName;
@@ -76,7 +76,7 @@ class Mission {
         this.missionDestinationLocation = missionDestinationLocation;
         this.missionDurationMonths = missionDurationMonths;
         this.missionStatus = missionStatus;
-        this.shuttleList = shuttleList;
+        this.shuttle = shuttle;
         this.selectionCriteria = selectionCriteria;
     }
     
@@ -248,12 +248,12 @@ class Mission {
         this.missionStatus = missionStatus;
     }
     
-    public ArrayList<Shuttle> getShuttleList() {
-        return shuttleList;
+    public Shuttle getShuttle() {
+        return shuttle;
     }
 
-    public void setShuttleList(ArrayList<Shuttle> shuttleList) {
-        this.shuttleList = shuttleList;
+    public void setShuttle(Shuttle shuttle) {
+        this.shuttle = shuttle;
     }
 
     public SelectionCriteria getSelectionCriteria() {

@@ -23,11 +23,12 @@ public class EmployFast {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //UserInterface ui = new UserInterface();
+        UserInterface ui = new UserInterface();
         //ui.displayLogin();
-        Coordinator coordinator = new Coordinator("H1","D1","S3","s4");
-        System.out.println(coordinator.getPassword());
-        coordinator.createMission();
+//        Coordinator coordinator = new Coordinator("H1","D1","S3","s4");
+//        System.out.println(coordinator.getPassword());
+//        coordinator.createMission();
+        ui.displayShuttleInfo();
         
     }
     
@@ -78,8 +79,7 @@ public class EmployFast {
         for (int i = 0; i < result.size(); i += 8) {
             String shuttleId = result.get(i);
             String shuttleName = result.get(i+1);
-            String usertype = result.get(i + 2);
-            String userpassword = result.get(i + 3);
+            String shuttleDate = result.get(i + 2);
             
             Shuttle temporaryShuttle = new Shuttle();
             temporaryShuttle.setShuttleId(shuttleId);
