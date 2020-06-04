@@ -164,7 +164,7 @@ class UserInterface {
     }
 
     public void displayNBestCandidates() {
-
+        efs.getNBestCandidates();
     }
 
     public void displayCoordinatorHome(EmployFastSystem efs) {
