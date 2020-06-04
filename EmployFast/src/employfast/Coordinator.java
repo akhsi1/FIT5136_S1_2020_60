@@ -415,9 +415,6 @@ public class Coordinator extends User {
             System.out.println("Mission Duration of the mission :  " + missionDurationMonths.get(i));
             System.out.println("Mission Status of the mission :  " + missionStatus.get(i));
             System.out.println();
-            System.out.println();
-            System.out.println();
-            System.out.println();
         }
     }
 
