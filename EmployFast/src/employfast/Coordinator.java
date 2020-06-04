@@ -379,7 +379,7 @@ public class Coordinator extends User {
         String CargoForJourney = "";
         String CargoForMission = "";
         String CargoForOtherMissions = "";
-        for (int i = 0; i < jobName.size(); i++) {
+        /*for (int i = 0; i < jobName.size(); i++) {
             job = "job name :  " + jobName.get(i) + "job description:  " + jobDescription.get(i) + "\n";
         }
         for (int i = 0; i < requiredTitleName.size(); i++) {
@@ -396,8 +396,9 @@ public class Coordinator extends User {
         for (int i = 0; i < cargoIDO.size(); i++) {
             CargoForOtherMissions = "cargo ID for other missions:  " + cargoIDO.get(i) + "cargo name for other missions:  " + cargoNameO.get(i) + "cargo quantity available for other missions:  "
                     + cargoQuantityAvailO.get(i) + "cargo quantity required for other missions:  " + cargoQuantityReqO.get(i) + "\n";
-        }
-        for (int i = 0; i < missionID.size(); i++) {
+        }*/
+        
+        /*for (int i = 0; i < missionID.size(); i++) {
             System.out.println("Mission ID :  " + missionID.get(i));
             System.out.println("Mission Name:  " + missionName.get(i));
             System.out.println("Mission Description :  " + missionDesc.get(i));
@@ -415,6 +416,10 @@ public class Coordinator extends User {
             System.out.println("Mission Duration of the mission :  " + missionDurationMonths.get(i));
             System.out.println("Mission Status of the mission :  " + missionStatus.get(i));
             System.out.println();
+        }*/
+        
+        for (int i = 0; i < missionID.size(); i++){
+            System.out.println("Mission ID :  " + missionID.get(i) + "  Mission Name:  " + missionName.get(i) + "  Mission Description :  " + missionDesc.get(i));
         }
     }
 

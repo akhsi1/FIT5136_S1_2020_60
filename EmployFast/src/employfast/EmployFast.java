@@ -23,8 +23,12 @@ public class EmployFast {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        UserInterface ui = new UserInterface();
-        ui.displayLogin();
+        //UserInterface ui = new UserInterface();
+        //ui.displayLogin();
+        Coordinator coordinator = new Coordinator("H1","D1","S3","s4");
+        System.out.println(coordinator.getPassword());
+        coordinator.createMission();
+        
     }
     
     public void readAllMissions(){
