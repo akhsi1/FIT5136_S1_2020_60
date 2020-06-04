@@ -177,6 +177,13 @@ class UserInterface {
         ArrayList<Shuttle> list = ef.getShuttleList();
         System.out.println(list.get(0).getShuttleId() + ": " + list.get(0).getShuttleName());
         System.out.println("Enter shuttle ID to select the shuttle");
+        System.out.println(list.get(0).getShuttleId() + "\n");
+        System.out.println(list.get(0).getShuttleManuYear());
+        System.out.println(list.get(0).getShuttleFuelCapacity());
+        System.out.println(list.get(0).getShuttleTravelSpeed());
+        System.out.println(list.get(0).getShuttlePassengerCapacity());
+        System.out.println(list.get(0).getShuttleCargoCapacity());
+        System.out.println(list.get(0).getShuttleOriginCountry());
         Scanner in = new Scanner(System.in);
         boolean end = false;
         while (!end) {
