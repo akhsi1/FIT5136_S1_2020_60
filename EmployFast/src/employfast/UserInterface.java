@@ -35,13 +35,13 @@ class UserInterface {
             System.out.println("Enter E to exit\n\n");
             System.out.println("Welcome to Employ Fast! \n\n Please enter username: ");
             String inuser = input.nextLine();
-            if (inuser.toUpperCase().equals("E")) {
+            if (isExit(inuser)) {
                 complete = true;
                 return;
             }
             System.out.println("Enter Password: ");
             String password = input.nextLine();
-            if (password.toUpperCase().equals("E")) {
+            if (isExit(password)) {
                 complete = true;
                 return;
             }
@@ -50,7 +50,6 @@ class UserInterface {
 //            char[] pwchars = con.readPassword("Please enter pw");
 //            String password = String.valueOf(pwchars);
             User u = efs.verifyUser(inuser, password);
-
             if (u.getUserId() != "" && u.getUserName() != "" && u.getUserType() != "") {
 
                 if (u.getUserType().equals("admin")) {
@@ -72,13 +71,32 @@ class UserInterface {
                     return;
                 }
             } else {
-
                 System.out.println("Wrong username or password entered \nPress any key to try again...");
                 complete = false;
                 input.nextLine();
 
             }
         }
+    }
+
+    public boolean isExit(String input) {
+        if (input.toUpperCase().trim().equals("E")) {
+            Scanner scan = new Scanner(System.in);
+            boolean end = false;
+            while (!end) {
+                System.out.println("Confirm Exit? (Y/N)");
+                String in = scan.nextLine().trim().toUpperCase();
+                if (in.equals("Y")) {
+                    end = true;
+                    return true;
+                }
+                if (in.equals("N")) {
+                    end = true;
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
     public void displayAdminHome() {
@@ -245,7 +263,6 @@ class UserInterface {
 
                             }
                         }
-
                     } else {
                         check = false;
                     }
