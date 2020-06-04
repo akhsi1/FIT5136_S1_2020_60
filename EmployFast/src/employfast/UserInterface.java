@@ -20,7 +20,7 @@ class UserInterface {
     private String username;
     private String userType;
     private String userpw;
-    private EmployFastSystem efs;
+    public static EmployFastSystem efs;
 
     public UserInterface() {
         efs = new EmployFastSystem();
@@ -89,7 +89,7 @@ class UserInterface {
             clrscr();
             System.out.println("You are logged in as Administrator\nPress L to log out\n");
             if (efs.hasMissionSelected()) {
-                
+
                 System.out.println("Selected Mission: " + efs.getSelectedMission().getMissionName() + "\nPress 1 to Select new Mission\n");
                 if (efs.hasShuttleSelected()) {
                     System.out.println("Selected Shuttle: " + efs.getSelectedShuttle().getShuttleName()
@@ -106,7 +106,7 @@ class UserInterface {
 
             String in = scan.nextLine().toUpperCase();
             if (in.equals("1") && efs.hasMissionSelected()) {
-                
+
                 end = true;
                 return;
             } else if (in.equals("2") && efs.hasShuttleSelected()) {
@@ -116,12 +116,29 @@ class UserInterface {
                 end = true;
                 return;
             } else if (in.equals("L") || in.equals("B")) {
-                end = true;
-                displayLogin();
+                boolean lo = false;
+                while (!lo) {
+                    System.out.println("Confirm Logout? (Y/N)");
+                    String s = scan.nextLine().trim().toUpperCase();
+                    if (s.equals("Y")) {
+                        lo = true;
+                        displayLogin();
+                        return;
+                    } else if (s.equals("N")) {
+                        lo = false;
+                        displayAdminHome();
+                        return;
+                    }
+                }
             } else {
                 System.out.println("Please enter a valid option");
             }
         }
+    }
+
+    public void displayCoordinatorHome(EmployFastSystem efs) {
+        this.efs = efs;
+        displayCoordinatorHome();
     }
 
     public void displayShuttleInfo() {
@@ -140,8 +157,7 @@ class UserInterface {
                 efs.setSelectedShuttle(list.get(0));
                 end = true;
                 return;
-            }
-            else {
+            } else {
                 System.out.println("wrong input");
             }
         }
@@ -149,6 +165,7 @@ class UserInterface {
 
     public void displayCoordinatorHome() {
         Coordinator c = new Coordinator(userId, username, userType, userpw);
+        c.setEfs(efs);
         Scanner scan = new Scanner(System.in);
         boolean end = false;
         while (!end) {
@@ -164,9 +181,20 @@ class UserInterface {
                 c.modifyMission();
                 return;
             } else if (in.equals("L") || in.equals("B")) {
-                end = true;
-                displayLogin();
-                return;
+                boolean lo = false;
+                while (!lo) {
+                    System.out.println("Confirm Logout? (Y/N)");
+                    String s = scan.nextLine().trim().toUpperCase();
+                    if (s.equals("Y")) {
+                        lo = true;
+                        displayLogin();
+                        return;
+                    } else if (s.equals("N")) {
+                        lo = false;
+                        displayCoordinatorHome();
+                        return;
+                    }
+                }
             } else {
                 System.out.println("Please enter a valid option");
             }
@@ -192,8 +220,9 @@ class UserInterface {
         } catch (IOException | InterruptedException ex) {
         }
     }
-    public void getCriteriaInformation(){
-        System.out.println("1. select range of Age\n"+"2. select Health Records\n"+"3. select Qualifications\n"+"Enter \"OK\" to finish criteria selection");
+
+    public void getCriteriaInformation() {
+        System.out.println("1. select range of Age\n" + "2. select Health Records\n" + "3. select Qualifications\n" + "Enter \"OK\" to finish criteria selection");
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine().trim();
         Boolean finish = false;
@@ -201,87 +230,85 @@ class UserInterface {
         Boolean hasHealth = false;
         Boolean hasQualification = false;
         ArrayList<String> qualifications = new ArrayList<>();
-        while(finish = false){
+        while (finish = false) {
             boolean check = true;
-            switch (input){
+            switch (input) {
                 case "1":
                     System.out.println("Sample input \"20-40\"");
                     String rangeOfAge = scanner.nextLine().trim();
-                    if (rangeOfAge.split("-").length==2){
-                        String bothAge = rangeOfAge.split("-")[0]+rangeOfAge.split("-")[1];
-                        
-                        for (int i = 0; i <bothAge.length(); i++){
-                            if(bothAge.charAt(i)<48 || bothAge.charAt(i)>57){
+                    if (rangeOfAge.split("-").length == 2) {
+                        String bothAge = rangeOfAge.split("-")[0] + rangeOfAge.split("-")[1];
+
+                        for (int i = 0; i < bothAge.length(); i++) {
+                            if (bothAge.charAt(i) < 48 || bothAge.charAt(i) > 57) {
                                 check = false;
-                                
+
                             }
                         }
-                        
-                        
-                    }
-                    else
+
+                    } else {
                         check = false;
-                    if (check){
-                            efs.rangeOfAgeSetting(rangeOfAge);
-                            hasAge = true;
-                        }
-                        else
-                            System.out.println("Please enter a valid context.");
+                    }
+                    if (check) {
+                        efs.rangeOfAgeSetting(rangeOfAge);
+                        hasAge = true;
+                    } else {
+                        System.out.println("Please enter a valid context.");
+                    }
                     break;
-                    
+
                 case "2":
                     System.out.println("health rank 1-5");
                     String healthRank = scanner.nextLine().trim();
-                    if (healthRank.length() == 1){
-                        if (healthRank.charAt(0)<49||healthRank.charAt(0)>53){
+                    if (healthRank.length() == 1) {
+                        if (healthRank.charAt(0) < 49 || healthRank.charAt(0) > 53) {
                             check = false;
                         }
-                    }
-                    else
+                    } else {
                         check = false;
-                    if (check){
+                    }
+                    if (check) {
                         efs.healthSetting(healthRank);
                         hasHealth = true;
-                    }
-                    else
+                    } else {
                         System.out.println("Please enter a valid context.");
+                    }
                     break;
                 case "3":
-                    
-                    System.out.println("Qualification List:\n"+"1.MIT 2.BE 3.ME 4.MBS 5.MBBS 6.BDS 7.MS\n"+"Please choose qualification in the list and input id.");
-                     String qualification = scanner.nextLine().trim();
-                    if (qualification.length() == 1){
-                        if (qualification.charAt(0)<49||qualification.charAt(0)>55){
+
+                    System.out.println("Qualification List:\n" + "1.MIT 2.BE 3.ME 4.MBS 5.MBBS 6.BDS 7.MS\n" + "Please choose qualification in the list and input id.");
+                    String qualification = scanner.nextLine().trim();
+                    if (qualification.length() == 1) {
+                        if (qualification.charAt(0) < 49 || qualification.charAt(0) > 55) {
                             check = false;
                         }
-                    }
-                    else
+                    } else {
                         check = false;
-                    if (check){
-                        for(int j = 49; j<56;j++){
-                            for(int i = 0; i<qualification.length();i++){
-                                if (qualification.charAt(i)==j){
+                    }
+                    if (check) {
+                        for (int j = 49; j < 56; j++) {
+                            for (int i = 0; i < qualification.length(); i++) {
+                                if (qualification.charAt(i) == j) {
                                     qualifications.add(String.valueOf(qualification.charAt(i)));
                                     break;
                                 }
                             }
                         }
-                        
-                        
+
                         efs.qualificationSetting(qualifications);
                         hasQualification = true;
-                    }
-                    else
+                    } else {
                         System.out.println("Please enter a valid context.");
+                    }
                     break;
                 case "OK":
-                    if (!hasAge){
+                    if (!hasAge) {
                         efs.rangeOfAgeSetting("none");
                     }
-                    if (!hasHealth){
+                    if (!hasHealth) {
                         efs.healthSetting("0");
                     }
-                    if (!hasQualification){
+                    if (!hasQualification) {
                         qualifications.add("none");
                         efs.qualificationSetting(qualifications);
                     }

@@ -5,6 +5,7 @@
  */
 package employfast;
 
+import static employfast.UserInterface.efs;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
  * @author akhsi
  */
 public class Coordinator extends User {
-
+    
     public Coordinator() {
         super();
     }
@@ -425,6 +426,7 @@ public class Coordinator extends User {
         boolean complete = false;
         boolean back = false;
         Mission mission = new Mission();
+        UserInterface ui = new UserInterface();
         int index = 0;
         do {
             viewMission();
@@ -1101,6 +1103,7 @@ public class Coordinator extends User {
                                 if (in.toUpperCase().equals("Y")) {
                                     back = true;
                                     complete = true;
+                                    ui.displayLogin();
                                 }
                                 break;
                             case "F":
@@ -1223,6 +1226,10 @@ public class Coordinator extends User {
         writeFileData("missionDestinationLocation", mission.getMissionDestinationLocation());
         writeFileData("missionDurationMonths", Integer.toString(mission.getMissionDurationMonths()));
         writeFileData("missionStatus", mission.getMissionStatus());
+    }
+    
+    public void setEfs(EmployFastSystem e){
+        efs = e;
     }
 
     //this function will change something to response database.
@@ -1358,9 +1365,9 @@ public class Coordinator extends User {
         boolean complete = false;
         boolean back = false;
         boolean[] judge = {complete, back};
-
         Scanner input = new Scanner(System.in);
         String in = "";
+        UserInterface ui = new UserInterface();
         //in.toUpperCase();
         if (choose.equals("H") | choose.equals("B") | choose.equals("L") | choose.equals("F")) {
             switch (choose) {
@@ -1370,6 +1377,7 @@ public class Coordinator extends User {
                     in = input.nextLine();
                     if (in.toUpperCase().equals("Y")) {
                         complete = true;
+                        ui.displayCoordinatorHome();
                     }
                     break;
                 case "B":
@@ -1386,6 +1394,7 @@ public class Coordinator extends User {
                     in = input.nextLine();
                     if (in.toUpperCase().equals("Y")) {
                         complete = true;
+                        ui.displayLogin();
                     }
                     break;
                 case "F":
@@ -1394,6 +1403,7 @@ public class Coordinator extends User {
                     in = input.nextLine();
                     if (in.toUpperCase().equals("Y")) {
                         complete = true;
+                        ui.displayCoordinatorHome();
                     }
                     break;
                 default:
