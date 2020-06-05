@@ -118,6 +118,7 @@ public class EmployFastSystem {
         ArrayList<Candidate> nBest1 = new ArrayList<Candidate>();
         ArrayList<Candidate> nBest2 = new ArrayList<Candidate>();
         ArrayList<Candidate> nBest3 = new ArrayList<Candidate>();
+        ArrayList<Candidate> nBest4 = new ArrayList<Candidate>();
         ArrayList<Candidate> finalList = new ArrayList<Candidate>();
 
         //get number of candidates required:
@@ -140,22 +141,31 @@ public class EmployFastSystem {
             if (candAge > minAge && candAge < maxAge) {
                 score++;
             }
+            else {
+                score -= 999;
+            }
             if (!candHealthRecords.equals(missionHealthRecords) || candHealthRecords.trim().toUpperCase().equals("NONE")) {
                 score++;
+            }
+            else {
+                score -= 999;
             }
             for (String s : candQuals) {
                 if (missionQualifications.contains(candQuals)) {
                     score++;
                 }
             }
-            if (score == 3) {
+            if (score >= 5) {
                 nBest1.add(c);
             }
-            if (score == 2) {
+            if (score >= 3 && score <= 4) {
                 nBest2.add(c);
             }
-            if (score == 1) {
+            if (score >= 1 && score <= 2) {
                 nBest3.add(c);
+            }
+            if (score <= 0){
+                nBest4.add(c);
             }
         }
 
@@ -170,6 +180,11 @@ public class EmployFastSystem {
             }
         }
         for (Candidate c : nBest3) {
+            if (finalList.size() < count) {
+                finalList.add(c);
+            }
+        }
+        for (Candidate c : nBest4) {
             if (finalList.size() < count) {
                 finalList.add(c);
             }

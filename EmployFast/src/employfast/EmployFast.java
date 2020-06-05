@@ -32,12 +32,12 @@ public class EmployFast {
      */
     public static void main(String[] args) {
         UserInterface ui = new UserInterface();
-//        ui.displayLogin();
+        ui.displayLogin();
 //        Coordinator coordinator = new Coordinator("H1","D1","S3","s4");
 //        System.out.println(coordinator.getPassword());
 //        coordinator.createMission();
 //        ui.displayShuttleInfo();
-        ui.displayNBestCandidates();
+//        ui.displayNBestCandidates();
 
     }
 
@@ -173,7 +173,7 @@ public class EmployFast {
             Date currdate = new Date();
             LocalDate date1 = currdate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate date2 = candDob.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            int candAge = Period.between(date1, date2).getYears();
+            int candAge = Period.between(date2, date1).getYears();
 
             clist.add(new Candidate(candId, candUsername, candAge, candHealthRecords, candQualifications));
         }
