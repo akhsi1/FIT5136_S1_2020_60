@@ -163,8 +163,51 @@ class UserInterface {
         }
     }
 
+    public void gap(int a, int b) {
+        for (int i = b; i <= a; i++) {
+            System.out.print(" ");
+        }
+    }
+
     public void displayNBestCandidates() {
-        efs.getNBestCandidates();
+        //predefine a random mission//
+        Mission mish = new Mission();
+        SelectionCriteria sc = new SelectionCriteria();
+        sc.setSelectionRangeOfAge("20-60");
+        sc.setSelectionHealthRecords("None");
+        ArrayList<String> quals = new ArrayList<String>();quals.add("MIT");quals.add("BDS");quals.add("BE");
+        sc.setSelectionQualifications(quals);
+        mish.setSelectionCriteria(sc);
+        RequiredTitle rt = new RequiredTitle();
+        rt.setRequiredTitleCount(2);
+        rt.setRequiredTitleName("Doctor");
+        ArrayList<RequiredTitle> rtlist = new ArrayList<RequiredTitle>();
+        rtlist.add(rt);
+        mish.setMissionTitles(rtlist);
+        efs.setSelectedMission(mish);
+
+        //predefine a random mission//
+        
+        int count = efs.getRequiredTitleCount();
+        ArrayList<Candidate> bestlist = efs.getNBestCandidates();
+        System.out.println("Number of Candidates Required: " + count);
+        System.out.println("ID     Username         Health Records        Qualifications");
+        for (Candidate c : bestlist){
+            System.out.print(c.getUserId() + " ");
+            gap(5, c.getUserId().length());
+            System.out.print(c.getUserName() + " ");
+            gap(15, c.getUserName().length());
+            System.out.print(c.getCandidateHealthRecords() + " ");
+            gap(20, c.getCandidateHealthRecords().length());
+            System.out.print(c.getCandidateQualifications() + " ");
+            int qualsLength = 0;
+            for(String s: c.getCandidateQualifications()){
+                qualsLength = qualsLength + s.length();
+            }
+            gap(25, qualsLength);
+            System.out.println();
+        }
+        efs.setMissionCandidates(bestlist);
     }
 
     public void displayCoordinatorHome(EmployFastSystem efs) {
@@ -181,7 +224,7 @@ class UserInterface {
         for (int i = 0; i < list.size(); i++) {
             System.out.println("ID: " + list.get(i).getShuttleId() + " Name: " + list.get(i).getShuttleName()
                     + "Manu. Year: " + list.get(i).getShuttleManuYear() + "Fuel Capacity: " + list.get(0).getShuttleFuelCapacity() + "Travel Speed: " + list.get(0).getShuttleTravelSpeed() + "Passenger Capacity: " + list.get(0).getShuttlePassengerCapacity()
-                    + "Cargo Capacity" + list.get(0).getShuttleCargoCapacity() +" Country: " + list.get(i).getShuttleOriginCountry());
+                    + "Cargo Capacity" + list.get(0).getShuttleCargoCapacity() + " Country: " + list.get(i).getShuttleOriginCountry());
         }
 //        System.out.println(list.get(0).getShuttleManuYear());
 //        System.out.println(list.get(0).getShuttleFuelCapacity());

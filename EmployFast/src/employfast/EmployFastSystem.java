@@ -90,6 +90,10 @@ public class EmployFastSystem {
     public Mission getSelectedMission() {
         return selectedMission;
     }
+    
+    public void setSelectedMission(Mission m){
+        selectedMission = m;
+    }
 
     public void setSelectedShuttle(Shuttle s) {
         selectedShuttle = s;
@@ -117,11 +121,7 @@ public class EmployFastSystem {
         ArrayList<Candidate> finalList = new ArrayList<Candidate>();
 
         //get number of candidates required:
-        ArrayList<RequiredTitle> rt = selectedMission.getMissionTitles();
-        int count = 0;
-        for (RequiredTitle r : rt) {
-            count = count + r.getRequiredTitleCount();
-        }
+        int count = getRequiredTitleCount();
 
         //define mission criteria
         String missionAgeRange = selectedMission.getSelectionCriteria().getSelectionRangeOfAge();
@@ -174,8 +174,20 @@ public class EmployFastSystem {
                 finalList.add(c);
             }
         }
-
         return finalList;
+    }
+
+    public void setMissionCandidates(ArrayList<Candidate> clist) {
+        selectedMission.setBestNCandidates(clist);
+    }
+
+    public int getRequiredTitleCount() {
+        ArrayList<RequiredTitle> rt = selectedMission.getMissionTitles();
+        int count = 0;
+        for (RequiredTitle r : rt) {
+            count = count + r.getRequiredTitleCount();
+        }
+        return count;
     }
 
 }

@@ -32,13 +32,12 @@ public class EmployFast {
      */
     public static void main(String[] args) {
         UserInterface ui = new UserInterface();
-        //ui.displayLogin();
+//        ui.displayLogin();
 //        Coordinator coordinator = new Coordinator("H1","D1","S3","s4");
 //        System.out.println(coordinator.getPassword());
 //        coordinator.createMission();
 //        ui.displayShuttleInfo();
-        EmployFast ef = new EmployFast();
-        ef.readCandidates();
+        ui.displayNBestCandidates();
 
     }
 
@@ -73,44 +72,45 @@ public class EmployFast {
         }
     }
 
-//    public ArrayList<Shuttle> getShuttleList() {
-//        shuttleList = new ArrayList<Shuttle>();
-//        ArrayList<String> result = new ArrayList<String>();
-//        String path = "shuttle";
-//        try {
-//            FileReader fileName = new FileReader(path);
-//            Scanner file = new Scanner(fileName);
-//            while (file.hasNextLine()) {
-//                result.add(file.nextLine());
-//            }
-//            //System.out.println(content);
-//            fileName.close();
-//            file.close();
-//        } catch (IOException e) {
-//        }
-//        for (int i = 0; i < result.size(); i += 8) {
-//            String shuttleId = result.get(i);
-//            String shuttleName = result.get(i + 1);
-//            int shuttleDate = result.get(i + 2);
-//            String shuttleFuelCapa = result.get(i + 3);
-//            float shuttleTravelSpeed = result.get(i + 4);
-//            String shuttlePassCapa = result.get(i + 5);
-//            String shuttleCargoCapa = result.get(i + 6);
-//            String shuttleCountry = result.get(i + 7);
-//
-//            Shuttle temporaryShuttle = new Shuttle();
-//            temporaryShuttle.setShuttleId(shuttleId);
-//            temporaryShuttle.setShuttleName(shuttleName);
-//            temporaryShuttle.setShuttleManuYear(shuttleDate);
-//            temporaryShuttle.setShuttleFuelCapacity(shuttleFuelCapa);
-//            temporaryShuttle.setShuttleTravelSpeed(shuttleTravelSpeed);
-//            temporaryShuttle.setShuttlePassengerCapacity(shuttlePassCapa);
-//            temporaryShuttle.setShuttleCargoCapacity(shuttleCargoCapa);
-//            temporaryShuttle.setShuttleOriginCountry(shuttleCountry);
-//            shuttleList.add(temporaryShuttle);
-//        }
-//        return shuttleList;
-//    }
+    public ArrayList<Shuttle> getShuttleList() {
+        shuttleList = new ArrayList<Shuttle>();
+        ArrayList<String> result = new ArrayList<String>();
+        String path = "shuttle";
+        try {
+            FileReader fileName = new FileReader(path);
+            Scanner file = new Scanner(fileName);
+            while (file.hasNextLine()) {
+                result.add(file.nextLine());
+            }
+            //System.out.println(content);
+            fileName.close();
+            file.close();
+        } catch (IOException e) {
+        }
+        for (int i = 0; i < result.size(); i += 8) {
+            String shuttleId = result.get(i);
+            String shuttleName = result.get(i + 1);
+            int shuttleDate = result.get(i + 2);
+            String shuttleFuelCapa = result.get(i + 3);
+            float shuttleTravelSpeed = result.get(i + 4);
+            String shuttlePassCapa = result.get(i + 5);
+            String shuttleCargoCapa = result.get(i + 6);
+            String shuttleCountry = result.get(i + 7);
+
+            Shuttle temporaryShuttle = new Shuttle();
+            temporaryShuttle.setShuttleId(shuttleId);
+            temporaryShuttle.setShuttleName(shuttleName);
+            temporaryShuttle.setShuttleManuYear(shuttleDate);
+            temporaryShuttle.setShuttleFuelCapacity(shuttleFuelCapa);
+            temporaryShuttle.setShuttleTravelSpeed(shuttleTravelSpeed);
+            temporaryShuttle.setShuttlePassengerCapacity(shuttlePassCapa);
+            temporaryShuttle.setShuttleCargoCapacity(shuttleCargoCapa);
+            temporaryShuttle.setShuttleOriginCountry(shuttleCountry);
+            shuttleList.add(temporaryShuttle);
+        }
+        return shuttleList;
+    }
+
     public ArrayList<User> getUserList() {
         return userList;
     }
@@ -176,7 +176,6 @@ public class EmployFast {
             int candAge = Period.between(date1, date2).getYears();
 
             clist.add(new Candidate(candId, candUsername, candAge, candHealthRecords, candQualifications));
-            System.out.println(candDob);
         }
         return clist;
     }
