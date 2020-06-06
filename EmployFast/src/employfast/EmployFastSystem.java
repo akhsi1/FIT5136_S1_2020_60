@@ -82,6 +82,18 @@ public class EmployFastSystem {
         }
         return u;
     }
+    
+    public void readAllMissions() {
+        ArrayList<Mission> missionList = new ArrayList<Mission>();
+        Coordinator coordinator = new Coordinator();
+        ArrayList<String> missionIDs = coordinator.readFileData("missionID");
+        for (int i = 0; i < missionIDs.size(); i ++)
+        {
+            missionList.add(coordinator.readMission(missionIDs.get(i)));
+            System.out.println(missionList.get(i).getMissionName());
+        }
+        
+    }
 
     public Shuttle getSelectedShuttle() {
         return selectedShuttle;

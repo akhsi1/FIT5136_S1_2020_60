@@ -519,6 +519,10 @@ class UserInterface {
 //            }
 //        }
     }
+    
+    public void displayMissionList(){
+        
+    }
 
     public void displayCoordinatorHome() {
         Coordinator c = new Coordinator(userId, username, userType, userpw);
@@ -534,7 +538,7 @@ class UserInterface {
                 c.createMission();
                 return;
             } else if (in.equals("2")) {
-                end = true;
+                
                 c.modifyMission();
                 return;
             } else if (in.equals("L") || in.equals("B")) {
