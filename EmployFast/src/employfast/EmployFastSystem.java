@@ -40,9 +40,9 @@ public class EmployFastSystem {
     }
 
     public boolean hasSelectionCriteria() {
-        if (hasMissionSelected()) {
-            if (selectedMission.getSelectionCriteria().getSelectionRangeOfAge() != null
-                    && selectedMission.getSelectionCriteria().getSelectionHealthRecords() != null
+        if (hasMissionSelected() && hasShuttleSelected()) {
+            if (selectedMission.getSelectionCriteria().getSelectionRangeOfAge() != ""
+                    && selectedMission.getSelectionCriteria().getSelectionHealthRecords() != ""
                     && selectedMission.getSelectionCriteria().getSelectionQualifications() != null) {
                 return true;
             }

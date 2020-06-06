@@ -55,8 +55,7 @@ class UserInterface {
                 if (u.getUserType().equals("admin")) {
                     userType = "admin";
                     complete = true;
-                    boolean login = true;
-                    displayAdminHome(login);
+                    displayAdminHome();
                     return;
                 }
                 if (u.getUserType().equals("coordinator")) {
@@ -100,41 +99,50 @@ class UserInterface {
         return false;
     }
 
-    public void displayAdminHome(boolean login) {
+    public void displayAdminHome() {
         Administrator a = new Administrator(userId, username, userType, userpw);
         Scanner scan = new Scanner(System.in);
         boolean end = false;
         while (!end) {
             clrscr();
-            if(login){
-                System.out.println("You are logged in as Administrator");
+            System.out.println("You are logged in as Administrator\nPress L to log out\n");
+            if (efs.hasMissionSelected()){
+                System.out.println("Selected Mission: " + efs.getSelectedMission().getMissionName());
             }
-            System.out.println("Press L to log out\n");
+            else {System.out.println("Please begin by selecting a Mission");}
+            if (efs.hasShuttleSelected()){
+                System.out.println("Selected Shuttle: " + efs.getSelectedShuttle().getShuttleName());
+            }
+            else {System.out.println("Please Select a Shuttle");}
+            
             if (efs.hasMissionSelected()) {
-
-                System.out.println("Selected Mission: " + efs.getSelectedMission().getMissionName() + "\nPress 1 to Select new Mission\n");
+                System.out.println("\nPress 1 to Select New Mission");
                 if (efs.hasShuttleSelected()) {
-                    System.out.println("Selected Shuttle: " + efs.getSelectedShuttle().getShuttleName()
-                            + "Press 2 to Select a New Shuttle\nPress 3 to Create a Selection Criteria\n");
+                    System.out.println("Press 2 to Select New Shuttle");
                     if (efs.hasSelectionCriteria()) {
-                        System.out.println("Press 4 to Find N Best Candidates\n");
+                        System.out.println("Press 3 to Create a New Selection Criteria");
+                        System.out.println("Press 4 to Find N Best Candidates");
+                    }
+                    else {
+                        System.out.println("Press 3 to Create Selection Criteria");
                     }
                 } else {
-                    System.out.println("Press 2 to Select a Shuttle\n");
+                    System.out.println("Press 2 to Select a Shuttle");
                 }
             } else {
-                System.out.println("Press 1 to Select a Mission");
+                System.out.println("\nPress 1 to Select a Mission");
             }
 
             String in = scan.nextLine().toUpperCase();
             if (in.equals("1")) {
                 end = true;
-
+                efs.setSelectedShuttle(null);
+                displayMissions();
                 return;
             } else if (in.equals("2") && efs.hasMissionSelected()) {
                 // if user selects 2. Select a New Shuttle
                 end = true;
-
+                displayShuttleInfo();
                 return;
             } else if (in.equals("3") && efs.hasShuttleSelected()) {
                 // If user selects 3. Create a Selection Criteria
@@ -157,8 +165,7 @@ class UserInterface {
                         return;
                     } else if (s.equals("N")) {
                         lo = false;
-                        login = false;
-                        displayAdminHome(login);
+                        displayAdminHome();
                         return;
                     }
                 }
@@ -166,6 +173,14 @@ class UserInterface {
                 System.out.println("Please enter a valid option");
             }
         }
+    }
+
+    public void displayMissions(){
+        EmployFast ef = new EmployFast();
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Implementing feature... Press any key to return");
+        scan.nextLine();
+        displayAdminHome();
     }
 
     public void gap(int a, int b) {
@@ -220,20 +235,18 @@ class UserInterface {
         System.out.println("\nAdd these candidates to the mission? Y/N");
         Scanner scan = new Scanner(System.in);
         boolean end = false;
-        boolean login = true;
         while (!end) {
             String in = scan.nextLine();
-            
             if (in.trim().toUpperCase().equals("Y")) {
                 efs.setMissionCandidates(bestlist);
                 System.out.println("Added Candidates to the Mission\n\n Press any key to return...");
                 scan.nextLine();
                 end = true;
-                displayAdminHome(login);
+                displayAdminHome();
                 return;
             } else if (in.trim().toUpperCase().equals("N")) {
                 end = true;
-                displayAdminHome(login);
+                displayAdminHome();
                 return;
             }
         }
@@ -287,54 +300,143 @@ class UserInterface {
 //            }
 //        }
 //    }
-
     public void displayCoordinatorHome(EmployFastSystem efs) {
         this.efs = efs;
         displayCoordinatorHome();
     }
 
+    public void displaySelectedShuttle(Shuttle s) {
+        clrscr();
+        System.out.println();
+        System.out.print("Name: ");
+        gap(25, 6);
+        System.out.println(s.getShuttleName());
+        System.out.print("Manufacture Year: ");
+        gap(25, 18);
+        System.out.println(s.getShuttleManuYear());
+        System.out.print("Passenger Capacity: ");
+        gap(25, 20);
+        System.out.println(s.getShuttlePassengerCapacity());
+        System.out.print("Fuel Capacity: ");
+        gap(25, 15);
+        System.out.println(s.getShuttleFuelCapacity());
+        System.out.print("Cargo Capacity: ");
+        gap(25, 16);
+        System.out.println(s.getShuttleCargoCapacity());
+        System.out.print("Travel Speed: ");
+        gap(25, 14);
+        System.out.println(s.getShuttleTravelSpeed());
+        System.out.print("Country of Origin: ");
+        gap(25, 19);
+        System.out.println(s.getShuttleOriginCountry());
+    }
+
     public void displayShuttleInfo() {
-        System.out.println("Shuttle Information");
+        clrscr();
+        System.out.println();
+        Scanner in = new Scanner(System.in);
+        System.out.println("ID    Name                       Year   Passenger Capacity");
         EmployFast ef = new EmployFast();
         ArrayList<Shuttle> list = ef.getShuttleList();
-//        System.out.println(list.get(0).getShuttleId() + ": " + list.get(0).getShuttleName());
-        System.out.println("Enter shuttle ID to select the shuttle");
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println("ID: " + list.get(i).getShuttleId() + " Name: " + list.get(i).getShuttleName()
-                    + "Manu. Year: " + list.get(i).getShuttleManuYear() + "Fuel Capacity: " + list.get(0).getShuttleFuelCapacity() + "Travel Speed: " + list.get(0).getShuttleTravelSpeed() + "Passenger Capacity: " + list.get(0).getShuttlePassengerCapacity()
-                    + "Cargo Capacity" + list.get(0).getShuttleCargoCapacity() + " Country: " + list.get(i).getShuttleOriginCountry());
-        }
+        int count = 0;
+        boolean finish = false;
+        int i = 0;
+        while (!finish) {
+            if (i < list.size()) {
+                System.out.print(list.get(i).getShuttleId() + " ");
+                gap(5, list.get(i).getShuttleId().length());
+                System.out.print(list.get(i).getShuttleName() + " ");
+                gap(25, list.get(i).getShuttleName().length());
+                System.out.print(list.get(i).getShuttleManuYear() + " ");
+                gap(5, String.valueOf(list.get(i).getShuttleManuYear()).length());
+                System.out.print(list.get(i).getShuttlePassengerCapacity());
+                gap(5, list.get(i).getShuttlePassengerCapacity().length());
+                System.out.println();
+                i++;
+                if (i % 10 == 0 || i == list.size()) {
+                    boolean end = false;
+                    System.out.println("<-- Press P for Previous Page, N for Next Page ->>");
+                    System.out.println("\nPress B to go Back");
+                    System.out.println("\nEnter Shuttle ID to view full information");
+                    while (!end) {
+                        String input = in.nextLine().trim().toUpperCase();
+                        switch (input) {
+                            case "N":
+                                clrscr();
+                                System.out.println();
+                                System.out.println("ID    Name                       Year   Passenger Capacity");
+                                end = true;
+                                break;
+                            case "P":
+                                clrscr();
+                                System.out.println();
+                                System.out.println("ID    Name                       Year   Passenger Capacity");
+                                i -= 10 + i % 10;
+                                end = true;
+                                break;
+                            case "B":
+                                displayAdminHome();
+                                return;
+                            default:
+                                for (Shuttle sh : list) {
+                                    if (sh.getShuttleId().equals(input)) {
+                                        displaySelectedShuttle(sh);
+                                        System.out.println("\nSelect this Shuttle? Y/N");
+                                        boolean yesno = false;
+                                        while (!yesno) {
+                                            String userinput = in.nextLine().trim().toUpperCase();
+                                            if (userinput.equals("Y")) {
+                                                efs.setSelectedShuttle(sh);
+                                                displayAdminHome();
+                                                return;
+                                            } else if (userinput.equals("N")) {
+                                                displayShuttleInfo();
+                                                return;
+                                            } else {
+                                                System.out.println("Please Enter Y or N");
+                                            }
+                                        }
+                                    }
+                                    end = false;
+                                }
+                        }
+                        }
+                    }
+                } else {
+                    i -= i % 10;
+                }
+            }
 //        System.out.println(list.get(0).getShuttleManuYear());
 //        System.out.println(list.get(0).getShuttleFuelCapacity());
 //        System.out.println(list.get(0).getShuttleTravelSpeed());
 //        System.out.println(list.get(0).getShuttlePassengerCapacity());
 //        System.out.println(list.get(0).getShuttleCargoCapacity());
 //        System.out.println(list.get(0).getShuttleOriginCountry());
-        Scanner in = new Scanner(System.in);
-        boolean end = false;
-        while (!end) {
-            String userinput = in.nextLine();
-            for (Shuttle s : list) {
-                if (userinput.equals(s.getShuttleId())) {
-                    System.out.println("name" + s.getShuttleName());
-
-                    efs.getSelectedMission().setShuttle(s);
-                    end = true;
-                }
-            }
+//        boolean end = false;
+//        while (!end) {
+//            String userinput = in.nextLine();
+//            for (Shuttle s : list) {
+//                if (userinput.equals(s.getShuttleId())) {
+//                    System.out.println("name" + s.getShuttleName());
+//
+//                    efs.getSelectedMission().setShuttle(s);
+//                    end = true;
+//                }
+//            }
+//        }
+//        while (!end) {
+//            String userInput = in.nextLine();
+//            if (userInput.equals("1")) {
+//                int index = Integer.valueOf(userInput) - 1;
+//                efs.setSelectedShuttle(list.get(0));
+//                end = true;
+//                return;
+//            } else {
+//                System.out.println("wrong input");
+//            }
+//        }
         }
-        while (!end) {
-            String userInput = in.nextLine();
-            if (userInput.equals("1")) {
-                int index = Integer.valueOf(userInput) - 1;
-                efs.setSelectedShuttle(list.get(0));
-                end = true;
-                return;
-            } else {
-                System.out.println("wrong input");
-            }
-        }
-    }
+    
 
     public void displayCoordinatorHome() {
         Coordinator c = new Coordinator(userId, username, userType, userpw);
@@ -486,11 +588,11 @@ class UserInterface {
                         efs.qualificationSetting(qualifications);
                     }
                     finish = true;
-                    displayAdminHome(login);
+                    displayAdminHome();
                     break;
                 case ("B"):
                     
-                    displayAdminHome(login);
+                    displayAdminHome();
                 default:
                     System.out.println("Select a valid input");
                     finish = false;
