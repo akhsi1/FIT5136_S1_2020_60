@@ -35,14 +35,14 @@ public class EmployFast {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//        UserInterface ui = new UserInterface();
+        UserInterface ui = new UserInterface();
 //        ui.displayLogin();
-        Coordinator coordinator = new Coordinator("H1","D1","S3","s4");
-        System.out.println(coordinator.getPassword());
-        coordinator.modifyMission();
+//        Coordinator coordinator = new Coordinator("H1","D1","S3","s4");
+//        System.out.println(coordinator.getPassword());
+//        coordinator.modifyMission();
 //        ui.displayShuttleInfo();
 //        ui.setUserType("Admin");
-//        ui.displayNBestCandidates();
+        ui.displayNBestCandidates();
 
 //        EmployFastSystem efs = new EmployFastSystem();
 //        efs.readAllMissions();
