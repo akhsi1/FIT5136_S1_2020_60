@@ -389,13 +389,15 @@ class UserInterface {
 
     public void displayCriteriaInformation() {
         clrscr();
-        System.out.println("1. select range of Age\n" + "2. select Health Records\n" + "3. select Qualifications\n" + "Enter \"OK\" to finish criteria selection");
+        System.out.println("1. select range of Age\n" + "2. select Health Records\n" + "3. select Qualifications\n" + "Enter \"OK\" to finish criteria selection"
+                +"Enter \"B\" to back to last screen");
         Scanner scanner = new Scanner(System.in);
+        boolean login = false;
         String input = scanner.nextLine().trim().toUpperCase();
-        Boolean finish = false;
-        Boolean hasAge = false;
-        Boolean hasHealth = false;
-        Boolean hasQualification = false;
+        boolean finish = false;
+        boolean hasAge = false;
+        boolean hasHealth = false;
+        boolean hasQualification = false;
         ArrayList<String> qualifications = new ArrayList<>();
         while (!finish) {
             boolean check = true;
@@ -477,7 +479,11 @@ class UserInterface {
                         efs.qualificationSetting(qualifications);
                     }
                     finish = true;
+                    displayAdminHome();
                     break;
+                case ("B"):
+                    
+                    displayAdminHome();
                 default:
                     System.out.println("Select a valid input");
                     finish = false;
