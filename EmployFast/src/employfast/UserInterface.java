@@ -55,7 +55,8 @@ class UserInterface {
                 if (u.getUserType().equals("admin")) {
                     userType = "admin";
                     complete = true;
-                    displayAdminHome();
+                    boolean login = true;
+                    displayAdminHome(login);
                     return;
                 }
                 if (u.getUserType().equals("coordinator")) {
@@ -99,13 +100,16 @@ class UserInterface {
         return false;
     }
 
-    public void displayAdminHome() {
+    public void displayAdminHome(boolean login) {
         Administrator a = new Administrator(userId, username, userType, userpw);
         Scanner scan = new Scanner(System.in);
         boolean end = false;
         while (!end) {
             clrscr();
-            System.out.println("You are logged in as Administrator\nPress L to log out\n");
+            if(login){
+                System.out.println("You are logged in as Administrator");
+            }
+            System.out.println("Press L to log out\n");
             if (efs.hasMissionSelected()) {
 
                 System.out.println("Selected Mission: " + efs.getSelectedMission().getMissionName() + "\nPress 1 to Select new Mission\n");
@@ -153,7 +157,8 @@ class UserInterface {
                         return;
                     } else if (s.equals("N")) {
                         lo = false;
-                        displayAdminHome();
+                        login = false;
+                        displayAdminHome(login);
                         return;
                     }
                 }
@@ -215,18 +220,20 @@ class UserInterface {
         System.out.println("\nAdd these candidates to the mission? Y/N");
         Scanner scan = new Scanner(System.in);
         boolean end = false;
+        boolean login = true;
         while (!end) {
             String in = scan.nextLine();
+            
             if (in.trim().toUpperCase().equals("Y")) {
                 efs.setMissionCandidates(bestlist);
                 System.out.println("Added Candidates to the Mission\n\n Press any key to return...");
                 scan.nextLine();
                 end = true;
-                displayAdminHome();
+                displayAdminHome(login);
                 return;
             } else if (in.trim().toUpperCase().equals("N")) {
                 end = true;
-                displayAdminHome();
+                displayAdminHome(login);
                 return;
             }
         }
@@ -479,11 +486,11 @@ class UserInterface {
                         efs.qualificationSetting(qualifications);
                     }
                     finish = true;
-                    displayAdminHome();
+                    displayAdminHome(login);
                     break;
                 case ("B"):
                     
-                    displayAdminHome();
+                    displayAdminHome(login);
                 default:
                     System.out.println("Select a valid input");
                     finish = false;
