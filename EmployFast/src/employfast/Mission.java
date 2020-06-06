@@ -32,7 +32,7 @@ class Mission {
     private String missionStatus;
     private Shuttle shuttle;
     private SelectionCriteria selectionCriteria;
-    private ArrayList<Candidate> candidateList;
+    private ArrayList<Candidate> bestNCandidates;
        
     public Mission(){
         missionID = "";
@@ -53,7 +53,7 @@ class Mission {
         missionStatus = "";
         shuttle = new Shuttle();
         selectionCriteria = new SelectionCriteria();
-        candidateList = new ArrayList<Candidate>();
+        bestNCandidates = new ArrayList<Candidate>();
     }
     
     public Mission(String missionID,String missionName,String missionDesc,String missionCountryOrigin,String missionCountriesAllowed,String missionCoordinatorName,String missionCoordinatorContact,
@@ -80,12 +80,12 @@ class Mission {
         this.selectionCriteria = selectionCriteria;
     }
     
-    public ArrayList<Candidate> getCandidateList(){
-        return candidateList;
+    public ArrayList<Candidate> getBestNCandidates(){
+        return bestNCandidates;
     }
     
-    public void setCandidateList(ArrayList<Candidate> canlist){
-        candidateList = canlist;
+    public void setBestNCandidates(ArrayList<Candidate> canlist){
+        bestNCandidates = canlist;
     }
     
     public String getMissionID()

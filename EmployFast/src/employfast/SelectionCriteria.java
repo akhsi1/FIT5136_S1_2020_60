@@ -28,7 +28,7 @@ class SelectionCriteria {
         this.selectionHealthRecords = selectionHealthRecords;
         this.selectionQualifications = selectionQualifications;
     }
-    
+
     public String getSelectionRangeOfAge()
     {
         return selectionRangeOfAge;
