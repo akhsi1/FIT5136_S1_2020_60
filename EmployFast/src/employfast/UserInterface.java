@@ -7,6 +7,7 @@ package employfast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import java.util.Scanner;
 
@@ -106,24 +107,25 @@ class UserInterface {
         while (!end) {
             clrscr();
             System.out.println("You are logged in as Administrator\nPress L to log out\n");
-            if (efs.hasMissionSelected()){
-                System.out.println("Selected Mission: " + efs.getSelectedMission().getMissionName());
-            }
-            else {System.out.println("Please begin by selecting a Mission");}
-            if (efs.hasShuttleSelected()){
-                System.out.println("Selected Shuttle: " + efs.getSelectedShuttle().getShuttleName());
-            }
-            else {System.out.println("Please Select a Shuttle");}
-            
             if (efs.hasMissionSelected()) {
-                System.out.println("\nPress 1 to Select New Mission");
+                System.out.println("Selected Mission: " + efs.getSelectedMission().getMissionName());
+            } else {
+                System.out.println("Please begin by selecting a Mission");
+            }
+            if (efs.hasShuttleSelected()) {
+                System.out.println("Selected Shuttle: " + efs.getSelectedShuttle().getShuttleName());
+            } else {
+                System.out.println("Please Select a Shuttle");
+            }
+
+            if (efs.hasMissionSelected()) {
+                System.out.println("\nPress 1 to View or Modify Mission");
                 if (efs.hasShuttleSelected()) {
-                    System.out.println("Press 2 to Select New Shuttle");
+                    System.out.println("Press 2 to View or Modify Shuttle");
                     if (efs.hasSelectionCriteria()) {
-                        System.out.println("Press 3 to Create a New Selection Criteria");
+                        System.out.println("Press 3 to View or Modify Selection Criteria");
                         System.out.println("Press 4 to Find N Best Candidates");
-                    }
-                    else {
+                    } else {
                         System.out.println("Press 3 to Create Selection Criteria");
                     }
                 } else {
@@ -147,7 +149,7 @@ class UserInterface {
             } else if (in.equals("3") && efs.hasShuttleSelected()) {
                 // If user selects 3. Create a Selection Criteria
                 end = true;
-                displayCriteriaInformation();
+                displayNewSelectionCriteria();
                 return;
             } else if (in.equals("4") && efs.hasSelectionCriteria()) {
                 // If user selects 4. Find N Best Candidates
@@ -175,7 +177,7 @@ class UserInterface {
         }
     }
 
-    public void displayMissions(){
+    public void displayMissions() {
         EmployFast ef = new EmployFast();
         Scanner scan = new Scanner(System.in);
         System.out.println("Implementing feature... Press any key to return");
@@ -400,12 +402,12 @@ class UserInterface {
                                     end = false;
                                 }
                         }
-                        }
                     }
-                } else {
-                    i -= i % 10;
                 }
+            } else {
+                i -= i % 10;
             }
+        }
 //        System.out.println(list.get(0).getShuttleManuYear());
 //        System.out.println(list.get(0).getShuttleFuelCapacity());
 //        System.out.println(list.get(0).getShuttleTravelSpeed());
@@ -435,8 +437,7 @@ class UserInterface {
 //                System.out.println("wrong input");
 //            }
 //        }
-        }
-    
+    }
 
     public void displayCoordinatorHome() {
         Coordinator c = new Coordinator(userId, username, userType, userpw);
@@ -496,109 +497,150 @@ class UserInterface {
         }
     }
 
-    public void displayCriteriaInformation() {
-        clrscr();
-        System.out.println("1. select range of Age\n" + "2. select Health Records\n" + "3. select Qualifications\n" + "Enter \"OK\" to finish criteria selection"
-                +"Enter \"B\" to back to last screen");
-        Scanner scanner = new Scanner(System.in);
-        boolean login = false;
-        String input = scanner.nextLine().trim().toUpperCase();
-        boolean finish = false;
-        boolean hasAge = false;
-        boolean hasHealth = false;
-        boolean hasQualification = false;
-        ArrayList<String> qualifications = new ArrayList<>();
-        while (!finish) {
-            boolean check = true;
-            switch (input) {
-                case ("1"):
-                    System.out.println("Sample input \"20-40\"");
-                    String rangeOfAge = scanner.nextLine().trim();
-                    if (rangeOfAge.split("-").length == 2) {
-                        String bothAge = rangeOfAge.split("-")[0] + rangeOfAge.split("-")[1];
-
-                        for (int i = 0; i < bothAge.length(); i++) {
-                            if (bothAge.charAt(i) < 48 || bothAge.charAt(i) > 57) {
-                                check = false;
+    public void displayNewSelectionCriteria() {
+        Scanner scan = new Scanner(System.in);
+        boolean end = false;
+        while (!end) {
+            clrscr();
+            System.out.println("1. select range of Age\n" + "2. select Health Records\n" + "3. select Qualifications\n" + "Enter \"OK\" to finish criteria selection"
+                    + ". Enter \"B\" to go Back");
+            String in = scan.nextLine().trim().toUpperCase();
+            switch (in) {
+                case "1":
+                    boolean ageEnd = false;
+                    while (!ageEnd) {
+                        clrscr();
+                        System.out.println("Press B to go Back\n");
+                        System.out.println("Enter Range of Age (e.g. 20-40)");
+                        String userinput = scan.nextLine().trim().toUpperCase();
+                        if (userinput.contains("-")) {
+                            String[] s = userinput.split("-");
+                            if (s.length == 2) {
+                                if (isInt(s[0]) && isInt(s[1])) {
+                                    int min = Integer.parseInt(s[0]);
+                                    int max = Integer.parseInt(s[1]);
+                                    if (min <= max) {
+                                        efs.rangeOfAgeSetting(userinput);
+                                        ageEnd = true;
+                                        System.out.println("Range of Age Successfully added to Mission Criteria\n Press any key to continue...");
+                                        scan.nextLine();
+                                    }
+                                }
+                            }
+                        } else if (userinput.equals("B")) {
+                            displayNewSelectionCriteria();
+                            ageEnd = true;
+                            return;
+                        } else {
+                            System.out.println("Input format error. Press any key to try again...");
+                            scan.nextLine();
+                        }
+                    }
+                    break;
+                case "2":
+                    boolean healthEnd = false;
+                    while (!healthEnd) {
+                        clrscr();
+                        System.out.println("Press B to go Back\n");
+                        System.out.println("Enter a Health Record (e.g. Asthma) to prevent \ncandidates with this health problem to be selected");
+                        String input = scan.nextLine().trim();
+                        if (input.toUpperCase().equals("B")) {
+                            healthEnd = true;
+                            end = true;
+                            displayNewSelectionCriteria();
+                            return;
+                        } else {
+                            if (input.equals("") || input.toUpperCase().equals("NONE")) {
+                                input = "None";
+                            }
+                            efs.healthSetting(input);
+                            System.out.println("Successfully added Health Record to Mission Criteria");
+                            System.out.println("Press any key to continue...");
+                            healthEnd = true;
+                            scan.nextLine();
+                        }
+                    }
+                    break;
+                case "3":
+                    ArrayList<Qualification> list = new ArrayList<Qualification>();
+                    list.add(new Qualification("1", "MIT"));
+                    list.add(new Qualification("2", "ME"));
+                    list.add(new Qualification("3", "MDS"));
+                    list.add(new Qualification("4", "MBA"));
+                    list.add(new Qualification("5", "BDS"));
+                    list.add(new Qualification("6", "MS"));
+                    list.add(new Qualification("7", "MBBS"));
+                    list.add(new Qualification("8", "BE"));
+                    ArrayList<String> selectedQualifications = new ArrayList<String>();
+                    String qualifications = "";
+                    boolean qualsEnd = false;
+                    while (!qualsEnd) {
+                        clrscr();
+                        System.out.println("Press B to go Back\n");
+                        System.out.println("1. MIT\n2. ME\n3. MDS\n4. MBA\n5. BDS\n6. MS\n7. MBBS\n8. BE");
+                        System.out.println("Select a number to add the Qualification");
+                        System.out.println("Currently Selected: " + selectedQualifications + " Press C to clear selections\n\nPress OK to finish");
+                        String input = scan.nextLine().trim().toUpperCase();
+                        for (Qualification c : list) {
+                            if (input.equals(c.getQualificationId())) {
+                                selectedQualifications.add(c.getQualificationName());
                             }
                         }
-                    } else {
-                        check = false;
-                    }
-                    if (check) {
-                        efs.rangeOfAgeSetting(rangeOfAge);
-                        hasAge = true;
-                    } else {
-                        System.out.println("Please enter a valid context.");
-                    }
-                    break;
-
-                case ("2"):
-                    System.out.println("health rank 1-5");
-                    String healthRank = scanner.nextLine().trim();
-                    if (healthRank.length() == 1) {
-                        if (healthRank.charAt(0) < 49 || healthRank.charAt(0) > 53) {
-                            check = false;
+                        if (input.equals("C")) {
+                            selectedQualifications.clear();
                         }
-                    } else {
-                        check = false;
-                    }
-                    if (check) {
-                        efs.healthSetting(healthRank);
-                        hasHealth = true;
-                    } else {
-                        System.out.println("Please enter a valid context.");
-                    }
-                    break;
-                case ("3"):
-                    System.out.println("Qualification List:\n" + "1.MIT 2.BE 3.ME 4.MBS 5.MBBS 6.BDS 7.MS\n" + "Please choose qualification in the list and input id.");
-                    String qualification = scanner.nextLine().trim();
-                    if (qualification.length() == 1) {
-                        if (qualification.charAt(0) < 49 || qualification.charAt(0) > 55) {
-                            check = false;
-                        }
-                    } else {
-                        check = false;
-                    }
-                    if (check) {
-                        for (int j = 49; j < 56; j++) {
-                            for (int i = 0; i < qualification.length(); i++) {
-                                if (qualification.charAt(i) == j) {
-                                    qualifications.add(String.valueOf(qualification.charAt(i)));
-                                    break;
+                        if (input.equals("B")) {
+                            boolean backEnd = false;
+                            while (!backEnd) {
+                                System.out.println("Confirm Back? Your selections will not be saved. Y/N");
+                                String userinput = scan.nextLine();
+                                if (userinput.equals("Y")) {
+                                    qualsEnd = true;
+                                    backEnd = true;
+                                } else if (userinput.equals("N")) {
+                                    qualsEnd = false;
+                                    backEnd = true;
+                                } else {
+                                    System.out.println("Please enter Y/N");
+                                    qualsEnd = false;
+                                    backEnd = false;
                                 }
                             }
                         }
-
-                        efs.qualificationSetting(qualifications);
-                        hasQualification = true;
-                    } else {
-                        System.out.println("Please enter a valid context.");
+                        if (input.equals("OK")) {
+                            efs.qualificationSetting(selectedQualifications);
+                            System.out.println("Successfully Added " + selectedQualifications + " to the Mission Criteria");
+                            System.out.println("Press any key to continue...");
+                            qualsEnd = true;
+                            scan.nextLine();
+                        }
                     }
                     break;
-                case ("OK"):
-                    if (!hasAge) {
-                        efs.rangeOfAgeSetting("none");
-                    }
-                    if (!hasHealth) {
-                        efs.healthSetting("0");
-                    }
-                    if (!hasQualification) {
-                        qualifications.add("none");
-                        efs.qualificationSetting(qualifications);
-                    }
-                    finish = true;
+                case "OK":
+                    end = true;
                     displayAdminHome();
                     break;
-                case ("B"):
-                    
+                case "B":
+                    end = true;
                     displayAdminHome();
+                    break;
                 default:
-                    System.out.println("Select a valid input");
-                    finish = false;
-                    input = scanner.nextLine();
-                    break;
+                    System.out.println("Please enter a correct option");
+                    System.out.println("Press any key to continue...");
+                    scan.nextLine();
+                    end = false;
             }
+
         }
+    }
+
+    public boolean isInt(String input) {
+        boolean check = true;
+        try {
+            Integer.parseInt(input);
+        } catch (Exception e) {
+            check = false;
+        }
+        return check;
     }
 }

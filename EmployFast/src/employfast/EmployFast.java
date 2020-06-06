@@ -32,28 +32,17 @@ public class EmployFast {
      */
     public static void main(String[] args) {
         UserInterface ui = new UserInterface();
-<<<<<<< Updated upstream
 //        ui.displayLogin();
 //        Coordinator coordinator = new Coordinator("H1","D1","S3","s4");
-=======
-        ui.displayLogin();
-        //Coordinator coordinator = new Coordinator("H1","D1","S3","s4");
->>>>>>> Stashed changes
 //        System.out.println(coordinator.getPassword());
-       //   coordinator.modifyMission();
+//        coordinator.createMission();
 //        ui.displayShuttleInfo();
         ui.displayNBestCandidates();
 
     }
 
     public void readAllMissions() {
-        missionList = new ArrayList<Mission>();
-        ArrayList<String> missionIDs = readFileData("missionID");
-        Coordinator coordinator = new Coordinator();
-        for (int i = 0; i < missionIDs.size(); i ++)
-        {
-            missionList.add(coordinator.readMission(missionIDs.get(i)));
-        }
+
     }
 
     public void readAllUsers() {
@@ -192,22 +181,4 @@ public class EmployFast {
         }
         return clist;
     }
-    
-     public ArrayList<String> readFileData(String filePath) {
-        ArrayList<String> content = new ArrayList<>();
-        String path = filePath;
-        try {
-            FileReader fileName = new FileReader(path);
-            Scanner file = new Scanner(fileName);
-            while (file.hasNext()) {
-                content.add(file.nextLine());
-            }
-            //System.out.println(content);
-            fileName.close();
-            file.close();
-        } catch (IOException e) {
-        }
-        return content;
-    }
-    
 }
