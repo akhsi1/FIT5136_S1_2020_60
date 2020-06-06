@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * @author akhsi
  */
 public class Coordinator extends User {
-    
+
     public Coordinator() {
         super();
     }
@@ -36,15 +36,15 @@ public class Coordinator extends User {
         boolean back = false;
         do {
             System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
-            System.out.println("1. Mission ID \n 2. Mission name \n 3. Mission description \n 4. Country of origin \n 5. Countries allowed \n 6. Coordinator’s name \n  7. Coordinator’contact information \n"
-                    + "8. Job(s) \n 9. Employment requirements \n 10.Cargo requirements \n 11.Launch date \n 12.Location of the destination \n 13.Duration of the mission \n 14.Status of the mission \n"
-                    + "\n Please press number to choose which attribute you want to change or \"Enter\" to finish");
+            System.out.println("1. Mission ID \n2. Mission name \n3. Mission description \n4. Country of origin \n5. Countries allowed \n6. Coordinator’s name \n7. Coordinator’contact information \n"
+                    + "8. Job(s) \n9. Employment requirements \n10.Cargo requirements \n11.Launch date \n12.Location of the destination \n13.Duration of the mission \n14. Status of the mission \n"
+                    + "\nPlease press number to choose which attribute you want to change or \"Enter H, F, L\" to finish");
             String in = input.nextLine();
             in.toUpperCase();
             switch (in) {
                 case "1":
                     clrscr();
-                    System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                    System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                     System.out.println("Please input Mission ID");
                     in = input.nextLine();
                     complete = backChoose(in.toUpperCase())[0];
@@ -55,7 +55,7 @@ public class Coordinator extends User {
                     break;
                 case "2":
                     clrscr();
-                    System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                    System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                     System.out.println("Please input Mission name");
                     in = input.nextLine();
                     complete = backChoose(in.toUpperCase())[0];
@@ -66,7 +66,7 @@ public class Coordinator extends User {
                     break;
                 case "3":
                     clrscr();
-                    System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                    System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                     System.out.println("Please input Mission description");
                     in = input.nextLine();
                     complete = backChoose(in.toUpperCase())[0];
@@ -77,7 +77,7 @@ public class Coordinator extends User {
                     break;
                 case "4":
                     clrscr();
-                    System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                    System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                     System.out.println("Please input Country of origin");
                     in = input.nextLine();
                     complete = backChoose(in.toUpperCase())[0];
@@ -88,7 +88,7 @@ public class Coordinator extends User {
                     break;
                 case "5":
                     clrscr();
-                    System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                    System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                     System.out.println("Please input Countries allowed");
                     in = input.nextLine();
                     complete = backChoose(in.toUpperCase())[0];
@@ -99,7 +99,7 @@ public class Coordinator extends User {
                     break;
                 case "6":
                     clrscr();
-                    System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                    System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                     System.out.println("Please input  Coordinator’s name");
                     in = input.nextLine();
                     complete = backChoose(in.toUpperCase())[0];
@@ -110,7 +110,7 @@ public class Coordinator extends User {
                     break;
                 case "7":
                     clrscr();
-                    System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                    System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                     System.out.println("Please input Coordinator’contact information");
                     in = input.nextLine();
                     complete = backChoose(in.toUpperCase())[0];
@@ -121,7 +121,7 @@ public class Coordinator extends User {
                     break;
                 case "8":
                     clrscr();
-                    System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                    System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                     System.out.println("Please input Job Name");
                     String jobName = input.nextLine();
                     complete = backChoose(in.toUpperCase())[0];
@@ -139,7 +139,7 @@ public class Coordinator extends User {
                     break;
                 case "9":
                     clrscr();
-                    System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                    System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                     System.out.println("Please input Employment requirement title name");
                     String requiredTitleName = input.nextLine();
                     complete = backChoose(in.toUpperCase())[0];
@@ -156,8 +156,8 @@ public class Coordinator extends User {
                     break;
                 case "10":
                     clrscr();
-                    System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
-                    System.out.println("Please choose type of cargo requirements \n 1.For  the journey \n 2.For the mission \n 3.For other missions");
+                    System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
+                    System.out.println("Please choose type of cargo requirements \n1.For  the journey \n2.For the mission \n3.For other missions");
                     in = input.nextLine();
                     complete = backChoose(in.toUpperCase())[0];
                     back = backChoose(in.toUpperCase())[1];
@@ -165,23 +165,23 @@ public class Coordinator extends User {
                         switch (in) {
                             case "1":
                                 clrscr();
-                                System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
-                                System.out.println("You choose cargo requirements for the journey \n Please input cargo ID");
+                                System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
+                                System.out.println("You choose cargo requirements for the journey \nPlease input cargo ID");
                                 String cargoID = input.nextLine();
                                 complete = backChoose(in.toUpperCase())[0];
                                 back = backChoose(in.toUpperCase())[1];
                                 if (!complete && !back) {
-                                    System.out.println("You choose cargo requirements for the journey \n Please input cargo name");
+                                    System.out.println("You choose cargo requirements for the journey \nPlease input cargo name");
                                     String cargoName = input.nextLine();
                                     complete = backChoose(in.toUpperCase())[0];
                                     back = backChoose(in.toUpperCase())[1];
                                     if (!complete && !back) {
-                                        System.out.println("You choose cargo requirements for the journey \n Please input the availbel number of this cargo");
+                                        System.out.println("You choose cargo requirements for the journey \nPlease input the availbel number of this cargo");
                                         String cargoQuantityAvail = input.nextLine();
                                         complete = backChoose(in.toUpperCase())[0];
                                         back = backChoose(in.toUpperCase())[1];
                                         if (!complete && !back) {
-                                            System.out.println("You choose cargo requirements for the journey \n Please input the required number of this cargo");
+                                            System.out.println("You choose cargo requirements for the journey \nPlease input the required number of this cargo");
                                             String cargoQuantityReq = input.nextLine();
                                             complete = backChoose(in.toUpperCase())[0];
                                             back = backChoose(in.toUpperCase())[1];
@@ -194,23 +194,23 @@ public class Coordinator extends User {
                                 break;
                             case "2":
                                 clrscr();
-                                System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
-                                System.out.println("You choose cargo requirements for the mission \n Please input cargo ID");
+                                System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
+                                System.out.println("You choose cargo requirements for the mission \nPlease input cargo ID");
                                 cargoID = input.nextLine();
                                 complete = backChoose(in.toUpperCase())[0];
                                 back = backChoose(in.toUpperCase())[1];
                                 if (!complete && !back) {
-                                    System.out.println("You choose cargo requirements for the mission \n Please input cargo name");
+                                    System.out.println("You choose cargo requirements for the mission \nPlease input cargo name");
                                     String cargoName = input.nextLine();
                                     complete = backChoose(in.toUpperCase())[0];
                                     back = backChoose(in.toUpperCase())[1];
                                     if (!complete && !back) {
-                                        System.out.println("You choose cargo requirements for the mission \n Please input the availbel number of this cargo");
+                                        System.out.println("You choose cargo requirements for the mission \nPlease input the availbel number of this cargo");
                                         String cargoQuantityAvail = input.nextLine();
                                         complete = backChoose(in.toUpperCase())[0];
                                         back = backChoose(in.toUpperCase())[1];
                                         if (!complete && !back) {
-                                            System.out.println("You choose cargo requirements for the mission \n Please input the required number of this cargo");
+                                            System.out.println("You choose cargo requirements for the mission \nPlease input the required number of this cargo");
                                             String cargoQuantityReq = input.nextLine();
                                             complete = backChoose(in.toUpperCase())[0];
                                             back = backChoose(in.toUpperCase())[1];
@@ -223,23 +223,23 @@ public class Coordinator extends User {
                                 break;
                             case "3":
                                 clrscr();
-                                System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
-                                System.out.println("You choose cargo requirements for other missions \n Please input cargo ID");
+                                System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
+                                System.out.println("You choose cargo requirements for other missions \nPlease input cargo ID");
                                 cargoID = input.nextLine();
                                 complete = backChoose(in.toUpperCase())[0];
                                 back = backChoose(in.toUpperCase())[1];
                                 if (!complete && !back) {
-                                    System.out.println("You choose cargo requirements for other missions \n Please input cargo name");
+                                    System.out.println("You choose cargo requirements for other missions \nPlease input cargo name");
                                     String cargoName = input.nextLine();
                                     complete = backChoose(in.toUpperCase())[0];
                                     back = backChoose(in.toUpperCase())[1];
                                     if (!complete && !back) {
-                                        System.out.println("You choose cargo requirements for other missions \n Please input the availbel number of this cargo");
+                                        System.out.println("You choose cargo requirements for other missions \nPlease input the availbel number of this cargo");
                                         String cargoQuantityAvail = input.nextLine();
                                         complete = backChoose(in.toUpperCase())[0];
                                         back = backChoose(in.toUpperCase())[1];
                                         if (!complete && !back) {
-                                            System.out.println("You choose cargo requirements for other missions \n Please input the required number of this cargo");
+                                            System.out.println("You choose cargo requirements for other missions \nPlease input the required number of this cargo");
                                             String cargoQuantityReq = input.nextLine();
                                             complete = backChoose(in.toUpperCase())[0];
                                             back = backChoose(in.toUpperCase())[1];
@@ -258,7 +258,7 @@ public class Coordinator extends User {
                     break;
                 case "11":
                     clrscr();
-                    System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                    System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                     System.out.println("Please input Launch date");
                     in = input.nextLine();
                     complete = backChoose(in.toUpperCase())[0];
@@ -269,7 +269,7 @@ public class Coordinator extends User {
                     break;
                 case "12":
                     clrscr();
-                    System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                    System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                     System.out.println("Please input Location of the destination");
                     in = input.nextLine();
                     complete = backChoose(in.toUpperCase())[0];
@@ -281,12 +281,11 @@ public class Coordinator extends User {
                 case "13":
 
                     clrscr();
-                    System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                    System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                     System.out.println("Please input Duration of the mission (Months)");
                     do {
                         in = input.nextLine();
-                    } while(!in.matches("[0-9]+"))
-                    ;
+                    } while (!in.matches("[0-9]+"));
                     complete = backChoose(in.toUpperCase())[0];
                     back = backChoose(in.toUpperCase())[1];
                     if (!complete && !back) {
@@ -296,9 +295,9 @@ public class Coordinator extends User {
                     break;
                 case "14":
                     clrscr();
-                    System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
-                    System.out.println("Please input Status of the mission \n a. Planning phase (selected by default) \n b. Departed Earth \n c. Landed on Mars \n"
-                            + "d. Mission in progress \n e. Returned to Earth \n f. Mission completed");
+                    System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
+                    System.out.println("Please input Status of the mission \na. Planning phase (selected by default) \nb. Departed Earth \nc. Landed on Mars \n"
+                            + "d. Mission in progress \ne. Returned to Earth \nf. Mission completed");
                     in = input.nextLine();
                     complete = backChoose(in.toUpperCase())[0];
                     back = backChoose(in.toUpperCase())[1];
@@ -342,7 +341,9 @@ public class Coordinator extends User {
                     break;
             }
         } while (!complete);
-        storeMission(mission);
+        if (!mission.getMissionID().trim().equals("")) {
+            storeMission(mission);
+        }
     }
 
     //For read mission. if one attribute has mutilple values,eg job,the file name(database) should with Mission ID.
@@ -397,8 +398,8 @@ public class Coordinator extends User {
             CargoForOtherMissions = "cargo ID for other missions:  " + cargoIDO.get(i) + "cargo name for other missions:  " + cargoNameO.get(i) + "cargo quantity available for other missions:  "
                     + cargoQuantityAvailO.get(i) + "cargo quantity required for other missions:  " + cargoQuantityReqO.get(i) + "\n";
         }*/
-        
-        /*for (int i = 0; i < missionID.size(); i++) {
+
+ /*for (int i = 0; i < missionID.size(); i++) {
             System.out.println("Mission ID :  " + missionID.get(i));
             System.out.println("Mission Name:  " + missionName.get(i));
             System.out.println("Mission Description :  " + missionDesc.get(i));
@@ -417,8 +418,7 @@ public class Coordinator extends User {
             System.out.println("Mission Status of the mission :  " + missionStatus.get(i));
             System.out.println();
         }*/
-        
-        for (int i = 0; i < missionID.size(); i++){
+        for (int i = 0; i < missionID.size(); i++) {
             System.out.println("Mission ID :  " + missionID.get(i) + "  Mission Name:  " + missionName.get(i) + "  Mission Description :  " + missionDesc.get(i));
         }
     }
@@ -448,18 +448,19 @@ public class Coordinator extends User {
                 }
                 if (find) {
                     mission = readMission(missionID.get(index));
+                    showOneMission(mission);
                     do {
                         clrscr();
-                        System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
-                        System.out.println("1. Mission ID \n 2. Mission name \n 3. Mission description \n 4. Country of origin \n 5. Countries allowed \n 6. Coordinator’s name \n  7. Coordinator’contact information \n"
-                                + "8. Job(s) \n 9. Employment requirements \n 10.Cargo requirements \n 11.Launch date \n 12.Location of the destination \n 13.Duration of the mission \n 14.Status of the mission \n"
-                                + "\n Please enter number to choose which attribute you want to change or \"Enter\" to finish");
+                        System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
+                        System.out.println("1. Mission ID \n2. Mission name \n3. Mission description \n4. Country of origin \n5. Countries allowed \n6. Coordinator’s name \n7. Coordinator’contact information \n"
+                                + "8. Job(s) \n9. Employment requirements \n10.Cargo requirements \n11.Launch date \n12.Location of the destination \n13.Duration of the mission \n14.Status of the mission \n"
+                                + "\nPlease enter number to choose which attribute you want to change or \"Enter H, F, L\" to finish");
                         in = input.nextLine();
                         in.toUpperCase();
                         switch (in) {
                             case "1":
                                 clrscr();
-                                System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                                System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                                 System.out.println("Original Mission ID:  " + mission.getMissionID());
                                 System.out.println("Please input Mission ID");
                                 in = input.nextLine();
@@ -471,7 +472,7 @@ public class Coordinator extends User {
                                 break;
                             case "2":
                                 clrscr();
-                                System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                                System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                                 System.out.println("Original Mission name:  " + mission.getMissionName());
                                 System.out.println("Please input Mission name");
                                 in = input.nextLine();
@@ -483,7 +484,7 @@ public class Coordinator extends User {
                                 break;
                             case "3":
                                 clrscr();
-                                System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                                System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                                 System.out.println("Original Mission description:  " + mission.getMissionDesc());
                                 System.out.println("Please input Mission description");
                                 in = input.nextLine();
@@ -495,7 +496,7 @@ public class Coordinator extends User {
                                 break;
                             case "4":
                                 clrscr();
-                                System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                                System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                                 System.out.println("Original Country of origin:  " + mission.getMissionCountryOrigin());
                                 System.out.println("Please input Country of origin");
                                 in = input.nextLine();
@@ -507,7 +508,7 @@ public class Coordinator extends User {
                                 break;
                             case "5":
                                 clrscr();
-                                System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                                System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                                 System.out.println("Original Countries allowed:  " + mission.getMissionCountriesAllowed());
                                 System.out.println("Please input Countries allowed");
                                 in = input.nextLine();
@@ -519,7 +520,7 @@ public class Coordinator extends User {
                                 break;
                             case "6":
                                 clrscr();
-                                System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                                System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                                 System.out.println("Original Coordinator’s name:  " + mission.getMissionCoordinatorName());
                                 System.out.println("Please input  Coordinator’s name");
                                 in = input.nextLine();
@@ -531,7 +532,7 @@ public class Coordinator extends User {
                                 break;
                             case "7":
                                 clrscr();
-                                System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                                System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                                 System.out.println("Original Coordinator’contact information:  " + mission.getMissionCoordinatorContact());
                                 System.out.println("Please input Coordinator’contact information");
                                 in = input.nextLine();
@@ -543,7 +544,7 @@ public class Coordinator extends User {
                                 break;
                             case "8":
                                 clrscr();
-                                System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                                System.out.println("Enter H to return to Home\n Enter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                                 System.out.println("Original job names as list: ");
                                 for (int i = 0; i < mission.getMissionJobs().size(); i++) {
                                     int s = i + 1;
@@ -612,7 +613,7 @@ public class Coordinator extends User {
 
                             case "9":
                                 clrscr();
-                                System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                                System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                                 System.out.println("Original employment requirements as list: ");
                                 for (int i = 0; i < mission.getMissionTitles().size(); i++) {
                                     int s = i + 1;
@@ -684,7 +685,7 @@ public class Coordinator extends User {
                                 break;
                             case "10":
                                 clrscr();
-                                System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                                System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                                 System.out.println("Please choose type of cargo requirements \n 1.For  the journey \n 2.For the mission \n 3.For other missions");
                                 in = input.nextLine();
                                 complete = backChoose(in.toUpperCase())[0];
@@ -693,7 +694,7 @@ public class Coordinator extends User {
                                     switch (in) {
                                         case "1":
                                             clrscr();
-                                            System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                                            System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                                             System.out.println("You choose cargo requirements for the journey. Original Cargo requirements for the journey as list: ");
                                             for (int i = 0; i < mission.getMissionCargoForJourney().size(); i++) {
                                                 int s = i + 1;
@@ -802,7 +803,7 @@ public class Coordinator extends User {
                                             break;
                                         case "2":
                                             clrscr();
-                                            System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                                            System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                                             System.out.println("You choose cargo requirements for the Mission. Original Cargo requirements for the mission as list: ");
                                             for (int i = 0; i < mission.getMissionCargoForMission().size(); i++) {
                                                 int s = i + 1;
@@ -910,7 +911,7 @@ public class Coordinator extends User {
                                             break;
                                         case "3":
                                             clrscr();
-                                            System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                                            System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                                             System.out.println("You choose cargo requirements for other missions. Original Cargo requirements for other missions as list: ");
                                             for (int i = 0; i < mission.getMissionCargoForOtherMissions().size(); i++) {
                                                 int s = i + 1;
@@ -1026,7 +1027,7 @@ public class Coordinator extends User {
 
                             case "11":
                                 clrscr();
-                                System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                                System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                                 System.out.println("Original Missiont Launch date: " + mission.getMissionLaunchDate());
                                 System.out.println("Please input new Missiont Launch date");
                                 in = input.nextLine();
@@ -1038,7 +1039,7 @@ public class Coordinator extends User {
                                 break;
                             case "12":
                                 clrscr();
-                                System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                                System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                                 System.out.println("Original Location of the destination: " + mission.getMissionDestinationLocation());
                                 System.out.println("Please input Location of the destination");
                                 in = input.nextLine();
@@ -1050,7 +1051,7 @@ public class Coordinator extends User {
                                 break;
                             case "13":
                                 clrscr();
-                                System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                                System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                                 System.out.println("Original Duration of the mission: " + mission.getMissionDurationMonths());
                                 System.out.println("Please input Duration of the mission");
                                 in = input.nextLine();
@@ -1066,7 +1067,7 @@ public class Coordinator extends User {
                                 break;
                             case "14":
                                 clrscr();
-                                System.out.println("Enter H to return to Home \n Enter B to go back \n Enter F to finish this Mission \n Enter L to log out \n \n");
+                                System.out.println("Enter H to return to Home \nEnter B to go back \nEnter F to finish this Mission \nEnter L to log out \n \n");
                                 System.out.println("Original Status of the mission: " + mission.getMissionStatus());
                                 System.out.println("Please input Status of the mission \n a. Planning phase (selected by default) \n b. Departed Earth \n c. Landed on Mars \n"
                                         + "d. Mission in progress \n e. Returned to Earth \n f. Mission completed");
@@ -1150,6 +1151,50 @@ public class Coordinator extends User {
         }
     }
 
+    public void showOneMission(Mission mission) {
+        System.out.println("The mission full information shows: ");
+        System.out.println("Mission id:  " + mission.getMissionID());
+        System.out.println("Mission name:  " + mission.getMissionName());
+        System.out.println("Mission description:  " + mission.getMissionDesc());
+        System.out.println("Mission original country:  " + mission.getMissionCountryOrigin());
+        System.out.println("Mission country allowed: " + mission.getMissionCountriesAllowed());
+        System.out.println("Mission coordinator's name:  " + mission.getMissionCoordinatorName());
+        System.out.println("Mission coordinator's contact:  " + mission.getMissionCoordinatorContact());
+        String jobs = null;
+        String titles = null;
+        String cargoForJourney = null;
+        String cargoForMission = null;
+        String cargoForOtherMissions = null;
+        for (int i = 0; i < mission.getMissionJobs().size(); i++) {
+            jobs += "job name:  " + mission.getMissionJobs().get(i).getJobName() + "   job description" + mission.getMissionJobs().get(i).getJobDescription() + "\n";
+        }
+        for (int i = 0; i < mission.getMissionTitles().size(); i++) {
+            titles += "title name:  " + mission.getMissionTitles().get(i).getRequiredTitleName() + "title count number:  " + mission.getMissionTitles().get(i).getRequiredTitleCount() + "\n";
+        }
+        for (int i = 0; i < mission.getMissionCargoForJourney().size(); i++) {
+            cargoForJourney += "cargo ID for journey:  " + mission.getMissionCargoForJourney().get(i).getCargoID() + "   cargo name for journey:  " + mission.getMissionCargoForJourney().get(i).getCargoName() + "   cargo quantity available for journey:  "
+                    + mission.getMissionCargoForJourney().get(i).getCargoQuantityAvail() + "   cargo quantity required for journey:  " + mission.getMissionCargoForJourney().get(i).getCargoQuantityReq() + "\n";
+        }
+        for (int i = 0; i < mission.getMissionCargoForMission().size(); i++) {
+            cargoForMission += "cargo ID for mission:  " + mission.getMissionCargoForMission().get(i).getCargoID() + "   cargo name for mission:  " + mission.getMissionCargoForMission().get(i).getCargoName() + "   cargo quantity available for mission:  "
+                    + mission.getMissionCargoForMission().get(i).getCargoQuantityAvail() + "   cargo quantity required for mission:  " + mission.getMissionCargoForMission().get(i).getCargoQuantityReq() + "\n";
+        }
+        for (int i = 0; i < mission.getMissionCargoForOtherMissions().size(); i++) {
+            cargoForOtherMissions += "cargo ID for other missions:  " + mission.getMissionCargoForOtherMissions().get(i).getCargoID() + "   cargo name for other missions:  " + mission.getMissionCargoForOtherMissions().get(i).getCargoName() + "   cargo quantity available for other missions:  "
+                    + mission.getMissionCargoForOtherMissions().get(i).getCargoQuantityAvail() + "   cargo quantity required for other missions:  " + mission.getMissionCargoForOtherMissions().get(i).getCargoQuantityReq() + "\n";
+        }
+        System.out.println("Mission Job(s) :  \n" + jobs);
+        System.out.println("Employment requirements :  \n" + titles);
+        System.out.println("Cargo requirements For the journey :  \n" + cargoForJourney);
+        System.out.println("Cargo requirements For the mission :  \n" + cargoForMission);
+        System.out.println("Cargo requirements For other missions :  \n" + cargoForOtherMissions);
+        System.out.println("Mission Launch date :  " + mission.getMissionLaunchDate());
+        System.out.println("Mission Location (coordinates or address) of the destination :  " + mission.getMissionDestinationLocation());
+        System.out.println("Mission Duration of the mission :  " + mission.getMissionDurationMonths());
+        System.out.println("Mission Status of the mission :  " + mission.getMissionStatus());
+        System.out.println();
+    }
+
     public Mission readMission(String missionID) {
         Mission mission = new Mission();
         ArrayList<String> missionIDs = readFileData("missionID");
@@ -1229,8 +1274,8 @@ public class Coordinator extends User {
         writeFileData("missionDurationMonths", Integer.toString(mission.getMissionDurationMonths()));
         writeFileData("missionStatus", mission.getMissionStatus());
     }
-    
-    public void setEfs(EmployFastSystem e){
+
+    public void setEfs(EmployFastSystem e) {
         efs = e;
     }
 
