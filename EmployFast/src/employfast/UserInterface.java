@@ -137,20 +137,60 @@ class UserInterface {
 
             String in = scan.nextLine().toUpperCase();
             if (in.equals("1")) {
+                efs.searchMissionCriteria();
                 end = true;
-                efs.setSelectedShuttle(null);
-                displayMissions();
-                return;
+                if (!efs.hasMissionSelected()) {
+                    efs.setSelectedShuttle(null);
+                    displayMissions();
+                    return;
+                } else {
+                    String result = displayMenuChoices("View Mission", "Modify Mission");
+                    if (result.equals("View Mission")) {
+                        displayMissions();
+                        return;
+                    }
+                    if (result.equals("Modify Mission")) {
+                        efs.setSelectedShuttle(null);
+                        return;
+                    }
+                }
             } else if (in.equals("2") && efs.hasMissionSelected()) {
                 // if user selects 2. Select a New Shuttle
                 end = true;
-                displayShuttleInfo();
-                return;
+                if (!efs.hasShuttleSelected()) {
+                    displayShuttleInfo();
+                    return;
+                } else if (efs.hasShuttleSelected()) {
+                    String result = displayMenuChoices("View Selected Shuttle", "Choose New Shuttle");
+                    if (result.equals("View Selected Shuttle")) {
+                        displaySelectedShuttle(efs.getSelectedShuttle());
+                        System.out.println("\nPress any key to continue...");
+                        scan.nextLine();
+                        end = false;
+                    } else if (result.equals("Choose New Shuttle")) {
+                        displayShuttleInfo();
+                        return;
+                    }
+                }
             } else if (in.equals("3") && efs.hasShuttleSelected()) {
                 // If user selects 3. Create a Selection Criteria
                 end = true;
-                displayNewSelectionCriteria();
-                return;
+                if (!efs.hasSelectionCriteria()) {
+                    displayNewSelectionCriteria();
+                    return;
+                } else if (efs.hasSelectionCriteria()) {
+                    String result = displayMenuChoices("View Current Criteria", "Set New Criteria");
+                    if (result.equals("View Current Criteria")) {
+                        displayCurrentSelectionCriteria();
+                        end = false;
+                        System.out.println("Press anything to continue...");
+                        scan.nextLine();
+                    } else if (result.equals("Set New Criteria")) {
+                        displayNewSelectionCriteria();
+                        return;
+                    }
+
+                }
             } else if (in.equals("4") && efs.hasSelectionCriteria()) {
                 // If user selects 4. Find N Best Candidates
                 end = true;
@@ -175,6 +215,45 @@ class UserInterface {
                 System.out.println("Please enter a valid option");
             }
         }
+    }
+
+    public String displayMenuChoices(String dothis, String dothat) {
+        clrscr();
+        Scanner scan = new Scanner(System.in);
+        boolean end = false;
+        while (!end) {
+            System.out.println("Press B to go Back\n");
+            System.out.println("Press 1 to " + dothis);
+            System.out.println("Press 2 to " + dothat);
+            String in = scan.nextLine().trim().toUpperCase();
+            if (in.equals("B")) {
+                if (userType.equals("Admin")) {
+                    displayAdminHome();
+                    end = true;
+                    break;
+                }
+                if (userType.equals("Coordinator")) {
+                    displayCoordinatorHome();
+                    end = true;
+                    break;
+                }
+                if (userType.equals("Candidate")) {
+                    displayCandidateHome();
+                    end = true;
+                    break;
+                }
+            }
+            if (in.equals("1")) {
+                return dothis;
+            }
+            if (in.equals("2")) {
+                return dothat;
+            } else {
+                System.out.println("Please select a valid option");
+                end = false;
+            }
+        }
+        return "";
     }
 
     public void displayMissions() {
@@ -209,6 +288,8 @@ class UserInterface {
         ArrayList<RequiredTitle> rtlist = new ArrayList<RequiredTitle>();
         rtlist.add(rt);
         mish.setMissionTitles(rtlist);
+        mish.setMissionID("35");
+        mish.setMissionName("Mission Apollo");
         efs.setSelectedMission(mish);
         //predefine a random mission//
         clrscr();
@@ -497,12 +578,26 @@ class UserInterface {
         }
     }
 
+    public void displayCurrentSelectionCriteria() {
+        SelectionCriteria current = efs.getSelectedMission().getSelectionCriteria();
+        System.out.println("Current Selection Criteria: ");
+        System.out.print("Range of Age: ");
+        gap(22, 14);
+        System.out.println(current.getSelectionRangeOfAge());
+        System.out.print("Health Records: ");
+        gap(22, 16);
+        System.out.println(current.getSelectionHealthRecords());
+        System.out.print("Qualifications: ");
+        gap(22, 16);
+        System.out.println(current.getSelectionQualifications());
+    }
+
     public void displayNewSelectionCriteria() {
         Scanner scan = new Scanner(System.in);
         boolean end = false;
         while (!end) {
             clrscr();
-            System.out.println("1. select range of Age\n" + "2. select Health Records\n" + "3. select Qualifications\n" + "Enter \"OK\" to finish criteria selection"
+            System.out.println("1. Set range of Age\n" + "2. Set Health Records\n" + "3. Set Qualifications\n" + "Enter \"OK\" to finish criteria selection"
                     + ". Enter \"B\" to go Back");
             String in = scan.nextLine().trim().toUpperCase();
             switch (in) {
@@ -583,7 +678,9 @@ class UserInterface {
                         String input = scan.nextLine().trim().toUpperCase();
                         for (Qualification c : list) {
                             if (input.equals(c.getQualificationId())) {
-                                selectedQualifications.add(c.getQualificationName());
+                                if (!selectedQualifications.contains(c.getQualificationName())) {
+                                    selectedQualifications.add(c.getQualificationName());
+                                }
                             }
                         }
                         if (input.equals("C")) {
@@ -618,11 +715,24 @@ class UserInterface {
                     break;
                 case "OK":
                     end = true;
+                    EmployFast ef = new EmployFast();
+                    ef.writeSelectionCriteria(efs.getSelectedMission().getSelectionCriteria());
                     displayAdminHome();
                     break;
                 case "B":
-                    end = true;
-                    displayAdminHome();
+                    boolean backEnd = false;
+                    while (!backEnd) {
+                        System.out.println("Confirm Back? Your selections will not be saved. Y/N");
+                        String userinput = scan.nextLine();
+                        if (userinput.equals("Y")) {
+                            end = true;
+                            return;
+                        } else if (userinput.equals("N")) {
+                            end = false;
+                        } else {
+                            System.out.println("Please enter Y/N");
+                        }
+                    }
                     break;
                 default:
                     System.out.println("Please enter a correct option");
@@ -643,4 +753,45 @@ class UserInterface {
         }
         return check;
     }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getUserpw() {
+        return userpw;
+    }
+
+    public void setUserpw(String userpw) {
+        this.userpw = userpw;
+    }
+
+    public static EmployFastSystem getEfs() {
+        return efs;
+    }
+
+    public static void setEfs(EmployFastSystem efs) {
+        UserInterface.efs = efs;
+    }
+
 }

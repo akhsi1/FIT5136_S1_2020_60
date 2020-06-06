@@ -90,8 +90,8 @@ public class EmployFastSystem {
     public Mission getSelectedMission() {
         return selectedMission;
     }
-    
-    public void setSelectedMission(Mission m){
+
+    public void setSelectedMission(Mission m) {
         selectedMission = m;
     }
 
@@ -140,14 +140,12 @@ public class EmployFastSystem {
             ArrayList<String> candQuals = c.getCandidateQualifications();
             if (candAge > minAge && candAge < maxAge) {
                 score++;
-            }
-            else {
+            } else {
                 score -= 999;
             }
             if (!candHealthRecords.equals(missionHealthRecords) || candHealthRecords.trim().toUpperCase().equals("NONE")) {
                 score++;
-            }
-            else {
+            } else {
                 score -= 999;
             }
             for (String s : candQuals) {
@@ -164,7 +162,7 @@ public class EmployFastSystem {
             if (score >= 1 && score <= 2) {
                 nBest3.add(c);
             }
-            if (score <= 0){
+            if (score <= 0) {
                 nBest4.add(c);
             }
         }
@@ -203,6 +201,19 @@ public class EmployFastSystem {
             count = count + r.getRequiredTitleCount();
         }
         return count;
+    }
+
+    public void searchMissionCriteria() {
+        if (hasMissionSelected()) {
+            EmployFast ef = new EmployFast();
+            ArrayList<SelectionCriteria> sclist = ef.getSelectionList();
+            String mishId = selectedMission.getMissionID();
+            for (SelectionCriteria sc : sclist) {
+                if (sc.getMissionId().equals(mishId)) {
+                    selectedMission.setSelectionCriteria(sc);
+                }
+            }
+        }
     }
 
 }

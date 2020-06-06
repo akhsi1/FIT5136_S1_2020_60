@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * @author Rongkun
  */
 class SelectionCriteria {
+    private String missionId;
     private String selectionRangeOfAge;
     private String selectionHealthRecords;
     private ArrayList<String> selectionQualifications;
@@ -21,12 +22,19 @@ class SelectionCriteria {
         selectionHealthRecords = "";
         selectionQualifications = new ArrayList<String>();
     }
-    
-    public SelectionCriteria(String selectionRangeOfAge,String selectionHealthRecords, ArrayList<String> selectionQualifications)
-    {
+    public SelectionCriteria(String missionId, String selectionRangeOfAge, String selectionHealthRecords, ArrayList<String> selectionQualifications) {
+        this.missionId = missionId;
         this.selectionRangeOfAge = selectionRangeOfAge;
         this.selectionHealthRecords = selectionHealthRecords;
         this.selectionQualifications = selectionQualifications;
+    }
+    
+    public String getMissionId() {
+        return missionId;
+    }
+
+    public void setMissionId(String missionId) {
+        this.missionId = missionId;
     }
 
     public String getSelectionRangeOfAge()

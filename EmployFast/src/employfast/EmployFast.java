@@ -6,6 +6,7 @@
 package employfast;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,6 +29,7 @@ public class EmployFast {
     private ArrayList<Shuttle> shuttleList;
     private ArrayList<User> userList;
     private ArrayList<Mission> missionList;
+    private ArrayList<SelectionCriteria> selectionList;
 
     /**
      * @param args the command line arguments
@@ -37,6 +41,7 @@ public class EmployFast {
 //        System.out.println(coordinator.getPassword());
 //        coordinator.createMission();
 //        ui.displayShuttleInfo();
+        ui.setUserType("Admin");
         ui.displayNBestCandidates();
 
     }
@@ -117,7 +122,7 @@ public class EmployFast {
 
     public ArrayList<Mission> getMissionList() {
         ArrayList<Mission> ml = new ArrayList<Mission>();
-        
+
         return missionList;
     }
 
@@ -180,5 +185,68 @@ public class EmployFast {
             clist.add(new Candidate(candId, candUsername, candAge, candHealthRecords, candQualifications));
         }
         return clist;
+    }
+
+    public ArrayList<SelectionCriteria> getSelectionList() {
+        String path = "selectionCriteria";
+        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<SelectionCriteria> clist = new ArrayList<SelectionCriteria>();
+        ArrayList<String> qualifications = new ArrayList<String>();
+        try {
+            FileReader fileName = new FileReader(path);
+            Scanner file = new Scanner(fileName);
+            while (file.hasNextLine()) {
+                result.add(file.nextLine());
+            }
+            //System.out.println(content);
+            fileName.close();
+            file.close();
+        } catch (IOException e) {
+        }
+
+        for (int i = 0; i < result.size(); i += 4) {
+            String missionId = result.get(i);
+            String rangeAge = result.get(i + 1);
+            String health = result.get(i + 2);
+            String quals = result.get(i + 3);
+            if (quals.contains(",")) {
+                qualifications = new ArrayList<String>(Arrays.asList(quals.split(",")));
+                for (String q : qualifications) {
+                    q.trim();
+                }
+            } else {
+                qualifications = new ArrayList<String>();
+                qualifications.add(quals);
+            }
+            clist.add(new SelectionCriteria(missionId, rangeAge, health, qualifications));
+        }
+        selectionList = clist;
+        return clist;
+    }
+
+    public void writeSelectionCriteria(SelectionCriteria newSc) {
+        ArrayList<SelectionCriteria> sclist = getSelectionList();
+        String output = "";
+
+        for (SelectionCriteria sc : sclist) {
+            if (sc.getMissionId().equals(newSc.getMissionId())) {
+                sc = newSc;
+            }
+            String qualsString = "";
+            for (String qual : sc.getSelectionQualifications()) {
+                qualsString = qualsString + qual + ",";
+            }
+            qualsString = qualsString.substring(0, qualsString.length() - 1);
+            output = output + sc.getMissionId() + "\n" + sc.getSelectionRangeOfAge() + "\n" + sc.getSelectionHealthRecords() + "\n" + qualsString + "\n";
+        }
+        output = output.substring(0, output.length()-2);
+        try {
+            FileWriter fileWriter = new FileWriter("selectionCriteria");
+            fileWriter.write(output);
+            fileWriter.close();
+        } catch (IOException ex) {
+            System.out.println("write selection criteria io exception");
+        }
+
     }
 }
