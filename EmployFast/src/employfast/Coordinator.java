@@ -14,6 +14,8 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -32,14 +34,38 @@ public class Coordinator extends User {
     public void createMission() {
         Mission mission = new Mission();
         Scanner input = new Scanner(System.in);
+        UserInterface ui = new UserInterface();
         boolean complete = false;
         boolean back = false;
         boolean[] check = {complete, back};
         do {
             System.out.println("Enter H to go Home\nEnter F to Finish Editing Mission\n");
-            System.out.println("1. Mission ID \n2. Mission name \n3. Mission description \n4. Country of origin \n5. Countries allowed \n6. Coordinator’s name \n7. Coordinator’contact information \n"
-                    + "8. Job(s) \n9. Employment requirements \n10.Cargo requirements \n11.Launch date \n12.Location of the destination \n13.Duration of the mission \n14. Status of the mission \n"
-                    + "\nPlease press number to choose which attribute you want to change or \"F\" to finish\nPlease make sure input MissionID, otherwise it will not save");
+            System.out.println("1. Mission ID:                 " + mission.getMissionID());
+            System.out.println("2. Mission Name:               " + mission.getMissionName());
+            System.out.println("3. Mission Description         " + mission.getMissionDesc());
+            System.out.println("4. Country of Origin           " + mission.getMissionCountryOrigin());
+            System.out.println("5. Countries Allowed           " + mission.getMissionCountriesAllowed());
+            System.out.println("6. Coordinator Name            " + mission.getMissionCoordinatorName());
+            System.out.println("7. Coordinator Contact Info    " + mission.getMissionCoordinatorContact());
+            String jobString = "  ";
+            for (Job j : mission.getMissionJobs()) {
+                jobString = jobString + j.getJobName() + ", ";
+            }
+            jobString = jobString.substring(0, jobString.length() - 2);
+            System.out.println("8. Job(s)                    " + jobString);
+            String rtString = "  ";
+            for (RequiredTitle r : mission.getMissionTitles()) {
+                rtString = rtString + r.getRequiredTitleName() + " (" + r.getRequiredTitleCount() + "), ";
+            }
+            rtString = rtString.substring(0, rtString.length() - 2);
+            System.out.println("9. Employment Requirements:  " + rtString);
+
+            System.out.println("10. Cargo Requirements:        ");
+            System.out.println("11. Launch Date:               " + mission.getMissionLaunchDate());
+            System.out.println("12. Destination Location:      " + mission.getMissionDestinationLocation());
+            System.out.println("13. Mission Duration (months): " + mission.getMissionDurationMonths());
+            System.out.println("14. Mission Status:            " + mission.getMissionStatus());
+            System.out.println("\nEnter the attribute number you wish to modify, or F to finish.");
             String in = input.nextLine();
             in.toUpperCase();
             switch (in) {
@@ -57,7 +83,8 @@ public class Coordinator extends User {
                         if (checkMIDUnique(in)) {
                             mission.setMissionID(in);
                         } else {
-                            System.out.println("This mission ID is used by others, please input another mission ID");
+                            System.out.println("This mission ID is used by others, please input another mission ID\nPress any key to continue...");
+                            input.nextLine();
                         }
                     }
                     break;
@@ -183,7 +210,7 @@ public class Coordinator extends User {
                     clrscr();
                     System.out.println("Please make sure input MissionID, otherwise it will not save");
                     System.out.println("Enter H to go Home\nEnter F to Finish Editing Mission\n");
-                    System.out.println("Please choose type of cargo requirements \n1.For  the journey \n2.For the mission \n3.For other missions");
+                    System.out.println("Please choose type of cargo requirements \n1.For the journey \n2.For the mission \n3.For other missions");
                     in = input.nextLine();
                     check = backChoose(in.toUpperCase());
                     complete = check[0];
@@ -340,6 +367,13 @@ public class Coordinator extends User {
                     break;
                 case "14":
                     clrscr();
+                    ArrayList<MissionStatus> mslist = new ArrayList<MissionStatus>();
+                    mslist.add(new MissionStatus("1", "Planning Phase"));
+                    mslist.add(new MissionStatus("2", "Departed Earth"));
+                    mslist.add(new MissionStatus("3", "Landed on Mars"));
+                    mslist.add(new MissionStatus("4", "Mission In Progress"));
+                    mslist.add(new MissionStatus("5", "Returned to Earth"));
+                    mslist.add(new MissionStatus("6", "Mission Complete"));
                     System.out.println("Please make sure input MissionID, otherwise it will not save");
                     System.out.println("Enter H to go Home\nEnter F to Finish Editing Mission\n");
                     System.out.println("Please input Status of the mission \n1. Planning phase (selected by default) \n2. Departed Earth \n3. Landed on Mars \n"
@@ -350,13 +384,18 @@ public class Coordinator extends User {
                     back = check[1];
                     if (!complete && !back) {
                         if (in.equals("")) {
-                            mission.setMissionStatus("a. Planning phase");
+                            mission.setMissionStatus("Planning phase");
                         } else {
-                            mission.setMissionStatus(in);
+                            for (MissionStatus ms : mslist) {
+                                if (in.equals(ms.getStatusId())) {
+                                    mission.setMissionStatus(ms.getStatusMessage());
+                                }
+                            }
                         }
                     }
                     break;
                 case "H":
+                case "h":
                     clrscr();
                     System.out.println("Are you sure to return to HomePage? Y(yes)/N(no)");
                     in = input.nextLine();
@@ -376,6 +415,7 @@ public class Coordinator extends User {
                     }
                     break;
                 case "F":
+                case "f":
                     clrscr();
                     System.out.println("Finish this creating Mission activity? Y(yes)/N(no)");
                     in = input.nextLine();
@@ -390,6 +430,10 @@ public class Coordinator extends User {
         } while (!complete);
         if (!mission.getMissionID().trim().equals("")) {
             storeMission(mission);
+            System.out.println("Mission successfully saved. Press any key to continue...");
+            input.nextLine();
+            ui.displayCoordinatorHome();
+            return;
         }
     }
 
@@ -468,20 +512,23 @@ public class Coordinator extends User {
         }*/
         System.out.println("ID     Name                  Description");
         Scanner scan = new Scanner(System.in);
-        
+
         for (int i = min; i < max; i++) {
             System.out.print(missionID.get(i) + " ");
             gap(5, missionID.get(i).length());
             System.out.print(missionName.get(i) + " ");
-            gap(20, missionName.get(i).length());
+            gap(30, missionName.get(i).length());
             System.out.print(missionDesc.get(i) + " ");
             gap(100, missionDesc.get(i).length());
             System.out.println();
         }
     }
 
-    public void modifyMission() {
+    public void modifyMission(String uid, String uname, String userType, String userpw, EmployFastSystem efsys) {
         Scanner input = new Scanner(System.in);
+        if (userType == null) {
+            userType = "coordinator";
+        }
         boolean complete = false;
         boolean back = false;
         boolean[] check = {complete, back};
@@ -491,6 +538,18 @@ public class Coordinator extends User {
         int itemNo = 0;
         String in = "";
         ArrayList<String> missionID = readFileData("missionID");
+        if (missionID == null) {
+            System.out.println("No missions stored in database \nPress any key to continue...");
+            Scanner scan = new Scanner(System.in);
+            scan.nextLine();
+            if (userType.equals("coordinator")) {
+                ui.displayCoordinatorHome(efsys);
+                return;
+            } else {
+                ui.displayAdminHome(uid, uname, userType, userpw, efsys);
+                return;
+            }
+        }
         do {
             boolean pageEnd = false;
             while (!pageEnd) {
@@ -516,6 +575,14 @@ public class Coordinator extends User {
                         } else {
                             itemNo += 10;
                             pageEnd = false;
+                        }
+                    } else if (in.equals("H")) {
+                        if (userType.equals("coordinator")) {
+                            ui.displayCoordinatorHome(efsys);
+                            return;
+                        } else {
+                            ui.displayAdminHome(uid, uname, userType, userpw, efsys);
+                            return;
                         }
                     } else {
                         for (String s : missionID) {
@@ -548,9 +615,33 @@ public class Coordinator extends User {
                     do {
                         clrscr();
                         System.out.println("Enter H to go Home\nEnter F to Finish Editing Mission\n");
-                        System.out.println("1. Mission ID \n2. Mission name \n3. Mission description \n4. Country of origin \n5. Countries allowed \n6. Coordinator’s name \n7. Coordinator’contact information \n"
-                                + "8. Job(s) \n9. Employment requirements \n10.Cargo requirements \n11.Launch date \n12.Location of the destination \n13.Duration of the mission \n14.Status of the mission \n"
-                                + "\nPlease enter number to choose which attribute you want to change or \"Enter F\" to finish");
+                        System.out.println("Enter H to go Home\nEnter F to Finish Editing Mission\n");
+                        System.out.println("1. Mission ID:                 " + mission.getMissionID());
+                        System.out.println("2. Mission Name:               " + mission.getMissionName());
+                        System.out.println("3. Mission Description         " + mission.getMissionDesc());
+                        System.out.println("4. Country of Origin           " + mission.getMissionCountryOrigin());
+                        System.out.println("5. Countries Allowed           " + mission.getMissionCountriesAllowed());
+                        System.out.println("6. Coordinator Name            " + mission.getMissionCoordinatorName());
+                        System.out.println("7. Coordinator Contact Info    " + mission.getMissionCoordinatorContact());
+                        String jobString = "  ";
+                        for (Job j : mission.getMissionJobs()) {
+                            jobString = jobString + j.getJobName() + ", ";
+                        }
+                        jobString = jobString.substring(0, jobString.length() - 2);
+                        System.out.println("8. Job(s)                    " + jobString);
+                        String rtString = "  ";
+                        for (RequiredTitle r : mission.getMissionTitles()) {
+                            rtString = rtString + r.getRequiredTitleName() + " (" + r.getRequiredTitleCount() + "), ";
+                        }
+                        rtString = rtString.substring(0, rtString.length() - 2);
+                        System.out.println("9. Employment Requirements:  " + rtString);
+
+                        System.out.println("10. Cargo Requirements:        ");
+                        System.out.println("11. Launch Date:               " + mission.getMissionLaunchDate());
+                        System.out.println("12. Destination Location:      " + mission.getMissionDestinationLocation());
+                        System.out.println("13. Mission Duration (months): " + mission.getMissionDurationMonths());
+                        System.out.println("14. Mission Status:            " + mission.getMissionStatus());
+                        System.out.println("\nEnter the attribute number you wish to modify, or F to finish.");
                         in = input.nextLine();
                         in.toUpperCase();
                         switch (in) {
@@ -1237,33 +1328,50 @@ public class Coordinator extends User {
                                 }
                                 break;
                             case "H":
+                            case "h":
                                 clrscr();
-                                System.out.println("Are you sure to return to HomePage? Y(yes)/N(no)");
+                                System.out.println("Are you sure to return to HomePage? Changes won't be saved. Y(yes)/N(no)");
                                 in = input.nextLine();
                                 if (in.toUpperCase().equals("Y")) {
                                     complete = true;
                                     back = true;
+                                    if (userType.equals("coordinator")) {
+                                        ui.displayCoordinatorHome(efsys);
+                                        return;
+                                    } else {
+                                        ui.displayAdminHome(uid, uname, userType, userpw, efsys);
+                                        return;
+                                    }
                                 }
                                 break;
                             case "B":
                                 clrscr();
-                                System.out.println("Are you sure to go back? Y(yes)/N(no)");
+                                System.out.println("Are you sure to go back? Changes won't be saved. Y(yes)/N(no)");
                                 in = input.nextLine();
                                 if (in.toUpperCase().equals("Y")) {
                                     back = true;
+                                    if (userType.equals("coordinator")) {
+                                        ui.displayCoordinatorHome(efsys);
+                                        return;
+                                    } else {
+                                        ui.displayAdminHome(uid, uname, userType, userpw, efsys);
+                                        return;
+                                    }
                                 }
                                 break;
                             case "L":
                                 clrscr();
-                                System.out.println("Are are sure to logout? Y(yes)/N(no)");
+                                System.out.println("Are are sure to logout? Changes won't be saved. Y(yes)/N(no)");
                                 in = input.nextLine();
                                 if (in.toUpperCase().equals("Y")) {
                                     back = true;
                                     complete = true;
                                     ui.displayLogin();
+                                    return;
                                 }
                                 break;
                             case "F":
+                            case "f":
                                 clrscr();
                                 System.out.println("Finish this creating Mission activity? Y(yes)/N(no)");
                                 in = input.nextLine();
@@ -1284,6 +1392,14 @@ public class Coordinator extends User {
             }
         } while (!complete);
         storeModifiedMission(mission, index);
+        if (userType.equals("coordinator")) {
+            ui.displayCoordinatorHome(efsys);
+            return;
+        } else {
+            efsys.setSelectedMission(mission);
+            ui.displayAdminHome(uid, uname, userType, userpw, efsys);
+            return;
+        }
     } //This method just write one line data each time since everytime mission attribute will add one new line
 
     public void writeFileData(String fileName, String FileData) {
@@ -1329,33 +1445,33 @@ public class Coordinator extends User {
         String cargoForMission = "";
         String cargoForOtherMissions = "";
         for (int i = 0; i < mission.getMissionJobs().size(); i++) {
-            jobs += "Job name:                                " + mission.getMissionJobs().get(i).getJobName() + 
-                    "\nJob description:                         " + mission.getMissionJobs().get(i).getJobDescription() + "\n";
+            jobs += "Job name:                                " + mission.getMissionJobs().get(i).getJobName()
+                    + "\nJob description:                         " + mission.getMissionJobs().get(i).getJobDescription() + "\n";
         }
         for (int i = 0; i < mission.getMissionTitles().size(); i++) {
-            titles += "Title name:                              " + mission.getMissionTitles().get(i).getRequiredTitleName() + 
-                    "\nTitle count number:                      " + mission.getMissionTitles().get(i).getRequiredTitleCount() + "\n";
+            titles += "Title name:                              " + mission.getMissionTitles().get(i).getRequiredTitleName()
+                    + "\nTitle count number:                      " + mission.getMissionTitles().get(i).getRequiredTitleCount() + "\n";
         }
         for (int i = 0; i < mission.getMissionCargoForJourney().size(); i++) {
-            cargoForJourney += "Cargo ID for journey:                    " + mission.getMissionCargoForJourney().get(i).getCargoID() + 
-                    "\nCargo name for journey:                  " + mission.getMissionCargoForJourney().get(i).getCargoName() + 
-                    "\nCargo quantity available for journey:    "
-                    + mission.getMissionCargoForJourney().get(i).getCargoQuantityAvail() + 
-                    "\nCargo quantity required for journey:     " + mission.getMissionCargoForJourney().get(i).getCargoQuantityReq() + "\n";
+            cargoForJourney += "Cargo ID for journey:                    " + mission.getMissionCargoForJourney().get(i).getCargoID()
+                    + "\nCargo name for journey:                  " + mission.getMissionCargoForJourney().get(i).getCargoName()
+                    + "\nCargo quantity available for journey:    "
+                    + mission.getMissionCargoForJourney().get(i).getCargoQuantityAvail()
+                    + "\nCargo quantity required for journey:     " + mission.getMissionCargoForJourney().get(i).getCargoQuantityReq() + "\n";
         }
         for (int i = 0; i < mission.getMissionCargoForMission().size(); i++) {
-            cargoForMission += "Cargo ID for mission:                    " + mission.getMissionCargoForMission().get(i).getCargoID() + 
-                    "\nCargo name for mission:                  " + mission.getMissionCargoForMission().get(i).getCargoName() + 
-                    "\nCargo quantity available for mission:    "
-                    + mission.getMissionCargoForMission().get(i).getCargoQuantityAvail() + 
-                    "\nCargo quantity required for mission:     " + mission.getMissionCargoForMission().get(i).getCargoQuantityReq() + "\n";
+            cargoForMission += "Cargo ID for mission:                    " + mission.getMissionCargoForMission().get(i).getCargoID()
+                    + "\nCargo name for mission:                  " + mission.getMissionCargoForMission().get(i).getCargoName()
+                    + "\nCargo quantity available for mission:    "
+                    + mission.getMissionCargoForMission().get(i).getCargoQuantityAvail()
+                    + "\nCargo quantity required for mission:     " + mission.getMissionCargoForMission().get(i).getCargoQuantityReq() + "\n";
         }
         for (int i = 0; i < mission.getMissionCargoForOtherMissions().size(); i++) {
-            cargoForOtherMissions += "Cargo ID for other missions:       " + mission.getMissionCargoForOtherMissions().get(i).getCargoID() + 
-                    "\nCargo name for other missions:                " + mission.getMissionCargoForOtherMissions().get(i).getCargoName() + 
-                    "\nCargo quantity available for other missions:  "
-                    + mission.getMissionCargoForOtherMissions().get(i).getCargoQuantityAvail() + 
-                    "\nCargo quantity required for other missions:   " + mission.getMissionCargoForOtherMissions().get(i).getCargoQuantityReq() + "\n";
+            cargoForOtherMissions += "Cargo ID for other missions:       " + mission.getMissionCargoForOtherMissions().get(i).getCargoID()
+                    + "\nCargo name for other missions:                " + mission.getMissionCargoForOtherMissions().get(i).getCargoName()
+                    + "\nCargo quantity available for other missions:  "
+                    + mission.getMissionCargoForOtherMissions().get(i).getCargoQuantityAvail()
+                    + "\nCargo quantity required for other missions:   " + mission.getMissionCargoForOtherMissions().get(i).getCargoQuantityReq() + "\n";
         }
         System.out.println("Mission Job(s) :                         \n" + jobs);
 
@@ -1578,6 +1694,7 @@ public class Coordinator extends User {
             fileName.close();
             file.close();
         } catch (IOException e) {
+            return null;
         }
         return content;
     }
@@ -1610,7 +1727,7 @@ public class Coordinator extends User {
                     in = input.nextLine();
                     if (in.toUpperCase().equals("Y")) {
                         judge[0] = true;
-                        ui.displayCoordinatorHome();
+                        ui.displayCoordinatorHome(efs);
                     }
                     break;
                 case "B":
@@ -1636,7 +1753,7 @@ public class Coordinator extends User {
                     in = input.nextLine();
                     if (in.toUpperCase().equals("Y")) {
                         judge[0] = true;
-                        ui.displayCoordinatorHome();
+                        ui.displayCoordinatorHome(efs);
                     }
                     break;
                 default:
@@ -1660,14 +1777,18 @@ public class Coordinator extends User {
     public boolean checkMIDUnique(String missionID) {
         boolean unique = true;
         ArrayList<String> missionIDs = readFileData("missionID");
-        String missionIDList = null;
+        if (missionIDs == null) {
+            return true;
+        }
+        String missionIDList = "";
         for (int i = 0; i < missionIDs.size(); i++) {
-            missionIDList += missionIDs.get(i) + "    ";
+            missionIDList += missionIDs.get(i) + ", ";
             if (missionID.equals(missionIDs.get(i).trim())) {
                 unique = false;
             }
         }
         if (!unique) {
+            missionIDList = missionIDList.substring(0,missionIDList.length()-2);
             System.out.println("Mission ID used now are:  " + missionIDList);
         }
         return unique;

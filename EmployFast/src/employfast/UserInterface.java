@@ -99,9 +99,20 @@ class UserInterface {
         }
         return false;
     }
-
+    
+    public void displayAdminHome(String userId, String userName, String userType, String userpw, EmployFastSystem efsys) { 
+        this.userId = userId;
+        this.username = userName;
+        this.userType = userType;
+        this.userpw = userpw;
+        this.efs = efsys;
+        displayAdminHome();
+    }
+    
     public void displayAdminHome() {
         Administrator a = new Administrator(userId, username, userType, userpw);
+        Coordinator c = new Coordinator();
+        c.setEfs(efs);
         Scanner scan = new Scanner(System.in);
         boolean end = false;
         while (!end) {
@@ -137,20 +148,21 @@ class UserInterface {
 
             String in = scan.nextLine().toUpperCase();
             if (in.equals("1")) {
-                efs.searchMissionCriteria();
+//                efs.searchMissionCriteria();
                 end = true;
                 if (!efs.hasMissionSelected()) {
                     efs.setSelectedShuttle(null);
-                    displayMissions();
+                    displayMissionList();
                     return;
                 } else {
                     String result = displayMenuChoices("View Mission", "Modify Mission");
                     if (result.equals("View Mission")) {
-                        displayMissions();
+                        c.showOneMission(efs.getSelectedMission());
                         return;
                     }
                     if (result.equals("Modify Mission")) {
                         efs.setSelectedShuttle(null);
+                        displayMissionList();
                         return;
                     }
                 }
@@ -256,13 +268,20 @@ class UserInterface {
         return "";
     }
 
-    public void displayMissions() {
-        EmployFast ef = new EmployFast();
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Implementing feature... Press any key to return");
-        scan.nextLine();
-        displayAdminHome();
+    public void displayMissionList() {
+        Coordinator c = new Coordinator();
+        c.modifyMission(userId, username, userType, userpw, efs);
     }
+    
+//    public void displayMissionList(){
+//        ArrayList<Mission> missionList = new ArrayList<Mission>();
+//        Coordinator c = new Coordinator();
+//        ArrayList<String> missionIDs = c.readFileData("missionID");
+//        for (int i = 0; i < missionIDs.size(); i ++)
+//        {
+//            missionList.add(c.readMission(missionIDs.get(i)));
+//        }
+//    }
 
     public void gap(int a, int b) {
         for (int i = b; i <= a; i++) {
@@ -520,10 +539,6 @@ class UserInterface {
 //        }
     }
     
-    public void displayMissionList(){
-        
-    }
-
     public void displayCoordinatorHome() {
         Coordinator c = new Coordinator(userId, username, userType, userpw);
         c.setEfs(efs);
@@ -532,14 +547,13 @@ class UserInterface {
         while (!end) {
             clrscr();
             System.out.println("You are logged in as Coordinator\nPress L to log out\n\nPress 1 to Create a Mission\nPress 2 to Modify or View a Mission");
-            String in = scan.nextLine();
+            String in = scan.nextLine().trim().toUpperCase();
             if (in.equals("1")) {
                 end = true;
                 c.createMission();
                 return;
             } else if (in.equals("2")) {
-                
-                c.modifyMission();
+                c.modifyMission(userId, username, userType, userpw, efs);
                 return;
             } else if (in.equals("L") || in.equals("B")) {
                 boolean lo = false;

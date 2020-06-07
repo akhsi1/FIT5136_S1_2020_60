@@ -36,17 +36,7 @@ public class EmployFast {
      */
     public static void main(String[] args) {
         UserInterface ui = new UserInterface();
-//        ui.displayLogin();
-//        Coordinator coordinator = new Coordinator("H1","D1","S3","s4");
-//        System.out.println(coordinator.getPassword());
-//        coordinator.modifyMission();
-//        ui.displayShuttleInfo();
-//        ui.setUserType("Admin");
-        ui.displayNBestCandidates();
-
-//        EmployFastSystem efs = new EmployFastSystem();
-//        efs.readAllMissions();
-
+        ui.displayLogin();
     }
 
     public void readAllMissions() {
@@ -242,7 +232,7 @@ public class EmployFast {
             qualsString = qualsString.substring(0, qualsString.length() - 1);
             output = output + sc.getMissionId() + "\n" + sc.getSelectionRangeOfAge() + "\n" + sc.getSelectionHealthRecords() + "\n" + qualsString + "\n";
         }
-        output = output.substring(0, output.length()-2);
+        output = output.substring(0, output.length() - 2);
         try {
             FileWriter fileWriter = new FileWriter("selectionCriteria");
             fileWriter.write(output);
