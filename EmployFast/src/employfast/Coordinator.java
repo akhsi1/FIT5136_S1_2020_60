@@ -1452,6 +1452,7 @@ public class Coordinator extends User {
     }
 
     public void showOneMission(Mission mission) {
+        clrscr();
         System.out.println("The mission full information shows: ");
         System.out.println("Mission id:                              " + mission.getMissionID());
         System.out.println("Mission name:                            " + mission.getMissionName());

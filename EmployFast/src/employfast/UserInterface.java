@@ -359,54 +359,6 @@ class UserInterface {
         }
     }
 
-//    public void displayEscapeOptions() {
-//        System.out.println("Press L to Log Out\nPress H to go Home\nPress B to go Back");
-//        Scanner scan = new Scanner(System.in);
-//        boolean end = false;
-//        while (!end) {
-//            String in = scan.nextLine();
-//            switch (in){
-//                case "L":
-//                    displayConfirmMessage("L");
-//                    break;
-//                case "H":
-//                    displayConfirmMessage("H");
-//                    break;
-//            }
-//            
-//        }
-//    }
-//    
-//    public void displayConfirmMessage(String type){
-//        boolean end = false;
-//        Scanner scan = new Scanner(System.in);
-//        if (type.equals("L")){
-//            while (!end){
-//                System.out.println("Confirm Logout? Y/N");
-//                String s = scan.nextLine().trim().toUpperCase();
-//                if (s.equals("Y")){
-//                    displayLogin();
-//                }
-//            }
-//        }
-//        if (type.equals("H")){
-//            while (!end){
-//                System.out.println("Confirm Logout? Y/N");
-//                String s = scan.nextLine().trim().toUpperCase();
-//                if (s.equals("Y")){
-//                    if (userType.equals("Admin")){
-//                        displayAdminHome();
-//                    }
-//                    if (userType.equals("Coordinator")){
-//                        displayCoordinatorHome();
-//                    }
-//                    if (userType.equals("Candidate")){
-//                        displayCandidateHome();
-//                    }
-//                }
-//            }
-//        }
-//    }
     public void displayCoordinatorHome(EmployFastSystem efs) {
         this.efs = efs;
         displayCoordinatorHome();
@@ -462,7 +414,7 @@ class UserInterface {
                 i++;
                 if (i % 10 == 0 || i == list.size()) {
                     boolean end = false;
-                    System.out.println("<-- Press P for Previous Page, N for Next Page ->>");
+                    System.out.println("\n<-- Press P for Previous Page, N for Next Page ->>");
                     System.out.println("\nPress B to go Back");
                     System.out.println("\nEnter Shuttle ID to view full information");
                     while (!end) {
@@ -603,6 +555,7 @@ class UserInterface {
     }
 
     public void displayCurrentSelectionCriteria() {
+        clrscr();
         SelectionCriteria current = efs.getSelectedMission().getSelectionCriteria();
         System.out.println("Current Selection Criteria: ");
         System.out.print("Range of Age: ");
