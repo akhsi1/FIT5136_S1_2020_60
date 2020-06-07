@@ -214,6 +214,10 @@ public class EmployFastSystem {
         }
         return count;
     }
+    
+    public void setSelectionMissionId(){
+        selectedMission.getSelectionCriteria().setMissionId(selectedMission.getMissionID());
+    }
 
     public void searchMissionCriteria() {
         if (hasMissionSelected()) {

@@ -510,7 +510,7 @@ public class Coordinator extends User {
             System.out.println("Mission Status of the mission :  " + missionStatus.get(i));
             System.out.println();
         }*/
-        System.out.println("ID     Name                  Description");
+        System.out.println("ID     Name                            Description");
         Scanner scan = new Scanner(System.in);
 
         for (int i = min; i < max; i++) {
@@ -524,8 +524,13 @@ public class Coordinator extends User {
         }
     }
 
-    public void modifyMission(String uid, String uname, String userType, String userpw, EmployFastSystem efsys) {
+    public void modifyMission(String uid, String uname, String userType, String userpw, EmployFastSystem efsys, String operation) {
         Scanner input = new Scanner(System.in);
+        // operation String can be for "modify" or "choose"
+        if (operation == null){
+            operation = "modify";
+        }
+        
         if (userType == null) {
             userType = "coordinator";
         }
@@ -560,8 +565,7 @@ public class Coordinator extends User {
                         viewMission(itemNo, missionID.size());
                     }
                     System.out.println("<-- Press P for Previous Page, N for Next Page -->\n");
-                    System.out.println("Enter H to return to Home");
-                    System.out.println("Please input the Mission ID which you want to change");
+                    System.out.println("Please input the Mission ID or Press H to return Home");
                     in = input.nextLine().trim().toUpperCase();
                     if (in.equals("P")) {
                         if (itemNo - 10 < 0) {
@@ -612,9 +616,14 @@ public class Coordinator extends User {
                 if (find) {
                     mission = readMission(missionID.get(index));
                     showOneMission(mission);
+                    if (userType.equals("admin") && operation == "choose") {
+                        System.out.println();
+                        efsys.setSelectedMission(mission);
+                        ui.displayAdminHome(uid, uname, userType, userpw, efsys);
+                        return;
+                    }
                     do {
                         clrscr();
-                        System.out.println("Enter H to go Home\nEnter F to Finish Editing Mission\n");
                         System.out.println("Enter H to go Home\nEnter F to Finish Editing Mission\n");
                         System.out.println("1. Mission ID:                 " + mission.getMissionID());
                         System.out.println("2. Mission Name:               " + mission.getMissionName());
@@ -1311,19 +1320,30 @@ public class Coordinator extends User {
                                 break;
                             case "14":
                                 clrscr();
+                                ArrayList<MissionStatus> mslist = new ArrayList<MissionStatus>();
+                                mslist.add(new MissionStatus("1", "Planning Phase"));
+                                mslist.add(new MissionStatus("2", "Departed Earth"));
+                                mslist.add(new MissionStatus("3", "Landed on Mars"));
+                                mslist.add(new MissionStatus("4", "Mission In Progress"));
+                                mslist.add(new MissionStatus("5", "Returned to Earth"));
+                                mslist.add(new MissionStatus("6", "Mission Complete"));
+                                System.out.println("Please make sure input MissionID, otherwise it will not save");
                                 System.out.println("Enter H to go Home\nEnter F to Finish Editing Mission\n");
-                                System.out.println("Original Status of the mission: " + mission.getMissionStatus());
                                 System.out.println("Please input Status of the mission \n1. Planning phase (selected by default) \n2. Departed Earth \n3. Landed on Mars \n"
-                                        + "4. Mission in progress \n5.Returned to Earth \n6. Mission completed");
+                                        + "4. Mission in progress \n5. Returned to Earth \n6. Mission completed");
                                 in = input.nextLine();
                                 check = backChoose(in.toUpperCase());
                                 complete = check[0];
                                 back = check[1];
                                 if (!complete && !back) {
                                     if (in.equals("")) {
-                                        mission.setMissionStatus("a. Planning phase");
+                                        mission.setMissionStatus("Planning phase");
                                     } else {
-                                        mission.setMissionStatus(in);
+                                        for (MissionStatus ms : mslist) {
+                                            if (in.equals(ms.getStatusId())) {
+                                                mission.setMissionStatus(ms.getStatusMessage());
+                                            }
+                                        }
                                     }
                                 }
                                 break;
@@ -1505,7 +1525,6 @@ public class Coordinator extends User {
         mission.setMissionID(missionID);
         try {
             mission.setMissionName(readFileData("missionName").get(index));
-
             mission.setMissionDesc(readFileData("missionDesc").get(index));
             mission.setMissionCountryOrigin(readFileData("missionCountryOrigin").get(index));
             mission.setMissionCountriesAllowed(readFileData("missionCountriesAllowed").get(index));
@@ -1668,7 +1687,7 @@ public class Coordinator extends User {
             }
             contents.set(lineIndex, changeData);
             for (int i = 0; i < contents.size(); i++) {
-                content = contents.get(i) + "\n";
+                content = content + contents.get(i) + "\n";
             }
             output = new FileOutputStream(filePath);
             output.write(content.getBytes());
@@ -1788,7 +1807,7 @@ public class Coordinator extends User {
             }
         }
         if (!unique) {
-            missionIDList = missionIDList.substring(0,missionIDList.length()-2);
+            missionIDList = missionIDList.substring(0, missionIDList.length() - 2);
             System.out.println("Mission ID used now are:  " + missionIDList);
         }
         return unique;

@@ -28,11 +28,11 @@ class UserInterface {
     }
 
     public void displayLogin() {
-        clrscr();
         efs = new EmployFastSystem();
         Scanner input = new Scanner(System.in);
         boolean complete = false;
         while (!complete) {
+            clrscr();
             System.out.println("Enter E to exit\n\n");
             System.out.println("Welcome to Employ Fast! \n\n Please enter username: ");
             String inuser = input.nextLine();
@@ -99,8 +99,8 @@ class UserInterface {
         }
         return false;
     }
-    
-    public void displayAdminHome(String userId, String userName, String userType, String userpw, EmployFastSystem efsys) { 
+
+    public void displayAdminHome(String userId, String userName, String userType, String userpw, EmployFastSystem efsys) {
         this.userId = userId;
         this.username = userName;
         this.userType = userType;
@@ -108,7 +108,7 @@ class UserInterface {
         this.efs = efsys;
         displayAdminHome();
     }
-    
+
     public void displayAdminHome() {
         Administrator a = new Administrator(userId, username, userType, userpw);
         Coordinator c = new Coordinator();
@@ -120,12 +120,13 @@ class UserInterface {
             System.out.println("You are logged in as Administrator\nPress L to log out\n");
             if (efs.hasMissionSelected()) {
                 System.out.println("Selected Mission: " + efs.getSelectedMission().getMissionName());
+                efs.searchMissionCriteria();
             } else {
                 System.out.println("Please begin by selecting a Mission");
             }
             if (efs.hasShuttleSelected()) {
                 System.out.println("Selected Shuttle: " + efs.getSelectedShuttle().getShuttleName());
-            } else {
+            } else if (efs.hasMissionSelected()) {
                 System.out.println("Please Select a Shuttle");
             }
 
@@ -148,21 +149,20 @@ class UserInterface {
 
             String in = scan.nextLine().toUpperCase();
             if (in.equals("1")) {
-//                efs.searchMissionCriteria();
                 end = true;
                 if (!efs.hasMissionSelected()) {
                     efs.setSelectedShuttle(null);
-                    displayMissionList();
+                    displayMissionList("choose");
                     return;
                 } else {
                     String result = displayMenuChoices("View Mission", "Modify Mission");
                     if (result.equals("View Mission")) {
                         c.showOneMission(efs.getSelectedMission());
-                        return;
+                        end = false;
                     }
                     if (result.equals("Modify Mission")) {
                         efs.setSelectedShuttle(null);
-                        displayMissionList();
+                        displayMissionList("modify");
                         return;
                     }
                 }
@@ -239,17 +239,17 @@ class UserInterface {
             System.out.println("Press 2 to " + dothat);
             String in = scan.nextLine().trim().toUpperCase();
             if (in.equals("B")) {
-                if (userType.equals("Admin")) {
+                if (userType.equals("admin")) {
                     displayAdminHome();
                     end = true;
                     break;
                 }
-                if (userType.equals("Coordinator")) {
+                if (userType.equals("coordinator")) {
                     displayCoordinatorHome();
                     end = true;
                     break;
                 }
-                if (userType.equals("Candidate")) {
+                if (userType.equals("candidate")) {
                     displayCandidateHome();
                     end = true;
                     break;
@@ -268,11 +268,11 @@ class UserInterface {
         return "";
     }
 
-    public void displayMissionList() {
+    public void displayMissionList(String operation) {
         Coordinator c = new Coordinator();
-        c.modifyMission(userId, username, userType, userpw, efs);
+        c.modifyMission(userId, username, userType, userpw, efs, operation);
     }
-    
+
 //    public void displayMissionList(){
 //        ArrayList<Mission> missionList = new ArrayList<Mission>();
 //        Coordinator c = new Coordinator();
@@ -282,7 +282,6 @@ class UserInterface {
 //            missionList.add(c.readMission(missionIDs.get(i)));
 //        }
 //    }
-
     public void gap(int a, int b) {
         for (int i = b; i <= a; i++) {
             System.out.print(" ");
@@ -290,28 +289,35 @@ class UserInterface {
     }
 
     public void displayNBestCandidates() {
-        //predefine a random mission//
-        Mission mish = new Mission();
-        SelectionCriteria sc = new SelectionCriteria();
-        sc.setSelectionRangeOfAge("10-30");
-        sc.setSelectionHealthRecords("None");
-        ArrayList<String> quals = new ArrayList<String>();
-        quals.add("MIT");
-        quals.add("BDS");
-        quals.add("BE");
-        sc.setSelectionQualifications(quals);
-        mish.setSelectionCriteria(sc);
-        RequiredTitle rt = new RequiredTitle();
-        rt.setRequiredTitleCount(5);
-        rt.setRequiredTitleName("Doctor");
-        ArrayList<RequiredTitle> rtlist = new ArrayList<RequiredTitle>();
-        rtlist.add(rt);
-        mish.setMissionTitles(rtlist);
-        mish.setMissionID("35");
-        mish.setMissionName("Mission Apollo");
-        efs.setSelectedMission(mish);
-        //predefine a random mission//
+        Scanner scan = new Scanner(System.in);
+        //predefine a random mission for TESTING PURPOSES//
+//        Mission mish = new Mission();
+//        SelectionCriteria sc = new SelectionCriteria();
+//        sc.setSelectionRangeOfAge("10-30");
+//        sc.setSelectionHealthRecords("None");
+//        ArrayList<String> quals = new ArrayList<String>();
+//        quals.add("MIT");
+//        quals.add("BDS");
+//        quals.add("BE");
+//        sc.setSelectionQualifications(quals);
+//        mish.setSelectionCriteria(sc);
+//        RequiredTitle rt = new RequiredTitle();
+//        rt.setRequiredTitleCount(5);
+//        rt.setRequiredTitleName("Doctor");
+//        ArrayList<RequiredTitle> rtlist = new ArrayList<RequiredTitle>();
+//        rtlist.add(rt);
+//        mish.setMissionTitles(rtlist);
+//        mish.setMissionID("35");
+//        mish.setMissionName("Mission Apollo");
+//        efs.setSelectedMission(mish);
+        //predefine a random mission FOR TESTING PURPOSES//
         clrscr();
+        if (efs.getRequiredTitleCount() == 0) {
+            System.out.println("Please set Required Title Count for Mission. Press any Key to Continue...");
+            scan.nextLine();
+            displayAdminHome();
+            return;
+        }
         int count = efs.getRequiredTitleCount();
         ArrayList<Candidate> bestlist = efs.getNBestCandidates();
         System.out.println("Number of candidates required for mission: " + count);
@@ -335,7 +341,6 @@ class UserInterface {
             System.out.println();
         }
         System.out.println("\nAdd these candidates to the mission? Y/N");
-        Scanner scan = new Scanner(System.in);
         boolean end = false;
         while (!end) {
             String in = scan.nextLine();
@@ -538,7 +543,7 @@ class UserInterface {
 //            }
 //        }
     }
-    
+
     public void displayCoordinatorHome() {
         Coordinator c = new Coordinator(userId, username, userType, userpw);
         c.setEfs(efs);
@@ -553,7 +558,7 @@ class UserInterface {
                 c.createMission();
                 return;
             } else if (in.equals("2")) {
-                c.modifyMission(userId, username, userType, userpw, efs);
+                c.modifyMission(userId, username, userType, userpw, efs, "modify");
                 return;
             } else if (in.equals("L") || in.equals("B")) {
                 boolean lo = false;
@@ -613,6 +618,7 @@ class UserInterface {
     public void displayNewSelectionCriteria() {
         Scanner scan = new Scanner(System.in);
         boolean end = false;
+        efs.setSelectionMissionId();
         while (!end) {
             clrscr();
             System.out.println("1. Set range of Age\n" + "2. Set Health Records\n" + "3. Set Qualifications\n" + "Enter \"OK\" to finish criteria selection"
@@ -741,12 +747,13 @@ class UserInterface {
                     boolean backEnd = false;
                     while (!backEnd) {
                         System.out.println("Confirm Back? Your selections will not be saved. Y/N");
-                        String userinput = scan.nextLine();
+                        String userinput = scan.nextLine().trim().toUpperCase();
                         if (userinput.equals("Y")) {
                             end = true;
+                            displayAdminHome();
                             return;
                         } else if (userinput.equals("N")) {
-                            end = false;
+                            end = true;
                         } else {
                             System.out.println("Please enter Y/N");
                         }

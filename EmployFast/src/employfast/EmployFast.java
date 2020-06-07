@@ -220,9 +220,11 @@ public class EmployFast {
     public void writeSelectionCriteria(SelectionCriteria newSc) {
         ArrayList<SelectionCriteria> sclist = getSelectionList();
         String output = "";
+        boolean exists = false;
 
         for (SelectionCriteria sc : sclist) {
             if (sc.getMissionId().equals(newSc.getMissionId())) {
+                exists = true;
                 sc = newSc;
             }
             String qualsString = "";
@@ -232,7 +234,16 @@ public class EmployFast {
             qualsString = qualsString.substring(0, qualsString.length() - 1);
             output = output + sc.getMissionId() + "\n" + sc.getSelectionRangeOfAge() + "\n" + sc.getSelectionHealthRecords() + "\n" + qualsString + "\n";
         }
-        output = output.substring(0, output.length() - 2);
+        if (!exists){
+            String qualsString = "";
+            for (String qual : newSc.getSelectionQualifications()) {
+                qualsString = qualsString + qual + ",";
+            }
+            qualsString = qualsString.substring(0, qualsString.length() - 1);
+            output = output + newSc.getMissionId() + "\n" + newSc.getSelectionRangeOfAge() + "\n" + newSc.getSelectionHealthRecords() + "\n" + qualsString + "\n";
+        }
+        
+//            output = output.substring(0, output.length() - 2);
         try {
             FileWriter fileWriter = new FileWriter("selectionCriteria");
             fileWriter.write(output);
