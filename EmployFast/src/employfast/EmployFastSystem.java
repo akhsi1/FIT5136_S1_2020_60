@@ -215,6 +215,33 @@ public class EmployFastSystem {
         return count;
     }
     
+    public Shuttle searchMissionShuttle(){
+        EmployFast ef = new EmployFast();
+        ArrayList<String> list = ef.readMissionShuttle();
+        ArrayList<String> mishIds = new ArrayList<String>();
+        ArrayList<String> shIds = new ArrayList<String>();
+        String shuttleId = "";
+        if (list != null || list.size()> 0){
+            for(String s : list){
+            String[] split = s.split(",");
+            shIds.add(split[0]);
+            mishIds.add(split[1]);
+        }
+        for (int i = 0; i < list.size(); i++){
+            if (selectedMission.getMissionID().equals(mishIds.get(i))){
+                shuttleId  = shIds.get(i);
+                ArrayList<Shuttle> slist = ef.getShuttleList();
+                for (Shuttle s : slist){
+                    if (s.getShuttleId().equals(shuttleId)){
+                        selectedShuttle = s;
+                    }
+                }
+            }
+        }
+        }
+        return selectedShuttle;
+    }
+    
     public void setSelectionMissionId(){
         selectedMission.getSelectionCriteria().setMissionId(selectedMission.getMissionID());
     }
