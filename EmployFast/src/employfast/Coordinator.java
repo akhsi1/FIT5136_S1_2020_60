@@ -527,10 +527,10 @@ public class Coordinator extends User {
     public void modifyMission(String uid, String uname, String userType, String userpw, EmployFastSystem efsys, String operation) {
         Scanner input = new Scanner(System.in);
         // operation String can be for "modify" or "choose"
-        if (operation == null){
+        if (operation == null) {
             operation = "modify";
         }
-        
+
         if (userType == null) {
             userType = "coordinator";
         }
@@ -564,7 +564,7 @@ public class Coordinator extends User {
                     } else {
                         viewMission(itemNo, missionID.size());
                     }
-                    System.out.println("<-- Press P for Previous Page, N for Next Page -->\n");
+                    System.out.println("\n<-- Press P for Previous Page, N for Next Page -->\n");
                     System.out.println("Please input the Mission ID or Press H to return Home");
                     in = input.nextLine().trim().toUpperCase();
                     if (in.equals("P")) {
@@ -1433,7 +1433,7 @@ public class Coordinator extends User {
                 fos = new FileOutputStream(file, true);
             }
             OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
-            if (FileData.trim().equals("")) {
+            if (FileData.trim().equals("") || FileData == null) {
                 FileData = "null";
             }
             osw.write(FileData);
@@ -1441,6 +1441,7 @@ public class Coordinator extends User {
             osw.close();
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("error storing");
         }
     }
 
@@ -1532,24 +1533,41 @@ public class Coordinator extends User {
             mission.setMissionCoordinatorContact(readFileData("missionCoordinatorContact").get(index));
             for (int i = 0; i < readFileData("jobName" + missionID).size(); i++) {
                 mission.getMissionJobs().add(new Job(readFileData("jobName" + missionID).get(i), readFileData("jobDescription" + missionID).get(i)));
+                if (mission.getMissionJobs().get(i).getJobName().equals("null")) {
+                    mission.getMissionJobs().remove(i);
+                }
             }
             for (int i = 0; i < readFileData("requiredTitleName" + missionID).size(); i++) {
                 mission.getMissionTitles().add(new RequiredTitle(readFileData("requiredTitleName" + missionID).get(i), Integer.parseInt(readFileData("requiredTitleCount" + missionID).get(i))));
+                if (mission.getMissionTitles().get(i).getRequiredTitleName().equals("null")) {
+                    mission.getMissionTitles().remove(i);
+                }
             }
             for (int i = 0; i < readFileData("cargoIDForJourney" + missionID).size(); i++) {
                 mission.getMissionCargoForJourney().add(new Cargo(readFileData("cargoIDForJourney" + missionID).get(i), readFileData("cargoNameForJourney" + missionID).get(i), Integer.parseInt(readFileData("cargoQuantityAvailForJourney" + missionID).get(i)), Integer.parseInt(readFileData("cargoQuantityReqForJourney" + missionID).get(i))));
+                if (mission.getMissionCargoForJourney().get(i).getCargoName().equals("null")) {
+                    mission.getMissionCargoForJourney().remove(i);
+                }
             }
             for (int i = 0; i < readFileData("cargoIDForMission" + missionID).size(); i++) {
-                mission.getMissionCargoForJourney().add(new Cargo(readFileData("cargoIDForMission" + missionID).get(i), readFileData("cargoNameForMission" + missionID).get(i), Integer.parseInt(readFileData("cargoQuantityAvailForMission" + missionID).get(i)), Integer.parseInt(readFileData("cargoQuantityReqForMission" + missionID).get(i))));
+                mission.getMissionCargoForMission().add(new Cargo(readFileData("cargoIDForMission" + missionID).get(i), readFileData("cargoNameForMission" + missionID).get(i), Integer.parseInt(readFileData("cargoQuantityAvailForMission" + missionID).get(i)), Integer.parseInt(readFileData("cargoQuantityReqForMission" + missionID).get(i))));
+
+                if (mission.getMissionCargoForMission().get(i).getCargoName().equals("null")) {
+                    mission.getMissionCargoForMission().remove(i);
+                }
             }
             for (int i = 0; i < readFileData("cargoIDForOtherMissions" + missionID).size(); i++) {
-                mission.getMissionCargoForJourney().add(new Cargo(readFileData("cargoIDForOtherMissions" + missionID).get(i), readFileData("cargoNameForOtherMissions" + missionID).get(i), Integer.parseInt(readFileData("cargoQuantityAvailForOtherMissions" + missionID).get(i)), Integer.parseInt(readFileData("cargoQuantityReqForOtherMissions" + missionID).get(i))));
+                mission.getMissionCargoForOtherMissions().add(new Cargo(readFileData("cargoIDForOtherMissions" + missionID).get(i), readFileData("cargoNameForOtherMissions" + missionID).get(i), Integer.parseInt(readFileData("cargoQuantityAvailForOtherMissions" + missionID).get(i)), Integer.parseInt(readFileData("cargoQuantityReqForOtherMissions" + missionID).get(i))));
+                if (mission.getMissionCargoForOtherMissions().get(i).getCargoName().equals("null")) {
+                    mission.getMissionCargoForOtherMissions().remove(i);
+                }
             }
             mission.setMissionLaunchDate(readFileData("missionLaunchDate").get(index));
             mission.setMissionDestinationLocation(readFileData("missionDestinationLocation").get(index));
             mission.setMissionDurationMonths(Integer.parseInt(readFileData("missionDurationMonths").get(index)));
             mission.setMissionStatus(readFileData("missionStatus").get(index));
         } catch (Exception e) {
+            System.out.println("File Read Error");
         }
         return mission;
     }
@@ -1564,13 +1582,31 @@ public class Coordinator extends User {
         writeFileData("missionCountriesAllowed", mission.getMissionCountriesAllowed());
         writeFileData("missionCoordinatorName", mission.getMissionCoordinatorName());
         writeFileData("missionCoordinatorContact", mission.getMissionCoordinatorContact());
+        if (mission.getMissionJobs().size() == 0 || mission.getMissionJobs() == null) {
+            Job j = new Job("null", "null");
+            ArrayList<Job> jlist = new ArrayList<Job>();
+            jlist.add(j);
+            mission.setMissionJobs(jlist);
+        }
         for (int i = 0; i < mission.getMissionJobs().size(); i++) {
             writeFileData("jobName" + missionID, mission.getMissionJobs().get(i).getJobName());
             writeFileData("jobDescription" + missionID, mission.getMissionJobs().get(i).getJobDescription());
         }
+        if (mission.getMissionTitles().size() == 0 || mission.getMissionTitles() == null) {
+            RequiredTitle j = new RequiredTitle("null", 0);
+            ArrayList<RequiredTitle> list = new ArrayList<RequiredTitle>();
+            list.add(j);
+            mission.setMissionTitles(list);
+        }
         for (int i = 0; i < mission.getMissionTitles().size(); i++) {
             writeFileData("requiredTitleName" + missionID, mission.getMissionTitles().get(i).getRequiredTitleName());
             writeFileData("requiredTitleCount" + missionID, Integer.toString(mission.getMissionTitles().get(i).getRequiredTitleCount()));
+        }
+        if (mission.getMissionCargoForJourney().size() == 0 || mission.getMissionCargoForJourney() == null) {
+            Cargo j = new Cargo("null", "null", 0, 0);
+            ArrayList<Cargo> list = new ArrayList<Cargo>();
+            list.add(j);
+            mission.setMissionCargoForJourney(list);
         }
         for (int i = 0; i < mission.getMissionCargoForJourney().size(); i++) {
             writeFileData("cargoIDForJourney" + missionID, mission.getMissionCargoForJourney().get(i).getCargoID());
@@ -1578,11 +1614,23 @@ public class Coordinator extends User {
             writeFileData("cargoQuantityAvailForJourney" + missionID, Integer.toString(mission.getMissionCargoForJourney().get(i).getCargoQuantityAvail()));
             writeFileData("cargoQuantityReqForJourney" + missionID, Integer.toString(mission.getMissionCargoForJourney().get(i).getCargoQuantityReq()));
         }
+        if (mission.getMissionCargoForMission().size() == 0 || mission.getMissionCargoForMission() == null) {
+            Cargo j = new Cargo("null", "null", 0, 0);
+            ArrayList<Cargo> list = new ArrayList<Cargo>();
+            list.add(j);
+            mission.setMissionCargoForMission(list);
+        }
         for (int i = 0; i < mission.getMissionCargoForMission().size(); i++) {
             writeFileData("cargoIDForMission" + missionID, mission.getMissionCargoForMission().get(i).getCargoID());
             writeFileData("cargoNameForMission" + missionID, mission.getMissionCargoForMission().get(i).getCargoName());
             writeFileData("cargoQuantityAvailForMission" + missionID, Integer.toString(mission.getMissionCargoForMission().get(i).getCargoQuantityAvail()));
             writeFileData("cargoQuantityReqForMission" + missionID, Integer.toString(mission.getMissionCargoForMission().get(i).getCargoQuantityReq()));
+        }
+        if (mission.getMissionCargoForOtherMissions().size() == 0 || mission.getMissionCargoForOtherMissions() == null) {
+            Cargo j = new Cargo("null", "null", 0, 0);
+            ArrayList<Cargo> list = new ArrayList<Cargo>();
+            list.add(j);
+            mission.setMissionCargoForOtherMissions(list);
         }
         for (int i = 0; i < mission.getMissionCargoForOtherMissions().size(); i++) {
             writeFileData("cargoIDForOtherMissions" + missionID, mission.getMissionCargoForOtherMissions().get(i).getCargoID());

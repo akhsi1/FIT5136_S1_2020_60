@@ -494,6 +494,7 @@ class UserInterface {
                                             String userinput = in.nextLine().trim().toUpperCase();
                                             if (userinput.equals("Y")) {
                                                 efs.setSelectedShuttle(sh);
+                                                ef.writeToMission(efs.getSelectedShuttle().getShuttleId(), efs.getSelectedMission().getMissionID());
                                                 displayAdminHome();
                                                 return;
                                             } else if (userinput.equals("N")) {

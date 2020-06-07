@@ -69,6 +69,10 @@ public class EmployFast {
             userList.add(u);
         }
     }
+    
+    public void writeToMission(String shId, String mishId){
+        
+    }
 
     public ArrayList<Shuttle> getShuttleList() {
         shuttleList = new ArrayList<Shuttle>();
